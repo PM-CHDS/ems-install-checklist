@@ -1,0 +1,613 @@
+\chapter*{Úvodní informace}
+
+\textbf{Jednotlivé položky Checklistu jsou vysvětleny v samostatném dokumentu zasílaném spolu s checklistem.}
+
+\vskip.2in
+V checklistu je použito několik možností vyplnění odpovědi na daný bod.
+\begin{enumerate}[label=\alph*)]
+    \item  $\square$ $\rightarrow$ \makebox[0pt][l]{$\square$}\raisebox{.15ex}{\hspace{0.1em}$\checkmark$} \quad - značí nutnost položku \uv{odškrtnout} a splnit.
+    \item  \textbf{ANO \quad NE}  $\rightarrow$ \textbf{ANO \quad \raisebox{1ex}{\underline{\smash{\raisebox{-1ex}{NE}}}}} \quad - značí nutnost vybrat jednu z možností, neplatnou volbu prosíme škrtnout.
+    \item \textbf{A) \quad B) ... X)} $\rightarrow$ \textbf{\raisebox{0ex}{\dots{\smash{\raisebox{1ex}{B}}}}\raisebox{0ex}{\dots}} \quad - značí možnost výběru z uvedených možností a písmeno vybrané volby vepsat na tečkovaný řádek na konci sekce.
+    \item ............... \quad - značí nutnost vyplnit hodnotu k danému bodu.
+\end{enumerate}
+
+Pokud se Vaší technologie některý bod netýká - například střídače využívají připojení pomocí MODBUS TCP, pak sekce zabývající se připojením střídačů pomocí MODBUS RTU nebo Loggeru nevyplňujte.
+
+\setcounter{chapter}{1}
+\chapter*{Checklist instalace}
+
+\ifthenelse{\equal{\kapitolaElektroinstalacniPrace}{1}}{	
+    \section{Elektroinstalační práce}
+    \begin{enumerate}
+        \item Osazení a silové připojení EMS/DŘ rozvaděče. \hfill ANO \quad NE
+         \ifthenelse{\equal{\rozvadecFullSVyhrivanim}{1}}{
+        \item Umístění rozvaděče EMS/DŘ.\footnote{Specifikace umístění, zda je rozvaděč instalován ve venkovním prostředí nebo je umístěn v rozvodně.} \hfill UVNITŘ \quad VENKU
+        }
+
+
+        \item Osazení a silové připojení podružného MaR rozvaděče/čů. \hfill ANO \quad NE
+        \item Počet skutečně instalovaných MaR rozvaděčů. \hfill ...............
+        \item Osazení a silové připojení rozvaděče Oddáleného měření. \hfill ANO \quad NE
+        \item Označení rozvaděčů dle JPS\footnote{Pokud je instalováno více rozvaděčů, využijte pole pro poznámky.}
+        \vskip0.1in
+            \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}
+            |p{.4\textwidth}|p{.4\textwidth}|}
+            \hline
+            Název rozvaděče & Označení rozvaděče dle JPS\\
+            \hline
+            & \\
+            Rozvaděč EMS / DŘ & \\
+            \hline
+            & \\
+            & \\
+            \hline
+            & \\
+            & \\
+            \hline
+            \end{tabular*}
+    \end{enumerate}
+}
+
+
+\ifthenelse{\equal{\kapitolaElektromery}{1}}{	
+    \section{Elektroměry}
+    \ifthenelse{\equal{\elektromerSMLvRozvadeci}{1}}{
+        \subsection{Elektroměr SML133 v EMS/DŘ rozvaděči}
+        \begin{enumerate}[label=\alph*)]
+            \item Elektroměr osazen pro měření:
+            \begin{enumerate}[label=\Alph*)]
+                \item Na předacím místě s D.S. \hfill 
+                \item Výrobního modulu (FVE). \hfill
+                \item Výrobního modulu (BESS). \hfill
+                \item Jiné: ............................................................ \hfill
+            \end{enumerate}
+             \vskip.2in
+            \textbf{Vybraný režim měření} \hfill ...............
+            \item Osazení a připojení MTP. \hfill $\square$
+            \item Osazení a připojení MTN.\footnote{Vyplňuje se pouze v případě, že elektroměr bude měřit na hladině VN.} \hfill $\square$
+            \item Kontrola správnosti směru toku proudu na MTP. \hfill $\square$
+            \item Kontrola sledu fází. \hfill $\square$
+            \item Kontrola příslušnosti napětí vs. proud. \hfill $\square$ \newline
+            $(I_1 \rightarrow U_1; I_2 \rightarrow U_2; I_3 \rightarrow U_3)$
+            \item Nastavení elektroměru:
+            \begin{itemize}
+                \item Nastavení převodového poměru MTP. \hfill ANO \quad NE
+                \item Hodnota MTP. \hfill ...............
+                \item Nastavena měřená napěťová hladina.  \hfill ANO \quad NE
+                \item Hodnota napěťové hladiny. \hfill ...............
+                \item Nastaven převodový poměr MTN.\footnote{Vyplňuje se pouze v případě, že elektroměr bude měřit na hladině VN.} \hfill ANO \quad NE
+                \item Hodnota MTN. \hfill ...............
+            \end{itemize}
+        \end{enumerate}
+
+        \subsection{Podružné elektroměry}
+        \begin{enumerate}[label=\alph*)]
+            \item Počet instalovaných elektroměrů, např. pro měření FVE, \newline podružné elektroměry: \vskip0.1in \hfill \hfill ..............................
+            \item Informace k dalším instalovaných podružným elektroměrům:
+            \vskip0.1in
+            \begin{minipage}{\linewidth}
+            \begin{tabular}{||c|c|c|c|c||}
+            \hline
+            Značení dle JPS& Typ elektroměru & Modbus ID& Poměr & Svorkovnice\footnote{Nehodící se škrtněte.}\\
+             & &  IP adresa :: ID & MTP & \\
+            \hline
+             & & & & \\
+             & & .... : .... : .... : ....   :: .... & & X1 / X2\\
+             & & & & \\
+            \hline
+             & & & & \\
+             & & .... : .... : .... : ....   :: .... & & X1 / X2\\
+             & & & & \\
+            \hline
+             & & & & \\
+             & & .... : .... : .... : ....   :: .... & & X1 / X2\\
+             & & & & \\
+            \hline
+             & & & & \\
+             & & .... : .... : .... : ....   :: .... & & X1 / X2\\
+             & & & & \\
+            \hline
+             & & & & \\
+             & & .... : .... : .... : ....   :: .... & & X1 / X2\\
+             & & & & \\
+            \hline
+            \end{tabular}
+            \end{minipage}
+            \item Poznámky k elektroměrům:
+            \begin{center}
+            \vskip.2in
+            ............................................................................................................
+            \vskip.2in
+            ............................................................................................................
+            \vskip.2in
+            ............................................................................................................
+            \vskip.2in
+            ............................................................................................................
+            \vskip.2in
+            ............................................................................................................
+            \vskip.2in
+            ............................................................................................................
+            \vskip.2in
+            \end{center}
+        \end{enumerate}
+
+        
+
+    }
+
+}
+
+\ifthenelse{\equal{\kapitolaParametrizaceKomunikace}{1}}{
+    \section{Parametrizace a komunikace}
+    \begin{enumerate}[label=\alph*)]
+        \item Zapojení Eth kabelu (datová síť) do rozvaděče EMS/DŘ. \hfill $\square$
+        \item Zapojení Eth kabelu (datová síť) do všech rozvaděčů MaR. \hfill $\square$
+        \item Nastavení datové síťě pro komunikaci řídících jednotek \newline a následujících vyjímek v pravidlech FireWallu:  \hfill $\square$
+        \begin{itemize}
+            \item vpn.icool.cloud tcp/1194
+            \item cz.pool.ntp.org
+            \item 8.8.8.8 (DNS)
+            \item www.pvforecast.cz
+            \item www.ote-cr.cz
+        \end{itemize}
+        \item IP adresy a IC čísla řídících jednotek. \footnote{Při pořizování fotodokumentace IC čísla nezapomeň fotografii označit příslušností k rozvaděči.}
+        \vskip0.1in
+            \begin{minipage}{\linewidth}
+            \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}
+            |p{.3\textwidth}|p{.2\textwidth}|p{.3\textwidth}|}
+            \hline
+            IC číslo řídící jednotky & IP Adresa & Adresace\footnote{Nehodící se škrtněte}\\
+            \hline
+            & & \\
+            & .... : .... : .... : .... & STATICKÁ / DHCP\\
+            \hline
+            & & \\
+            & .... : .... : .... : .... & STATICKÁ / DHCP\\
+            \hline
+            & & \\
+            & .... : .... : .... : .... & STATICKÁ / DHCP\\
+            \hline
+            \end{tabular*}
+            \end{minipage}
+        \item Parametry místní sítě ve které je technologie připojena
+            \begin{itemize}
+                \item IP adresa sítě: \hfill .......... : .......... : .......... : ..........
+                \item Maska sítě: \hfill .......... : .......... : .......... : ..........
+                \item Brána: \hfill .......... : .......... : .......... : ..........
+                \item DNS: \hfill .......... : .......... : .......... : ..........
+                \item Všechny komponenty využívající připojení TCP (střídače, baterie, atd.) \newline jsou vzájemně dostupné přes PING příkaz. \hfill $\square$
+            \end{itemize}
+        \item Způsob připojení instalačního místa, resp. EMS/DŘ jednotky k Internetu:
+            \begin{enumerate}[label=\Alph*)]
+                \item Připojení do místní datové sítě. \hfill 
+                \item Připojení pomocí mobilního operátora. \hfill
+            \end{enumerate}
+             \vskip.2in
+            \textbf{Vybraný režim připojení:} \hfill ...............
+    \end{enumerate}
+
+    \textcolor{red}{ \textbf{Zahájení konfigurace je podmíněno funkční datovou konektivitou!}} Přiložte fotografii displeje PLC, kde je vidět potvrzení o správné komunikace PLC do cloudu, nutný je stav [100]. Viz kapitola \ref{podkladyProChecklist}.
+}
+
+\ifthenelse{\equal{\kapitolaTechnologie}{1}}{
+    \section{Technologie}
+
+     \ifthenelse{\equal{\kapitolaTechnologieStridaceLogger}{1}}{
+        \subsection{Střídače připojené přes Logger}
+        \begin{enumerate}[label=\alph*)]
+            \item Připojení do datové sítě s viditelností na EMS/DŘ. \hfill $\square$
+            \item Povoleno řízení loggeru nadřazeným systémem. \hfill $\square$
+            \item Připojení všech řízených střídačů. \hfill $\square$
+        \end{enumerate}
+
+        \vskip0.1in
+        \begin{tabular}{||c|c|c|c|c|c||}
+            \hline
+            Typ & Sumární výkon & Výkon & IP Adresa & Modbus ID & Verze\\
+            Loggeru & střídačů [kW] & FVE [kWp] & & & firmware \\
+            \hline
+            & & & & & \\
+            & & & .... : .... : .... : ....  & & \\
+            & & & port: & & \\
+            \hline
+            & & & & & \\
+            & & & .... : .... : .... : ....  & & \\
+            & & & port: & & \\
+            \hline
+            & & & & & \\
+            & & & .... : .... : .... : ....  & & \\
+            & & & port: & & \\
+            \hline
+        \end{tabular}
+    }
+
+    \ifthenelse{\equal{\kapitolaTechnologieStridaceRTU}{1}}{
+        \subsection{Střídače připojené přes Modbus RTU}
+        \begin{enumerate}[label=\alph*)]
+            \item Osazení zakončovacích odporů $120\ohm$ na koncích každé komunikační linky. \hfill $\square$
+            \item Ověření polarity linkek RS-485 (A, B, GND). \hfill $\square$
+            \item Povoleno ovládání střídačů přes Modbus. \hfill $\square$
+            \item Připojení všech řízených střídačů. \hfill $\square$
+        \end{enumerate}
+
+        \vskip0.1in
+        \begin{tabular}{||c|c|c|c|c|c||}
+            \hline
+            Značení& Výrobce & Výkon & Výkon & Modbus ID & Rychlost\\
+            dle JPS & a typ &[kW] & FVE [kWp] &   & linky [bps]\\
+            \hline
+            & & & & & \\
+            & & & & & \\
+            \hline
+            & & & & & \\
+            & & & & & \\
+            \hline
+            & & & & & \\
+            & & & & & \\
+            \hline
+            & & & & & \\
+            & & & & & \\
+            \hline
+            & & & & & \\
+            & & & & & \\
+            \hline
+            & & & & & \\
+            & & & & & \\
+            \hline
+            & & & & & \\
+            & & & & & \\
+            \hline
+            & & & & & \\
+            & & & & & \\
+            \hline
+        \end{tabular}
+    }
+
+    \ifthenelse{\equal{\kapitolaTechnologieStridaceTCP}{1}}{
+        \subsection{Střídače připojené přes Modbus TCP}
+        \begin{enumerate}[label=\alph*)]
+            \item Připojení do datové sítě s viditelností na EMS/DŘ. \hfill $\square$
+            \item Povoleno ovládání střídačů přes Modbus. \hfill $\square$
+            \item Připojení všech řízených střídačů. \hfill $\square$
+        \end{enumerate}
+
+        \vskip0.1in
+        \begin{tabular}{||c|c|c|c|c|c||}
+            \hline
+            Značení& Výrobce & Výkon & Výkon & IP Adresa & Modbus ID\\
+            dle JPS & a typ &[kW] & FVE [kWp] &  & \\
+            \hline
+            & & & & & \\
+            & & & & .... : .... : .... : ....  & \\
+            & & & & port: & \\
+            \hline
+            & & & & & \\
+            & & & & .... : .... : .... : ....  & \\
+            & & & & port: & \\
+            \hline
+            & & & & & \\
+            & & & & .... : .... : .... : ....  & \\
+            & & & & port: & \\
+            \hline
+            & & & & & \\
+            & & & & .... : .... : .... : ....  & \\
+            & & & & port: & \\
+            \hline
+            & & & & & \\
+            & & & & .... : .... : .... : ....  & \\
+            & & & & port: & \\
+            \hline
+            & & & & & \\
+            & & & & .... : .... : .... : ....  & \\
+            & & & & port: & \\
+            \hline
+            & & & & & \\
+            & & & & .... : .... : .... : ....  & \\
+            & & & & port: & \\
+            \hline
+            & & & & & \\
+            & & & & .... : .... : .... : ....  & \\
+            & & & & port: & \\
+            \hline
+        \end{tabular}
+    }
+
+    \ifthenelse{\equal{\kapitolaTechnologieBaterie}{1}}{
+        \subsection{Bateriová úložiště}
+        \begin{enumerate}[label=\alph*)]
+            \item Všechny prvky bateriového úložiště připojeny k EMS/DŘ. \footnote{Bateriové střídače, BMS, bateriové jednotky, atd.}  \hfill $\square$
+           
+            \ifthenelse{\equal{\kapitolaTechnologieBaterieEMS}{1}}{
+            \item Informace o bateriovém uložišti a adresace komponent
+            \begin{itemize}
+                \item Typ / model bateriového uložiště: \hfill .............................................
+                \item Kapacita úložiště: \hfill ............... [kWh]
+                \item Max. SoC pro nabíjení: \hfill ............... \%
+                \item Min. SoC pro vybíjení: \hfill ............... \%
+            \end{itemize}
+            \vskip0.1in
+            }
+
+            \item Doplňující informace k bateriovému úložišti: 
+
+            \begin{minipage}{\linewidth}
+                \begin{tabular}{||c|c|c|c|c||}
+                    \hline
+                    Komponenta & Kapacita BU & Max. výkon & Modbus ID & ID \\
+                    INV / BMS / MBMS & [kWh] & Střídače [kW] & IP Adresa :: ID & úložiště \footnote{V případě MBMS.} \\
+                    \hline
+                    & & & & \\
+                    & & & .... : .... : .... : ....   :: .... & \\
+                    \hline
+                    & & & & \\
+                    & & & .... : .... : .... : ....   :: .... & \\
+                    \hline
+                    & & & & \\
+                   & & & .... : .... : .... : ....   :: .... & \\
+                    \hline
+                    & & & & \\
+                    & & & .... : .... : .... : ....   :: .... & \\
+                    \hline
+                    & & & & \\
+                   & & & .... : .... : .... : ....   :: .... & \\
+                    \hline
+                    & & & & \\
+                    & & & .... : .... : .... : ....   :: .... & \\
+                    \hline
+                \end{tabular}
+            \end{minipage}
+        \item Poznámky k bateriím:
+            \begin{center}
+            \vskip.2in
+            ............................................................................................................
+            \vskip.2in
+            ............................................................................................................
+            \vskip.2in
+            ............................................................................................................
+            \vskip.2in
+            ............................................................................................................
+            \vskip.2in
+            ............................................................................................................
+            \vskip.2in
+            ............................................................................................................
+            \vskip.2in
+            \end{center}
+         \end{enumerate}
+    }
+}
+
+
+\ifthenelse{\equal{\kapitolaMeteostanice}{1}}{
+    \section{Meteorologická stanice}
+    \begin{enumerate}[label=\alph*)]
+        \item METEO stanice nainstalována s ohledem na měření osvitu elektrárny\footnote{Hodnoty z měření METEO stanice se předávají na dispečink. Je proto nutné, aby odpovídaly skutečnému osvitu, rychlosti větru, atp.}. \hfill $\square$
+        \item IP adresa METEO stanice je ve stejné síti jako EMS/DŘ. \footnote{Vzájemně dostupné přes PING příkaz.} \hfill $\square$
+        \item IP adresa METEO stanice: \hfill .... : .... : .... : .... 
+    \end{enumerate}
+}
+
+
+\ifthenelse{\equal{\kapitolaKompenzace}{1}}{
+    \section{Kompenzace}
+    \begin{enumerate}[label=\alph*)]
+        \item Instalována kompenzace? \hfill ANO \quad NE
+        \item Bude ovlivňovavat řízení FVE a povely z DŘ?\hfill ANO \quad NE
+        \item Umožňuje kompenzace blokování pomocí kontaktu? \hfill ANO \quad NE
+    \end{enumerate}
+}
+
+
+\setcounter{chapter}{2}
+\setcounter{section}{0}
+\chapter*{Nastavení systému}
+
+Pro potřeby nastavení EMS/DŘ je potřeba vyplnit několik základních parametrů samotné služby „řízení energií“, obsluhovaných „zařízení“ (střídač, bateriové úložiště) a řízených „spotřebičů“ (proporcionálně řízená spirála akumulační nádrže, elektromobilita). Na základě uvedených hodnot bude nastaven a předán řídící systém EMS.
+
+\ifthenelse{\equal{\kapitolaNastaveniOM}{1}}{
+    \section{Parametry odběrného místa}
+    \begin{enumerate}[label=\alph*)]
+        \item Jmenovitá hodnota \textbf{hlavního jističe}: \hfill $I_N =$ ............... [A]
+        \begin{itemize}
+            \item V případě VN přepočtěte na ekvivalent \hfill $I_{N-VN} =$ ............... [A]
+        \end{itemize}
+        \item Hodnota \textbf{rezervovaného příkonu} dle SoP: \hfill ............... [kW]
+        \item Hodnota \textbf{rezervovaného výkonu} výrobny dle SoP: \hfill ............... [kW]
+        \item Celkový \textbf{instalovaný výkon} dle SoP: \hfill ............... [kWp]
+        \item Povolení přetoků do sítě během zkušebního provozu \hfill ANO \quad NE
+        \begin{itemize}
+            \item Hodnota povoleného přetoku \hfill ............... [kW]
+        \end{itemize}
+    \end{enumerate}
+}
+
+
+\ifthenelse{\equal{\kapitolaNastaveniSPOT}{1}}{
+    \section{Parametry SPOT / PRODEJ}
+    Výkup elektřiny je realizována dle cen:
+
+    \begin{enumerate}[label=\Alph*)]
+        \item SPOT - ceny dle burzy OTE.
+        \item FIX - pevná cena domluvená s obchodníkem
+    \end{enumerate}
+    \vskip.1in
+    \textbf{Vybraný režim výkupu elektřiny} \hfill ...............
+
+    \begin{enumerate}[label=\alph*)]
+        \item \textbf{SPOT}
+        \begin{itemize}
+            \item Cena za použití přenosové soustavy \hfill ............... [EUR / MWh]
+            \item Sazba DPH \hfill ............... [\%]
+            \item Minimální zisk \hfill ............... [\%]
+            \item Zakázat dodávku do síte při záporných SPOT cenách \hfill ANO \quad NE
+        \end{itemize}
+
+        \item \textbf{FIX}
+        \begin{itemize}
+            \item Fixní prodejní cena \hfill ............... [EUR / MWh]
+            \item Cena za použití přenosové soustavy \hfill ............... [EUR / MWh]
+            \item Sazba DPH \hfill ............... [\%]
+        \end{itemize}
+    \end{enumerate}
+
+    \section{Parametry SPOT / NÁKUP}
+    Nákup elektřiny je realizována dle cen:
+
+    \begin{enumerate}[label=\Alph*)]
+        \item SPOT - ceny dle burzy OTE.
+        \item FIX - pevná cena domluvená s obchodníkem
+        \item SPOT+FIX - ceny dle burzy OTE až do smluveného zastropování cen.
+    \end{enumerate}
+    \vskip.1in
+    \textbf{Vybraný režim nákupu elektřiny} \hfill ...............
+
+    \begin{enumerate}[label=\alph*)]
+        \item \textbf{SPOT}
+        \begin{itemize}
+            \item Náklady při vysokém tarifu \hfill ............... [EUR / MWh]
+            \item Náklady při nízkém tarifu \hfill ............... [EUR / MWh]
+            \item Denní náklady \hfill ............... [EUR / MWh]
+            \item Sazba DPH \hfill ............... [\%]
+        \end{itemize}
+
+        \item \textbf{FIX}
+        \begin{itemize}
+            \item Fixní nákupní cena \hfill ............... [EUR / MWh]
+            \item Náklady při vysokém tarifu \hfill ............... [EUR / MWh]
+            \item Náklady při nízkém tarifu \hfill ............... [EUR / MWh]
+            \item Denní náklady \hfill ............... [EUR / MWh]
+            \item Sazba DPH \hfill ............... [\%]
+        \end{itemize}
+
+        \item \textbf{SPOT+FIX}
+        \begin{itemize}
+            \item Maximální nákupní cena \hfill ............... [EUR / MWh]
+            \item Náklady při vysokém tarifu \hfill ............... [EUR / MWh]
+            \item Náklady při nízkém tarifu \hfill ............... [EUR / MWh]
+            \item Denní náklady \hfill ............... [EUR / MWh]
+            \item Sazba DPH \hfill ............... [\%]
+        \end{itemize}
+    \end{enumerate}
+
+    \vskip.2in
+    \textbf{\textcolor{red}{!!! DŮLEŽITÉ:} pokud se bude nabíjet baterie ze SPOTu a OPM je fakturováno dle $1/4$h rezervované kapacity (RK), je nutné řešit sledování a řízení $1/4$h výkonu přímo z fakturačního elektroměru. Pokud nebude použito řízení $1/4$h rezervované kapacity z fakturačního elektroměru, je možné, že se limit RK překročí a OPM může být fakturováno za překročení limity RK.}
+}
+
+
+\ifthenelse{\equal{\kapitolaNastaveniRezerovaneKapacity}{1}}{
+    \section{Parametry rezervované kapacity $1/4$h maxima}
+    \begin{enumerate}[label=\alph*)]
+        \item Rezervovaná kapacita $1/4$h maximum: \hfill ............... [kW]
+        \item Instalován a připojen galvanický optooddělovač pro sběr \newline pulsů k fakturačnímu elektroměru:  \hfill ANO \quad NE
+        \item Připojen galvanický optooddělovač k rozvaděči $1/4$h maxima: \vspace{0\baselineskip}  \hfill ANO \quad NE
+        \item Připojen rozvaděč $1/4$h maxima k EMS/DŘ rozvaděči: \vspace{0\baselineskip} \hfill ANO \quad NE
+        \begin{itemize}
+            \item CIB adresa prvku AK.PULS (C-AM-0006I) \hfill ...............
+        \end{itemize}
+        \item Popis pulzů:
+        \begin{itemize}
+            \item imp1 (AK.PULS/AI1) \hfill ...............
+            \item imp2 (AK.PULS/AI2) \hfill ...............
+            \item imp3 (AK.PULS/AI3) \hfill ...............
+        \end{itemize}
+        \item Regulační stupně:
+        \begin{itemize}
+            \item Stupeň 1 – kompenzace baterií: \hfill ANO \quad NE
+            \item Stupeň 2 - vypnutí zařízení 1 \hfill max. příkon ............... [kW]
+            \item Stupeň 3 - vypnutí zařízení 1 \hfill max. příkon ............... [kW]
+            \item Stupeň 4 - vypnutí zařízení 1 \hfill max. příkon ............... [kW]
+            \item Stupeň 5 - vypnutí zařízení 1 \hfill max. příkon ............... [kW]
+            \item další stupně je nutno řešit individuálně
+        \end{itemize}
+    \end{enumerate}
+}
+
+
+
+\ifthenelse{\equal{\kapitolaNastaveniBaterie}{1}}{
+    \section{Nastavení bateriového úložiště}
+    Bateriové úložiště může být provozováno v jednom z následujících režimů (vzájemné kombinování režimů je vždy nutné domluvit individuálně, až po ověření, že daná technologie kombinaci umožňuje).
+
+    \begin{enumerate}[label=\Alph*)]
+        \item \textbf{Self-consumption} : nabíjení z přetoků fve a kompenzace spotřeby.
+        \item \textbf{Peak-shaving} : ořezávání/vyrovnání výkonových špiček (standardní spotřeba není kompenzována).
+        \item \textbf{SPOT} : nabíjení a kompenzace na základě SPOTových cen (neřeší vyrovnávání výkonových špiček).
+    \end{enumerate}
+
+    \vskip.2in
+    \textbf{Vybraný režim řízení bateriového úložiště} \hfill ...............
+
+}
+
+
+\ifthenelse{\equal{\kapitolaNastaveniZdrojuEMS}{1}}{
+    \section{Nastavení zdrojů EMS pro SPOT}
+    Řízení zdrojů FVE, bateriová úložiště či jiné zdroje EMS. Pokud zdroj, například baterie, nebude provozován v režimu SPOT, danou část nevyplňujte.
+
+    \begin{enumerate}[label=\alph*)]
+        \item Povolit řízení EMS dle SPOT: \hfill ANO \quad NE
+        \item Bateriové úložiště:
+        \begin{itemize}
+            \item Povolit vybíjení baterií do sítě dle SPOT: \hfill ANO \quad NE
+            \item Amortizace baterie při využití SPOT: \hfill ............... [EUR / MWh]
+            \item Ztráty bateriového úložiště: \hfill ............... [\%]
+        \end{itemize}
+        \item Jsou instalovány další zdroje do EMS/DŘ?\footnote{Například kogenerační jednotky či diesel agregáty. Tyto zdroje popište do poznámek níže.} \hfill ANO \quad NE
+    \end{enumerate}
+
+    Poznámky:
+    \begin{center}
+        \vskip.2in
+        ............................................................................................................
+        \vskip.2in
+        ............................................................................................................
+        \vskip.2in
+        ............................................................................................................
+        \vskip.2in
+        ............................................................................................................
+        \vskip.2in
+        ............................................................................................................
+        \vskip.2in
+        ............................................................................................................
+        \vskip.2in
+    \end{center}
+}
+
+\setcounter{chapter}{3}
+\setcounter{section}{0}
+\chapter*{Podklady pro checklist}
+%\begin{enumerate}[label=$\square$]
+%    \item sdfs
+%\end{enumerate}
+
+\section{Povinné přílohy}
+    \begin{enumerate}[label=\alph*)]
+        \item Fotodokumentace displejů řídících jednotek (IC čísla). \hfill $\square$
+        \item Fotodokumentace štítků řízených technologií dle výše uvedeného. \hfill $\square$
+        \item Technické listy (datasheety) k použitým technologiím. \hfill $\square$
+        
+        \ifthenelse{\equal{\novyDriverZarizeni}{1}}{
+        \item Tabulku Modbus registrů dle aktuálně instalovaného firmwaru \newline a typu rozhraní (TCP/RTU).\footnote{Pouze v případě, že v rámci instalovaných technologií bude zařízení, které není systémem EMS/DŘ podporováno a bude potřeba naprogramovat nový driver.} \hfill $\square$
+        }
+        
+        \item Dokumentaci k rozvaděčům s vyznačenými realizovanými \newline signály a povely, případně zaznamenanými změnami. \hfill $\square$
+        \item Realizační projektovou Dokumentaci
+        \begin{itemize}
+            \item Jednopólové schéma se zanesenou kompletní dotčenou technologií \newline a dotčených rozvaděčů (vč. prvků dle telemetrické tabulky). \hfill $\square$
+            \item Situační schéma objektů se zakresleným umístěním dotčených \newline technologií a rozvaděčů. \hfill $\square$
+        \end{itemize}
+        \item Smlouvu o připojení v aktuálním znění vč. příloh a dodatků. \hfill $\square$
+        \item Screen (foto obrazovky) z distribučního portálu s nasmlouvanými \newline hodnotami rezervovaného příkonu, výkonu a kapacity. \hfill $\square$
+    \end{enumerate}
+    \label{podkladyProChecklist}
+
+    \textbf{Svým podpisem potvrzuji správnost uvedených údajů a provedených ověření. Beru na vědomí to, že pokud bude během konfigurace a funkční zkoušky shledán nesoulad bude řešení tohoto nesouladu řešeno ze strany EnergoStation s.r.o. jako vícepráce dle hodinové sazby z aktuálního ceníku.}
+
+    \vskip0.2in
+    \begin{tabbing}
+	\hspace{0em} \= V .............................................  \hspace{6em} \= dne: ............................................. \\[0.5cm]
+	\> Checklist vyplnil (čitelně):   \> Společnost:  \\[0.5cm]
+    \> .............................................   \> .............................................  \\[1.5cm]
+	\>   \> .............................................  \\[0.2cm]
+	\hspace{25em} \= \textbf{PODPIS} \\
+	\end{tabbing}
+

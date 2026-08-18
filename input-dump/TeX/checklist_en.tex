@@ -1,0 +1,609 @@
+\chapter*{Introductory Information}
+
+\textbf{Each item in the Checklist is explained in a separate document sent together with the checklist.}
+
+\vskip.2in
+The checklist uses several methods for filling in answers to each item.
+\begin{enumerate}[label=\alph*)]
+    \item  $\square$ $\rightarrow$ \makebox[0pt][l]{$\square$}\raisebox{.15ex}{\hspace{0.1em}$\checkmark$} \quad - indicates the need to {check off} and complete the item.
+    \item  \textbf{YES \quad NO}  $\rightarrow$ \textbf{YES \quad \raisebox{1ex}{\underline{\smash{\raisebox{-1ex}{NO}}}}} \quad - indicates the need to select one option; please cross out the invalid choice.
+    \item \textbf{A) \quad B) ... X)} $\rightarrow$ \textbf{\raisebox{0ex}{\dots{\smash{\raisebox{1ex}{B}}}}\raisebox{0ex}{\dots}} \quad - indicates the option to choose from the listed options and enter the letter of the selected choice on the dotted line at the end of the section.
+    \item ............... \quad - indicates the need to fill in a value for the given item.
+\end{enumerate}
+
+If a particular item does not apply to your technology — for example, if inverters use MODBUS TCP connection, do not fill in the section dealing with inverter connection via MODBUS RTU or Logger.
+
+\setcounter{chapter}{1}
+\chapter*{Installation Checklist}
+
+\ifthenelse{\equal{\kapitolaElektroinstalacniPrace}{1}}{	
+    \section{Electrical Installation Work}
+    \begin{enumerate}
+        \item Installation and power connection of the EMS/CS panel. \hfill YES \quad NO
+         \ifthenelse{\equal{\rozvadecFullSVyhrivanim}{1}}{
+        \item Location of the EMS/CS panel.\footnote{Specify the location — whether the panel is installed outdoors or placed in a substation.} \hfill INDOORS \quad OUTDOORS
+        }
+
+
+        \item Installation and power connection of the auxiliary M\&C panel(s). \hfill YES \quad NO
+        \item Number of actually installed M\&C panels. \hfill ...............
+        \item Installation and power connection of the Remote Metering panel. \hfill YES \quad NO
+        \item Labelling of panels according to SPD\footnote{If multiple panels are installed, use the notes field.}
+        \vskip0.1in
+            \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}
+            |p{.4\textwidth}|p{.4\textwidth}|}
+            \hline
+            Panel name & Panel label per SPD\\
+            \hline
+            & \\
+            EMS / CS Panel & \\
+            \hline
+            & \\
+            & \\
+            \hline
+            & \\
+            & \\
+            \hline
+            \end{tabular*}
+    \end{enumerate}
+}
+
+
+\ifthenelse{\equal{\kapitolaElektromery}{1}}{	
+    \section{Electricity Meters}
+    \ifthenelse{\equal{\elektromerSMLvRozvadeci}{1}}{
+        \subsection{SML133 Electricity Meter in EMS/CS Panel}
+        \begin{enumerate}[label=\alph*)]
+            \item Electricity meter installed for measuring:
+            \begin{enumerate}[label=\Alph*)]
+                \item At the delivery point with D.S. \hfill 
+                \item Production module (PV). \hfill
+                \item Production module (BESS). \hfill
+                \item Other: ............................................................ \hfill
+            \end{enumerate}
+             \vskip.2in
+            \textbf{Selected measurement mode} \hfill ...............
+            \item Installation and connection of CT (current transformer). \hfill $\square$
+            \item Installation and connection of VT (voltage transformer).\footnote{Fill in only if the meter will measure at medium voltage (MV) level.} \hfill $\square$
+            \item Verification of correct current flow direction on CT. \hfill $\square$
+            \item Phase sequence check. \hfill $\square$
+            \item Voltage-to-current assignment check. \hfill $\square$ \newline
+            $(I_1 \rightarrow U_1; I_2 \rightarrow U_2; I_3 \rightarrow U_3)$
+            \item Meter configuration:
+            \begin{itemize}
+                \item CT ratio setting. \hfill YES \quad NO
+                \item CT value. \hfill ...............
+                \item Measured voltage level set.  \hfill YES \quad NO
+                \item Voltage level value. \hfill ...............
+                \item VT ratio set.\footnote{Fill in only if the meter will measure at medium voltage (MV) level.} \hfill YES \quad NO
+                \item VT value. \hfill ...............
+            \end{itemize}
+        \end{enumerate}
+
+        \subsection{Sub-meters}
+        \begin{enumerate}[label=\alph*)]
+            \item Number of installed electricity meters, e.g. for measuring PV, \newline sub-meters: \vskip0.1in \hfill \hfill ..............................
+            \item Information on additional installed sub-meters:
+            \vskip0.1in
+            \begin{minipage}{\linewidth}
+            \begin{tabular}{||c|c|c|c|c||}
+            \hline
+            Label per SPD & Meter type & Modbus ID & Ratio & Terminal block\footnote{Cross out whichever does not apply.}\\
+             & &  IP address :: ID & CT & \\
+            \hline
+             & & & & \\
+             & & .... : .... : .... : ....   :: .... & & X1 / X2\\
+             & & & & \\
+            \hline
+             & & & & \\
+             & & .... : .... : .... : ....   :: .... & & X1 / X2\\
+             & & & & \\
+            \hline
+             & & & & \\
+             & & .... : .... : .... : ....   :: .... & & X1 / X2\\
+             & & & & \\
+            \hline
+             & & & & \\
+             & & .... : .... : .... : ....   :: .... & & X1 / X2\\
+             & & & & \\
+            \hline
+             & & & & \\
+             & & .... : .... : .... : ....   :: .... & & X1 / X2\\
+             & & & & \\
+            \hline
+            \end{tabular}
+            \end{minipage}
+            \item Notes on electricity meters:
+            \begin{center}
+            \vskip.2in
+            ............................................................................................................
+            \vskip.2in
+            ............................................................................................................
+            \vskip.2in
+            ............................................................................................................
+            \vskip.2in
+            ............................................................................................................
+            \vskip.2in
+            ............................................................................................................
+            \vskip.2in
+            ............................................................................................................
+            \vskip.2in
+            \end{center}
+        \end{enumerate}
+
+        
+
+    }
+
+}
+
+\ifthenelse{\equal{\kapitolaParametrizaceKomunikace}{1}}{
+    \section{Parametrisation and Communication}
+    \begin{enumerate}[label=\alph*)]
+        \item Connection of Ethernet cable (data network) to the EMS/CS panel. \hfill $\square$
+        \item Connection of Ethernet cable (data network) to all M\&C panels. \hfill $\square$
+        \item Data network configuration for communication of control units \newline and the following exceptions in FireWall rules:  \hfill $\square$
+        \begin{itemize}
+            \item vpn.icool.cloud tcp/1194
+            \item cz.pool.ntp.org
+            \item 8.8.8.8 (DNS)
+            \item www.pvforecast.cz
+            \item www.ote-cr.cz
+        \end{itemize}
+        \item IP addresses and IC numbers of control units. \footnote{When taking photo documentation of IC numbers, remember to label the photo with the corresponding panel.}
+        \vskip0.1in
+            \begin{minipage}{\linewidth}
+            \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}
+            |p{.3\textwidth}|p{.2\textwidth}|p{.3\textwidth}|}
+            \hline
+            IC number of control unit & IP Address & Addressing\footnote{Cross out whichever does not apply.}\\
+            \hline
+            & & \\
+            & .... : .... : .... : .... & STATIC / DHCP\\
+            \hline
+            & & \\
+            & .... : .... : .... : .... & STATIC / DHCP\\
+            \hline
+            & & \\
+            & .... : .... : .... : .... & STATIC / DHCP\\
+            \hline
+            \end{tabular*}
+            \end{minipage}
+        \item Parameters of the local network to which the technology is connected:
+            \begin{itemize}
+                \item Network IP address: \hfill .......... : .......... : .......... : ..........
+                \item Subnet mask: \hfill .......... : .......... : .......... : ..........
+                \item Gateway: \hfill .......... : .......... : .......... : ..........
+                \item DNS: \hfill .......... : .......... : .......... : ..........
+                \item All components using TCP connection (inverters, batteries, etc.) \newline are mutually reachable via PING command. \hfill $\square$
+            \end{itemize}
+        \item Method of connecting the installation site / EMS/CS unit to the Internet:
+            \begin{enumerate}[label=\Alph*)]
+                \item Connection to local data network. \hfill 
+                \item Connection via mobile operator. \hfill
+            \end{enumerate}
+             \vskip.2in
+            \textbf{Selected connection mode:} \hfill ...............
+    \end{enumerate}
+
+    \textcolor{red}{ \textbf{Configuration may only begin once data connectivity is functional!}} Attach a photo of the PLC display showing confirmation of correct PLC-to-cloud communication; status [100] is required. See chapter \ref{podkladyProChecklist}.
+}
+
+\ifthenelse{\equal{\kapitolaTechnologie}{1}}{
+    \section{Technology}
+
+     \ifthenelse{\equal{\kapitolaTechnologieStridaceLogger}{1}}{
+        \subsection{Inverters Connected via Logger}
+        \begin{enumerate}[label=\alph*)]
+            \item Connected to the data network with visibility to EMS/CS. \hfill $\square$
+            \item Logger control by superior system enabled. \hfill $\square$
+            \item All controlled inverters connected. \hfill $\square$
+        \end{enumerate}
+
+        \vskip0.1in
+        \begin{tabular}{||c|c|c|c|c|c||}
+            \hline
+            Logger & Total inverter & PV power & IP Address & Modbus ID & Firmware\\
+            type & power [kW] & [kWp] & & & version \\
+            \hline
+            & & & & & \\
+            & & & .... : .... : .... : ....  & & \\
+            & & & port: & & \\
+            \hline
+            & & & & & \\
+            & & & .... : .... : .... : ....  & & \\
+            & & & port: & & \\
+            \hline
+            & & & & & \\
+            & & & .... : .... : .... : ....  & & \\
+            & & & port: & & \\
+            \hline
+        \end{tabular}
+    }
+
+    \ifthenelse{\equal{\kapitolaTechnologieStridaceRTU}{1}}{
+        \subsection{Inverters Connected via Modbus RTU}
+        \begin{enumerate}[label=\alph*)]
+            \item Installation of $120\ohm$ termination resistors at each end of every communication line. \hfill $\square$
+            \item Verification of RS-485 line polarity (A, B, GND). \hfill $\square$
+            \item Inverter control via Modbus enabled. \hfill $\square$
+            \item All controlled inverters connected. \hfill $\square$
+        \end{enumerate}
+
+        \vskip0.1in
+        \begin{tabular}{||c|c|c|c|c|c||}
+            \hline
+            Label & Manufacturer & Power & PV power & Modbus ID & Line speed\\
+            per SPD & and type &[kW] & [kWp] &   & [bps]\\
+            \hline
+            & & & & & \\
+            & & & & & \\
+            \hline
+            & & & & & \\
+            & & & & & \\
+            \hline
+            & & & & & \\
+            & & & & & \\
+            \hline
+            & & & & & \\
+            & & & & & \\
+            \hline
+            & & & & & \\
+            & & & & & \\
+            \hline
+            & & & & & \\
+            & & & & & \\
+            \hline
+            & & & & & \\
+            & & & & & \\
+            \hline
+            & & & & & \\
+            & & & & & \\
+            \hline
+        \end{tabular}
+    }
+
+    \ifthenelse{\equal{\kapitolaTechnologieStridaceTCP}{1}}{
+        \subsection{Inverters Connected via Modbus TCP}
+        \begin{enumerate}[label=\alph*)]
+            \item Connected to the data network with visibility to EMS/CS. \hfill $\square$
+            \item Inverter control via Modbus enabled. \hfill $\square$
+            \item All controlled inverters connected. \hfill $\square$
+        \end{enumerate}
+
+        \vskip0.1in
+        \begin{tabular}{||c|c|c|c|c|c||}
+            \hline
+            Label & Manufacturer & Power & PV power & IP Address & Modbus ID\\
+            per SPD & and type &[kW] & [kWp] &  & \\
+            \hline
+            & & & & & \\
+            & & & & .... : .... : .... : ....  & \\
+            & & & & port: & \\
+            \hline
+            & & & & & \\
+            & & & & .... : .... : .... : ....  & \\
+            & & & & port: & \\
+            \hline
+            & & & & & \\
+            & & & & .... : .... : .... : ....  & \\
+            & & & & port: & \\
+            \hline
+            & & & & & \\
+            & & & & .... : .... : .... : ....  & \\
+            & & & & port: & \\
+            \hline
+            & & & & & \\
+            & & & & .... : .... : .... : ....  & \\
+            & & & & port: & \\
+            \hline
+            & & & & & \\
+            & & & & .... : .... : .... : ....  & \\
+            & & & & port: & \\
+            \hline
+            & & & & & \\
+            & & & & .... : .... : .... : ....  & \\
+            & & & & port: & \\
+            \hline
+            & & & & & \\
+            & & & & .... : .... : .... : ....  & \\
+            & & & & port: & \\
+            \hline
+        \end{tabular}
+    }
+
+    \ifthenelse{\equal{\kapitolaTechnologieBaterie}{1}}{
+        \subsection{Battery Storage Systems}
+        \begin{enumerate}[label=\alph*)]
+            \item All battery storage system components connected to EMS/CS. \footnote{Battery inverters, BMS, battery units, etc.}  \hfill $\square$
+           
+            \ifthenelse{\equal{\kapitolaTechnologieBaterieEMS}{1}}{
+            \item Information on battery storage and component addressing:
+            \begin{itemize}
+                \item Battery storage type / model: \hfill .............................................
+                \item Storage capacity: \hfill ............... [kWh]
+                \item Max. SoC for charging: \hfill ............... \%
+                \item Min. SoC for discharging: \hfill ............... \%
+            \end{itemize}
+            \vskip0.1in
+            }
+
+            \item Additional information on battery storage: 
+
+            \begin{minipage}{\linewidth}
+                \begin{tabular}{||c|c|c|c|c||}
+                    \hline
+                    Component & BS capacity & Max. inverter & Modbus ID & Storage \\
+                    INV / BMS / MBMS & [kWh] & power [kW] & IP Address :: ID & ID \footnote{In case of MBMS.} \\
+                    \hline
+                    & & & & \\
+                    & & & .... : .... : .... : ....   :: .... & \\
+                    \hline
+                    & & & & \\
+                    & & & .... : .... : .... : ....   :: .... & \\
+                    \hline
+                    & & & & \\
+                   & & & .... : .... : .... : ....   :: .... & \\
+                    \hline
+                    & & & & \\
+                    & & & .... : .... : .... : ....   :: .... & \\
+                    \hline
+                    & & & & \\
+                   & & & .... : .... : .... : ....   :: .... & \\
+                    \hline
+                    & & & & \\
+                    & & & .... : .... : .... : ....   :: .... & \\
+                    \hline
+                \end{tabular}
+            \end{minipage}
+        \item Notes on batteries:
+            \begin{center}
+            \vskip.2in
+            ............................................................................................................
+            \vskip.2in
+            ............................................................................................................
+            \vskip.2in
+            ............................................................................................................
+            \vskip.2in
+            ............................................................................................................
+            \vskip.2in
+            ............................................................................................................
+            \vskip.2in
+            ............................................................................................................
+            \vskip.2in
+            \end{center}
+         \end{enumerate}
+    }
+}
+
+
+\ifthenelse{\equal{\kapitolaMeteostanice}{1}}{
+    \section{Weather Station}
+    \begin{enumerate}[label=\alph*)]
+        \item METEO station installed with regard to measuring the irradiation of the power plant\footnote{Values from the METEO station measurements are transmitted to the dispatch centre. It is therefore necessary that they correspond to actual irradiance, wind speed, etc.}. \hfill $\square$
+        \item IP address of the METEO station is on the same network as the EMS/CS. \footnote{Mutually reachable via PING command.} \hfill $\square$
+        \item IP address of the METEO station: \hfill .... : .... : .... : .... 
+    \end{enumerate}
+}
+
+
+\ifthenelse{\equal{\kapitolaKompenzace}{1}}{
+    \section{Compensation}
+    \begin{enumerate}[label=\alph*)]
+        \item Compensation installed? \hfill YES \quad NO
+        \item Will it affect PV control and commands from CS?\hfill YES \quad NO
+        \item Does the compensation unit support blocking via contact? \hfill YES \quad NO
+    \end{enumerate}
+}
+
+
+\setcounter{chapter}{2}
+\setcounter{section}{0}
+\chapter*{System Settings}
+
+For the purpose of configuring the EMS/CS, several basic parameters of the energy management service itself, the serviced devices (inverter, battery storage) and controlled consumers (proportionally controlled coil of a thermal storage tank, e-mobility) need to be filled in. Based on the entered values, the EMS control system will be configured and handed over.
+
+\ifthenelse{\equal{\kapitolaNastaveniOM}{1}}{
+    \section{Consumption Point Parameters}
+    \begin{enumerate}[label=\alph*)]
+        \item Nominal value of the \textbf{main circuit breaker}: \hfill $I_N =$ ............... [A]
+        \begin{itemize}
+            \item For MV, convert to equivalent: \hfill $I_{N-MV} =$ ............... [A]
+        \end{itemize}
+        \item Value of \textbf{reserved input} per connection agreement (SoP): \hfill ............... [kW]
+        \item Value of \textbf{reserved output} of the generation unit per SoP: \hfill ............... [kW]
+        \item Total \textbf{installed capacity} per SoP: \hfill ............... [kWp]
+        \item Permission to export power to the grid during trial operation: \hfill YES \quad NO
+        \begin{itemize}
+            \item Permitted export value: \hfill ............... [kW]
+        \end{itemize}
+    \end{enumerate}
+}
+
+
+\ifthenelse{\equal{\kapitolaNastaveniSPOT}{1}}{
+    \section{SPOT / SELL Parameters}
+    Electricity buy-out is realised according to prices:
+
+    \begin{enumerate}[label=\Alph*)]
+        \item SPOT - prices according to the OTE exchange.
+        \item FIX - fixed price agreed with the trader.
+    \end{enumerate}
+    \vskip.1in
+    \textbf{Selected electricity sell mode} \hfill ...............
+
+    \begin{enumerate}[label=\alph*)]
+        \item \textbf{SPOT}
+        \begin{itemize}
+            \item Transmission system usage fee: \hfill ............... [EUR / MWh]
+            \item VAT rate: \hfill ............... [\%]
+            \item Minimum profit: \hfill ............... [\%]
+            \item Disable grid export at negative SPOT prices: \hfill YES \quad NO
+        \end{itemize}
+
+        \item \textbf{FIX}
+        \begin{itemize}
+            \item Fixed selling price: \hfill ............... [EUR / MWh]
+            \item Transmission system usage fee: \hfill ............... [EUR / MWh]
+            \item VAT rate: \hfill ............... [\%]
+        \end{itemize}
+    \end{enumerate}
+
+    \section{SPOT / PURCHASE Parameters}
+    Electricity purchase is realised according to prices:
+
+    \begin{enumerate}[label=\Alph*)]
+        \item SPOT - prices according to the OTE exchange.
+        \item FIX - fixed price agreed with the trader.
+        \item SPOT+FIX - OTE exchange prices up to the agreed price cap.
+    \end{enumerate}
+    \vskip.1in
+    \textbf{Selected electricity purchase mode} \hfill ...............
+
+    \begin{enumerate}[label=\alph*)]
+        \item \textbf{SPOT}
+        \begin{itemize}
+            \item Costs at high tariff: \hfill ............... [EUR / MWh]
+            \item Costs at low tariff: \hfill ............... [EUR / MWh]
+            \item Daily costs: \hfill ............... [EUR / MWh]
+            \item VAT rate: \hfill ............... [\%]
+        \end{itemize}
+
+        \item \textbf{FIX}
+        \begin{itemize}
+            \item Fixed purchase price: \hfill ............... [EUR / MWh]
+            \item Costs at high tariff: \hfill ............... [EUR / MWh]
+            \item Costs at low tariff: \hfill ............... [EUR / MWh]
+            \item Daily costs: \hfill ............... [EUR / MWh]
+            \item VAT rate: \hfill ............... [\%]
+        \end{itemize}
+
+        \item \textbf{SPOT+FIX}
+        \begin{itemize}
+            \item Maximum purchase price: \hfill ............... [EUR / MWh]
+            \item Costs at high tariff: \hfill ............... [EUR / MWh]
+            \item Costs at low tariff: \hfill ............... [EUR / MWh]
+            \item Daily costs: \hfill ............... [EUR / MWh]
+            \item VAT rate: \hfill ............... [\%]
+        \end{itemize}
+    \end{enumerate}
+
+    \vskip.2in
+    \textbf{\textcolor{red}{!!! IMPORTANT:} if the battery will be charged from SPOT and the consumption point is billed according to the $1/4$h reserved capacity (RC), it is necessary to address the monitoring and control of $1/4$h power directly from the billing meter. If $1/4$h reserved capacity control from the billing meter is not used, the RC limit may be exceeded and the consumption point may be billed for exceeding the RC limit.}
+}
+
+
+\ifthenelse{\equal{\kapitolaNastaveniRezerovaneKapacity}{1}}{
+    \section{Parameters of Reserved Capacity $1/4$h Maximum}
+    \begin{enumerate}[label=\alph*)]
+        \item Reserved capacity $1/4$h maximum: \hfill ............... [kW]
+        \item Galvanic opto-isolator for pulse collection from the billing meter \newline installed and connected:  \hfill YES \quad NO
+        \item Galvanic opto-isolator connected to the $1/4$h maximum panel: \vspace{0\baselineskip}  \hfill YES \quad NO
+        \item $1/4$h maximum panel connected to EMS/CS panel: \vspace{0\baselineskip} \hfill YES \quad NO
+        \begin{itemize}
+            \item CIB address of AK.PULS element (C-AM-0006I): \hfill ...............
+        \end{itemize}
+        \item Pulse description:
+        \begin{itemize}
+            \item imp1 (AK.PULS/AI1): \hfill ...............
+            \item imp2 (AK.PULS/AI2): \hfill ...............
+            \item imp3 (AK.PULS/AI3): \hfill ...............
+        \end{itemize}
+        \item Control stages:
+        \begin{itemize}
+            \item Stage 1 – battery compensation: \hfill YES \quad NO
+            \item Stage 2 – device 1 shutdown: \hfill max. input ............... [kW]
+            \item Stage 3 – device 1 shutdown: \hfill max. input ............... [kW]
+            \item Stage 4 – device 1 shutdown: \hfill max. input ............... [kW]
+            \item Stage 5 – device 1 shutdown: \hfill max. input ............... [kW]
+            \item Additional stages must be addressed individually.
+        \end{itemize}
+    \end{enumerate}
+}
+
+
+
+\ifthenelse{\equal{\kapitolaNastaveniBaterie}{1}}{
+    \section{Battery Storage Settings}
+    The battery storage system can be operated in one of the following modes (combining modes always needs to be agreed individually, after verifying that the given technology supports the combination).
+
+    \begin{enumerate}[label=\Alph*)]
+        \item \textbf{Self-consumption}: charging from PV surplus and consumption compensation.
+        \item \textbf{Peak-shaving}: trimming/levelling power peaks (standard consumption is not compensated).
+        \item \textbf{SPOT}: charging and compensation based on SPOT prices (does not handle power peak balancing).
+    \end{enumerate}
+
+    \vskip.2in
+    \textbf{Selected battery storage control mode} \hfill ...............
+
+}
+
+
+\ifthenelse{\equal{\kapitolaNastaveniZdrojuEMS}{1}}{
+    \section{EMS Source Settings for SPOT}
+    Control of PV sources, battery storage or other EMS sources. If a source, such as a battery, will not be operated in SPOT mode, do not fill in this section.
+
+    \begin{enumerate}[label=\alph*)]
+        \item Enable EMS control according to SPOT: \hfill YES \quad NO
+        \item Battery storage:
+        \begin{itemize}
+            \item Enable battery discharge to the grid according to SPOT: \hfill YES \quad NO
+            \item Battery amortisation when using SPOT: \hfill ............... [EUR / MWh]
+            \item Battery storage losses: \hfill ............... [\%]
+        \end{itemize}
+        \item Are additional sources installed in EMS/CS?\footnote{For example, cogeneration units or diesel generators. Describe these sources in the notes below.} \hfill YES \quad NO
+    \end{enumerate}
+
+    Notes:
+    \begin{center}
+        \vskip.2in
+        ............................................................................................................
+        \vskip.2in
+        ............................................................................................................
+        \vskip.2in
+        ............................................................................................................
+        \vskip.2in
+        ............................................................................................................
+        \vskip.2in
+        ............................................................................................................
+        \vskip.2in
+        ............................................................................................................
+        \vskip.2in
+    \end{center}
+}
+
+\setcounter{chapter}{3}
+\setcounter{section}{0}
+\chapter*{Supporting Documents for Checklist}
+
+\section{Mandatory Attachments}
+    \begin{enumerate}[label=\alph*)]
+        \item Photo documentation of control unit displays (IC numbers). \hfill $\square$
+        \item Photo documentation of nameplates of controlled technologies as listed above. \hfill $\square$
+        \item Technical data sheets for the technologies used. \hfill $\square$
+        
+        \ifthenelse{\equal{\novyDriverZarizeni}{1}}{
+        \item Modbus register table according to the currently installed firmware \newline and interface type (TCP/RTU).\footnote{Only if the installed technologies include a device that is not supported by the EMS/CS system and a new driver needs to be programmed.} \hfill $\square$
+        }
+        
+        \item Panel documentation with the implemented signals and commands marked, \newline including any recorded changes. \hfill $\square$
+        \item As-built project documentation:
+        \begin{itemize}
+            \item Single-line diagram showing the complete affected technology \newline and affected panels (incl. elements per the telemetry table). \hfill $\square$
+            \item Site layout diagram showing the location of affected \newline technologies and panels. \hfill $\square$
+        \end{itemize}
+        \item Connection agreement in its current version, including appendices and amendments. \hfill $\square$
+        \item Screenshot (photo of screen) from the distribution portal showing the contracted \newline values of reserved input, output, and capacity. \hfill $\square$
+    \end{enumerate}
+    \label{podkladyProChecklist}
+
+    \textbf{By signing, I confirm the accuracy of the information provided and the verifications carried out. I acknowledge that if any discrepancy is found during configuration and functional testing, the resolution of such discrepancy will be handled by EnergoStation s.r.o. as additional work charged at the hourly rate from the current price list.}
+
+    \vskip0.2in
+    \begin{tabbing}
+	\hspace{0em} \= In .............................................  \hspace{6em} \= on: ............................................. \\[0.5cm]
+	\> Checklist completed by (legibly):   \> Company:  \\[0.5cm]
+    \> .............................................   \> .............................................  \\[1.5cm]
+	\>   \> .............................................  \\[0.2cm]
+	\hspace{25em} \= \textbf{SIGNATURE} \\
+	\end{tabbing}

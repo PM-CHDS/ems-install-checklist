@@ -1,0 +1,51 @@
+# Checklist-level metadata. The section files listed under `sections` hold the fields.
+slug: rtu-ems
+version: 7
+title_cs: "Checklist instalace RTU / EMS"
+title_en: "RTU / EMS Installation Checklist"
+subtitle_cs: "Instalace rozvaděčů EMS a dispečerského řízení"
+subtitle_en: "Installation of EMS and dispatch-control switchboards"
+source_document: "Checklist_Instalace_RTU-EMS_v7.docx"
+author_org: "EnergoStation s.r.o."
+default_language: cs
+
+submission_contact:
+  email: projekty@energostation.com
+  person: "Ing. Hynek Bačík"
+  phone: "+420 737 547 189"
+  person_email: hynek.bacik@energostation.com
+
+# Order matters — this is the order of steps in the web form.
+sections:
+  - file: _cover.md
+    id: cover
+    title_cs: "Základní údaje"
+    title_en: "Basic information"
+  - file: 01-elektroinstalace.md
+    id: elektroinstalace
+    title_cs: "1. Elektroinstalační práce"
+    title_en: "1. Electrical installation works"
+  - file: 02-elektromery.md
+    id: elektromery
+    title_cs: "2. Elektroměry"
+    title_en: "2. Electricity meters"
+  - file: 03-parametrizace-komunikace.md
+    id: parametrizace
+    title_cs: "3. Parametrizace a komunikace"
+    title_en: "3. Parametrization and communication"
+  - file: 04-technologie.md
+    id: technologie
+    title_cs: "4. Technologie"
+    title_en: "4. Technology"
+  - file: 05-nastaveni-systemu.md
+    id: nastaveni
+    title_cs: "5. Nastavení systému"
+    title_en: "5. System settings"
+  - file: 06-dodane-podklady.md
+    id: podklady
+    title_cs: "6. Dodané podklady a podpis"
+    title_en: "6. Supplied documents and sign-off"
+  - file: 07-poznamky.md
+    id: poznamky
+    title_cs: "7. Poznámky"
+    title_en: "7. Notes"

@@ -1,0 +1,108 @@
+%\documentclass[10pt,a4paper]{article}
+\documentclass{book}
+\usepackage{a4}
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{subcaption}
+\usepackage{gensymb}
+\usepackage{pdfpages}
+\usepackage{float}
+\usepackage{subfiles}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{amssymb}
+%podminene formatovani
+\usepackage{ifthen}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[top=2cm, headheight=25pt]{geometry} % Adjust headheight
+
+\usepackage{tikz}
+\usetikzlibrary{calligraphy}
+
+\newcommand{\mycheckbox}{\large\color{black!80}$\Box$}
+
+
+% HODNOTA "1" ZNACI TISTKNOUT KAPITOLU, HODNOTA "0" KAPITOLU PRESKOCI
+
+%tisknuti kapitoly elektroinstalacni prace
+\newcommand{\kapitolaElektroinstalacniPrace}{1}
+\newcommand{\rozvadecFullSVyhrivanim}{1}
+
+%tisknuti casti v kapitole elektromery
+\newcommand{\kapitolaElektromery}{1}
+\newcommand{\elektromerSMLvRozvadeci}{1}
+\newcommand{\kapitolaParametrizaceKomunikace}{1}
+
+%tisknuti casti v kapitole technologie
+\newcommand{\kapitolaTechnologie}{1}
+\newcommand{\kapitolaTechnologieStridaceRTU}{1}
+\newcommand{\kapitolaTechnologieStridaceTCP}{1}
+\newcommand{\kapitolaTechnologieStridaceLogger}{1}
+\newcommand{\kapitolaTechnologieBaterie}{1}
+\newcommand{\kapitolaTechnologieBaterieEMS}{0}
+
+%tisknuti kapitoly o meteostanici
+\newcommand{\kapitolaMeteostanice}{1}
+
+%tisknuti kapitoly o kompenzaci
+\newcommand{\kapitolaKompenzace}{1}
+
+%tisknuti kapitoly o nastavení systému
+%parametry OM
+\newcommand{\kapitolaNastaveniOM}{1}
+
+%tisknuti casti o nastaveni spotu
+\newcommand{\kapitolaNastaveniSPOT}{0}
+
+%tiskuti casti o 1/4hodine
+\newcommand{\kapitolaNastaveniRezerovaneKapacity}{0}
+
+%tisknuti informaci o chování baterie
+\newcommand{\kapitolaNastaveniBaterie}{0}
+
+%tisknuti casti o nastaveni zdroju EMS
+\newcommand{\kapitolaNastaveniZdrojuEMS}{0}
+
+%tisknuti casti v podkladech
+\newcommand{\novyDriverZarizeni}{1}
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{} % Clear header/footer
+\rhead{\includegraphics[height=20pt]{img/logo.png}} % Right header
+\lhead{Návod k checklistu instalace EMS/DŘ} % Left header
+\renewcommand{\headrulewidth}{0.4pt} % Optional rule
+
+\begin{titlepage}
+\begin{flushright}
+\includegraphics[width=0.35\linewidth]{img/logo.png}
+\end{flushright}
+\vskip.1in
+\begin{center}
+  \bfseries
+  \huge NÁVOD K CHECKLISTU EMS/DŘ
+  \newline
+  \huge DŘ / BASIC
+  \vskip.1in
+\end{center}
+
+\vskip.5in
+\centering
+\bfseries
+\Large Vydáno \the\year
+
+
+\end{titlepage}
+
+\tableofcontents
+
+%\subfile{checklist.tex}
+
+	
+\subfile{navod.tex}
+	
+\end{document}

@@ -1,0 +1,948 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.1) (preloaded format=pdflatex 2026.4.1)  9 APR 2026 13:01
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**./checklist-ems-rtu-navod.tex
+(checklist-ems-rtu-navod.tex
+LaTeX2e <2025-11-01>
+L3 programming layer <2026-01-19>
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/bas
+e/book.cls
+Document Class: book 2025/01/22 v1.4n Standard LaTeX document class
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/bas
+e/bk10.clo
+File: bk10.clo 2025/01/22 v1.4n Standard LaTeX file (size option)
+)
+\c@part=\count275
+\c@chapter=\count276
+\c@section=\count277
+\c@subsection=\count278
+\c@subsubsection=\count279
+\c@paragraph=\count280
+\c@subparagraph=\count281
+\c@figure=\count282
+\c@table=\count283
+\abovecaptionskip=\skip49
+\belowcaptionskip=\skip50
+\bibindent=\dimen148
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/ntg
+class/a4.sty
+Package: a4 2025/12/29 v1.2g A4 based page layout
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/b
+abel/babel.sty
+Package: babel 2026/03/24 v26.5 The multilingual framework for LuaLaTeX, pdfLaT
+eX and XeLaTeX
+\babel@savecnt=\count284
+LaTeX Encoding Info:    Redeclaring text command \ij (encoding OT1) on input li
+ne 2078.
+LaTeX Encoding Info:    Redeclaring text command \IJ (encoding OT1) on input li
+ne 2080.
+LaTeX Encoding Info:    Redeclaring text command \ij (encoding T1) on input lin
+e 2082.
+LaTeX Encoding Info:    Redeclaring text command \IJ (encoding T1) on input lin
+e 2083.
+LaTeX Encoding Info:    Ignoring declaration for text command \ij (encoding ?) 
+on input line 2084.
+LaTeX Encoding Info:    Ignoring declaration for text command \IJ (encoding ?) 
+on input line 2086.
+LaTeX Encoding Info:    Ignoring declaration for text command \SS (encoding ?) 
+on input line 2111.
+\U@D=\dimen149
+\l@unhyphenated=\language79
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/b
+abel/txtbabel.def)
+\bbl@readstream=\read2
+\bbl@dirlevel=\count285
+Package babel Info: Configuration files are deprecated, as
+(babel)             they can break document portability.
+(babel)             Reported on input line 4206.
+
+*************************************
+* Local config file bblopts.cfg used
+*
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/ara
+bi/bblopts.cfg
+File: bblopts.cfg 2005/09/08 v0.1 add Arabic and Farsi to "declared" options of
+ babel
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/b
+abel/locale/cs/babel-czech.tex)
+Package babel Info: Importing font and identification data for czech
+(babel)             from babel-cs.ini. Reported on input line 4330.
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/bab
+el-czech/czech.ldf
+Language: czech 2008/07/06 v3.1a Czech support from the babel system
+Package babel Info: Making " an active character on input line 172.
+\cs@wordlen=\count286
+Package babel Info: Making - an active character on input line 226.
+))
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/bas
+e/inputenc.sty
+Package: inputenc 2024/02/08 v1.3d Input encoding file
+\inpenc@prehook=\toks17
+\inpenc@posthook=\toks18
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/bas
+e/fontenc.sty
+Package: fontenc 2025/07/18 v2.1d Standard LaTeX package
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/bas
+e/textcomp.sty
+Package: textcomp 2024/04/24 v2.1b Standard LaTeX package
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/cap
+tion/subcaption.sty
+Package: subcaption 2023/07/28 v1.6b Sub-captions (AR)
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/cap
+tion/caption.sty
+Package: caption 2023/08/05 v3.6o Customizing captions (AR)
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/cap
+tion/caption3.sty
+Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/gra
+phics/keyval.sty
+Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
+\KV@toks@=\toks19
+)
+\caption@tempdima=\dimen150
+\captionmargin=\dimen151
+\caption@leftmargin=\dimen152
+\caption@rightmargin=\dimen153
+\caption@width=\dimen154
+\caption@indent=\dimen155
+\caption@parindent=\dimen156
+\caption@hangindent=\dimen157
+Package caption Info: Standard document class detected.
+)
+\c@caption@flags=\count287
+\c@continuedfloat=\count288
+)
+Package caption Info: New subtype `subfigure' on input line 238.
+\c@subfigure=\count289
+Package caption Info: New subtype `subtable' on input line 238.
+\c@subtable=\count290
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/gen
+symb/gensymb.sty
+Package: gensymb 2022/10/17 v1.0.2 (KJH)
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/pdf
+pages/pdfpages.sty
+Package: pdfpages 2025/07/23 v0.6g Insert pages of external PDF documents (AM)
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/bas
+e/ifthen.sty
+Package: ifthen 2024/03/16 v1.1e Standard LaTeX ifthen package (DPC)
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/too
+ls/calc.sty
+Package: calc 2025/03/01 v4.3b Infix arithmetic (KKT,FJ)
+\calc@Acount=\count291
+\calc@Bcount=\count292
+\calc@Adimen=\dimen158
+\calc@Bdimen=\dimen159
+\calc@Askip=\skip51
+\calc@Bskip=\skip52
+LaTeX Info: Redefining \setlength on input line 86.
+LaTeX Info: Redefining \addtolength on input line 87.
+\calc@Ccount=\count293
+\calc@Cskip=\skip53
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/eso
+-pic/eso-pic.sty
+Package: eso-pic 2025/12/10 v3.0d eso-pic (RN)
+\ESO@tempdima=\dimen160
+\ESO@tempdimb=\dimen161
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/xco
+lor/xcolor.sty
+Package: xcolor 2024/09/29 v3.02 LaTeX color extensions (UK)
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/gra
+phics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: pdftex.def on input line 274.
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/gra
+phics-def/pdftex.def
+File: pdftex.def 2025/09/29 v1.2d Graphics/color driver for pdftex
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/gra
+phics/mathcolor.ltx)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1349.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1353.
+Package xcolor Info: Model `RGB' extended on input line 1365.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1367.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1370.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1371.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1372.
+))
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/eto
+olbox/etoolbox.sty
+Package: etoolbox 2025/10/02 v2.5m e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count294
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/gra
+phics/graphicx.sty
+Package: graphicx 2024/12/31 v1.2e Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/gra
+phics/graphics.sty
+Package: graphics 2024/08/06 v1.4g Standard LaTeX Graphics (DPC,SPQR)
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/gra
+phics/trig.sty
+Package: trig 2023/12/02 v1.11 sin cos tan (DPC)
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/gra
+phics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 106.
+)
+\Gin@req@height=\dimen162
+\Gin@req@width=\dimen163
+)
+\AM@pagewidth=\dimen164
+\AM@pageheight=\dimen165
+\AM@fboxrule=\dimen166
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/pdf
+pages/pppdftex.def
+File: pppdftex.def 2025/07/23 v0.6g Pdfpages driver for pdfTeX (AM)
+)
+\pdfpages@includegraphics@status=\count295
+\AM@pagebox=\box53
+\AM@global@opts=\toks20
+\AM@pagecnt=\count296
+\AM@toc@title=\toks21
+\AM@lof@heading=\toks22
+\c@AM@survey=\count297
+\AM@templatesizebox=\box54
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/flo
+at/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count298
+\float@exts=\toks23
+\float@box=\box55
+\@float@everytoks=\toks24
+\@floatcapt=\box56
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/sub
+files/subfiles.sty
+Package: subfiles 2020/11/14 v2.2 Multi-file projects (package)
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/imp
+ort/import.sty
+Package: import 2020/04/01  v 6.2
+))
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/enu
+mitem/enumitem.sty
+Package: enumitem 2025/02/06 v3.11 Customized lists
+\labelindent=\skip54
+\enit@outerparindent=\dimen167
+\enit@toks=\toks25
+\enit@inbox=\box57
+\enit@count@id=\count299
+\enitdp@description=\count300
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/ams
+fonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/ams
+fonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\@emptytoks=\toks26
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+))
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/too
+ls/array.sty
+Package: array 2025/09/25 v2.6n Tabular extension package (FMi)
+\col@sep=\dimen168
+\ar@mcellbox=\box58
+\extrarowheight=\dimen169
+\NC@list=\toks27
+\extratabsurround=\skip55
+\backup@length=\skip56
+\ar@cellbox=\box59
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/fan
+cyhdr/fancyhdr.sty
+Package: fancyhdr 2025/02/07 v5.2 Extensive control of page headers and footers
+
+\f@nch@headwidth=\skip57
+\f@nch@offset@elh=\skip58
+\f@nch@offset@erh=\skip59
+\f@nch@offset@olh=\skip60
+\f@nch@offset@orh=\skip61
+\f@nch@offset@elf=\skip62
+\f@nch@offset@erf=\skip63
+\f@nch@offset@olf=\skip64
+\f@nch@offset@orf=\skip65
+\f@nch@height=\skip66
+\f@nch@footalignment=\skip67
+\f@nch@widthL=\skip68
+\f@nch@widthC=\skip69
+\f@nch@widthR=\skip70
+\@temptokenb=\toks28
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/geo
+metry/geometry.sty
+Package: geometry 2026/03/07 v6.0 Page Geometry
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/i
+ftex/ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/i
+ftex/iftex.sty
+Package: iftex 2024/12/12 v1.0g TeX engine tests
+))
+\Gm@cnth=\count301
+\Gm@cntv=\count302
+\c@Gm@tempcnt=\count303
+\Gm@bindingoffset=\dimen170
+\Gm@wd@mp=\dimen171
+\Gm@odd@mp=\dimen172
+\Gm@even@mp=\dimen173
+\Gm@layoutwidth=\dimen174
+\Gm@layoutheight=\dimen175
+\Gm@layouthoffset=\dimen176
+\Gm@layoutvoffset=\dimen177
+\Gm@dimlist=\toks29
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/geo
+metry/geometry.cfg))
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/pgf
+/frontendlayer/tikz.sty
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/pgf
+/basiclayer/pgf.sty
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/pgf
+/utilities/pgfrcs.sty
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/utilities/pgfutil-common.tex
+\pgfutil@everybye=\toks30
+\pgfutil@tempdima=\dimen178
+\pgfutil@tempdimb=\dimen179
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/utilities/pgfutil-latex.def
+\pgfutil@abb=\box60
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/utilities/pgfrcs.code.tex
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/pgf.revision.tex)
+Package: pgfrcs 2025-08-29 v3.1.11a (3.1.11a)
+))
+Package: pgf 2025-08-29 v3.1.11a (3.1.11a)
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/pgf
+/basiclayer/pgfcore.sty
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/pgf
+/systemlayer/pgfsys.sty
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/systemlayer/pgfsys.code.tex
+Package: pgfsys 2025-08-29 v3.1.11a (3.1.11a)
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/utilities/pgfkeys.code.tex
+\pgfkeys@pathtoks=\toks31
+\pgfkeys@temptoks=\toks32
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/utilities/pgfkeyslibraryfiltered.code.tex
+\pgfkeys@tmptoks=\toks33
+))
+\pgf@x=\dimen180
+\pgf@y=\dimen181
+\pgf@xa=\dimen182
+\pgf@ya=\dimen183
+\pgf@xb=\dimen184
+\pgf@yb=\dimen185
+\pgf@xc=\dimen186
+\pgf@yc=\dimen187
+\pgf@xd=\dimen188
+\pgf@yd=\dimen189
+\w@pgf@writea=\write3
+\r@pgf@reada=\read3
+\c@pgf@counta=\count304
+\c@pgf@countb=\count305
+\c@pgf@countc=\count306
+\c@pgf@countd=\count307
+\t@pgf@toka=\toks34
+\t@pgf@tokb=\toks35
+\t@pgf@tokc=\toks36
+\pgf@sys@id@count=\count308
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/systemlayer/pgf.cfg
+File: pgf.cfg 2025-08-29 v3.1.11a (3.1.11a)
+)
+Driver file for pgf: pgfsys-pdftex.def
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/systemlayer/pgfsys-pdftex.def
+File: pgfsys-pdftex.def 2025-08-29 v3.1.11a (3.1.11a)
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/systemlayer/pgfsys-common-pdf.def
+File: pgfsys-common-pdf.def 2025-08-29 v3.1.11a (3.1.11a)
+)))
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/systemlayer/pgfsyssoftpath.code.tex
+File: pgfsyssoftpath.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfsyssoftpath@smallbuffer@items=\count309
+\pgfsyssoftpath@bigbuffer@items=\count310
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/systemlayer/pgfsysprotocol.code.tex
+File: pgfsysprotocol.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+))
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/basiclayer/pgfcore.code.tex
+Package: pgfcore 2025-08-29 v3.1.11a (3.1.11a)
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/math/pgfmath.code.tex
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/math/pgfmathutil.code.tex)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/math/pgfmathparser.code.tex
+\pgfmath@dimen=\dimen190
+\pgfmath@count=\count311
+\pgfmath@box=\box61
+\pgfmath@toks=\toks37
+\pgfmath@stack@operand=\toks38
+\pgfmath@stack@operation=\toks39
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/math/pgfmathfunctions.code.tex)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/math/pgfmathfunctions.basic.code.tex)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/math/pgfmathfunctions.trigonometric.code.tex)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/math/pgfmathfunctions.random.code.tex)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/math/pgfmathfunctions.comparison.code.tex)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/math/pgfmathfunctions.base.code.tex)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/math/pgfmathfunctions.round.code.tex)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/math/pgfmathfunctions.misc.code.tex)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/math/pgfmathfunctions.integerarithmetics.code.tex)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/math/pgfmathcalc.code.tex)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/math/pgfmathfloat.code.tex
+\c@pgfmathroundto@lastzeros=\count312
+))
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/math/pgfint.code.tex)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/basiclayer/pgfcorepoints.code.tex
+File: pgfcorepoints.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@picminx=\dimen191
+\pgf@picmaxx=\dimen192
+\pgf@picminy=\dimen193
+\pgf@picmaxy=\dimen194
+\pgf@pathminx=\dimen195
+\pgf@pathmaxx=\dimen196
+\pgf@pathminy=\dimen197
+\pgf@pathmaxy=\dimen198
+\pgf@xx=\dimen199
+\pgf@xy=\dimen256
+\pgf@yx=\dimen257
+\pgf@yy=\dimen258
+\pgf@zx=\dimen259
+\pgf@zy=\dimen260
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/basiclayer/pgfcorepathconstruct.code.tex
+File: pgfcorepathconstruct.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@path@lastx=\dimen261
+\pgf@path@lasty=\dimen262
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/basiclayer/pgfcorepathusage.code.tex
+File: pgfcorepathusage.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@shorten@end@additional=\dimen263
+\pgf@shorten@start@additional=\dimen264
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/basiclayer/pgfcorescopes.code.tex
+File: pgfcorescopes.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfpic=\box62
+\pgf@hbox=\box63
+\pgf@layerbox@main=\box64
+\pgf@picture@serial@count=\count313
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/basiclayer/pgfcoregraphicstate.code.tex
+File: pgfcoregraphicstate.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgflinewidth=\dimen265
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/basiclayer/pgfcoretransformations.code.tex
+File: pgfcoretransformations.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@pt@x=\dimen266
+\pgf@pt@y=\dimen267
+\pgf@pt@temp=\dimen268
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/basiclayer/pgfcorequick.code.tex
+File: pgfcorequick.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/basiclayer/pgfcoreobjects.code.tex
+File: pgfcoreobjects.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/basiclayer/pgfcorepathprocessing.code.tex
+File: pgfcorepathprocessing.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/basiclayer/pgfcorearrows.code.tex
+File: pgfcorearrows.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfarrowsep=\dimen269
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/basiclayer/pgfcoreshade.code.tex
+File: pgfcoreshade.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@max=\dimen270
+\pgf@sys@shading@range@num=\count314
+\pgf@shadingcount=\count315
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/basiclayer/pgfcoreimage.code.tex
+File: pgfcoreimage.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/basiclayer/pgfcoreexternal.code.tex
+File: pgfcoreexternal.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfexternal@startupbox=\box65
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/basiclayer/pgfcorelayers.code.tex
+File: pgfcorelayers.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/basiclayer/pgfcoretransparency.code.tex
+File: pgfcoretransparency.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/basiclayer/pgfcorepatterns.code.tex
+File: pgfcorepatterns.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/basiclayer/pgfcorerdf.code.tex
+File: pgfcorerdf.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)))
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/modules/pgfmoduleshapes.code.tex
+File: pgfmoduleshapes.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfnodeparttextbox=\box66
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/modules/pgfmoduleplot.code.tex
+File: pgfmoduleplot.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/pgf
+/compatibility/pgfcomp-version-0-65.sty
+Package: pgfcomp-version-0-65 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@nodesepstart=\dimen271
+\pgf@nodesepend=\dimen272
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/pgf
+/compatibility/pgfcomp-version-1-18.sty
+Package: pgfcomp-version-1-18 2025-08-29 v3.1.11a (3.1.11a)
+))
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/pgf
+/utilities/pgffor.sty
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/pgf
+/utilities/pgfkeys.sty
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/utilities/pgfkeys.code.tex))
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/pgf
+/math/pgfmath.sty
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/math/pgfmath.code.tex))
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/utilities/pgffor.code.tex
+Package: pgffor 2025-08-29 v3.1.11a (3.1.11a)
+\pgffor@iter=\dimen273
+\pgffor@skip=\dimen274
+\pgffor@stack=\toks40
+\pgffor@toks=\toks41
+))
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/frontendlayer/tikz/tikz.code.tex
+Package: tikz 2025-08-29 v3.1.11a (3.1.11a)
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/libraries/pgflibraryplothandlers.code.tex
+File: pgflibraryplothandlers.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgf@plot@mark@count=\count316
+\pgfplotmarksize=\dimen275
+)
+\tikz@lastx=\dimen276
+\tikz@lasty=\dimen277
+\tikz@lastxsaved=\dimen278
+\tikz@lastysaved=\dimen279
+\tikz@lastmovetox=\dimen280
+\tikz@lastmovetoy=\dimen281
+\tikzleveldistance=\dimen282
+\tikzsiblingdistance=\dimen283
+\tikz@figbox=\box67
+\tikz@figbox@bg=\box68
+\tikz@tempbox=\box69
+\tikz@tempbox@bg=\box70
+\tikztreelevel=\count317
+\tikznumberofchildren=\count318
+\tikznumberofcurrentchild=\count319
+\tikz@fig@count=\count320
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/modules/pgfmodulematrix.code.tex
+File: pgfmodulematrix.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+\pgfmatrixcurrentrow=\count321
+\pgfmatrixcurrentcolumn=\count322
+\pgf@matrix@numberofcolumns=\count323
+)
+\tikz@expandcount=\count324
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/generic/p
+gf/frontendlayer/tikz/libraries/tikzlibrarytopaths.code.tex
+File: tikzlibrarytopaths.code.tex 2025-08-29 v3.1.11a (3.1.11a)
+)))
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/spa
+th3/tikzlibrarycalligraphy.code.tex
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/spa
+th3/spath3.sty
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/l3k
+ernel/expl3.sty
+Package: expl3 2026-01-19 L3 programming layer (loader) 
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/l3b
+ackend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count325
+))
+Package: spath3 2024/05/31 v2.8 Functions for manipulating PGF soft paths
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/l3p
+ackages/xparse/xparse.sty
+Package: xparse 2025-10-09 L3 Experimental document command parser
+)
+\g__spath_output_int=\count326
+\l__spath_tmpa_dim=\dimen284
+\l__spath_tmpb_dim=\dimen285
+\l__spath_tmpa_int=\count327
+\l__spath_tmpb_int=\count328
+\l__spath_move_x_dim=\dimen286
+\l__spath_move_y_dim=\dimen287
+\l__spath_rectx_dim=\dimen288
+\l__spath_recty_dim=\dimen289
+\g__spath_anon_int=\count329
+)
+\l__cal_tmpa_int=\count330
+\l__cal_tmpb_int=\count331
+\g__cal_path_component_int=\count332
+\g__cal_label_int=\count333
+\l__cal_tmpa_dim=\dimen290
+\l__cal_tmpb_dim=\dimen291
+\l__cal_tmpc_dim=\dimen292
+\l__cal_tmpd_dim=\dimen293
+\l__cal_tmpe_dim=\dimen294
+\l__cal_tmpf_dim=\dimen295
+\l__cal_tmpg_dim=\dimen296
+\l__cal_tmph_dim=\dimen297
+\l__cal_taper_width_dim=\dimen298
+\l__cal_line_width_dim=\dimen299
+) (checklist-ems-rtu-navod.aux
+Package babel Info: 'czech' activates 'czech' shorthands.
+(babel)             Reported on input line 6.
+)
+\openout1 = `checklist-ems-rtu-navod.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: float package is loaded.
+Package caption Info: End \AtBeginDocument code.
+\symgns@font=\mathgroup6
+LaTeX Font Info:    Overwriting symbol font `gns@font' in version `bold'
+(Font)                  TS1/cmr/m/n --> TS1/cmr/b/n on input line 72.
+Package gensymb Info: Math companion symbols declared on input line 72.
+LaTeX Info: Redefining \degree on input line 72.
+LaTeX Info: Redefining \celsius on input line 72.
+Package gensymb Info: Using text companion symbols for \degree, \celsius and \p
+erthousand on input line 72.
+LaTeX Info: Redefining \ohm on input line 72.
+Package gensymb Info: Using \textohm for \ohm on input line 72.
+Package gensymb Info: Using \textmu for \micro on input line 72.
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/context/b
+ase/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count334
+\scratchdimen=\dimen300
+\scratchbox=\box71
+\nofMPsegments=\count335
+\nofMParguments=\count336
+\everyMPshowfont=\toks42
+\MPscratchCnt=\count337
+\MPscratchDim=\dimen301
+\MPnumerator=\count338
+\makeMPintoPDFobject=\count339
+\everyMPtoPDFconversion=\toks43
+)
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/eps
+topdf-pkg/epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/00m
+iktex/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
+))
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/pdf
+lscape/pdflscape.sty
+Package: pdflscape 2022-10-27 v0.13 Display of landscape pages in PDF
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/pdf
+lscape/pdflscape-nometadata.sty
+Package: pdflscape-nometadata 2022-10-28 v0.13 Display of landscape pages in PD
+F (HO)
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/gra
+phics/lscape.sty
+Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
+)
+Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
+))
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: <default>
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: twoside 
+* h-part:(L,W,R)=(73.71613pt, 430.00462pt, 110.57425pt)
+* v-part:(T,H,B)=(56.9055pt, 642.66711pt, 95.39737pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=430.00462pt
+* \textheight=642.66711pt
+* \oddsidemargin=1.44614pt
+* \evensidemargin=38.30426pt
+* \topmargin=-58.43198pt
+* \headheight=25.0pt
+* \headsep=18.06749pt
+* \topskip=10.0pt
+* \footskip=25.29494pt
+* \marginparwidth=72.26999pt
+* \marginparsep=7.0pt
+* \columnsep=10.0pt
+* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidetrue
+* \@mparswitchtrue
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+<img/logo.png, id=4, 108.405pt x 43.16125pt>
+File: img/logo.png Graphic file (type png)
+<use img/logo.png>
+Package pdftex.def Info: img/logo.png  used on input line 82.
+(pdftex.def)             Requested size: 150.50424pt x 59.93071pt.
+
+
+[1
+
+
+{/Users/macbook/Library/Application Support/MiKTeX/texmfs/data/fonts/map/pdftex
+/pdftex.map} <./img/logo.png>]
+
+File: img/logo.png Graphic file (type png)
+<use img/logo.png>
+Package pdftex.def Info: img/logo.png  used on input line 101.
+(pdftex.def)             Requested size: 50.23245pt x 20.0pt.
+[2
+
+] (checklist-ems-rtu-navod.toc
+LaTeX Font Info:    Trying to load font information for U+msa on input line 2.
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/ams
+fonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 2.
+
+(/Users/macbook/Library/Application Support/MiKTeX/texmfs/install/tex/latex/ams
+fonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+))
+\tf@toc=\write4
+\openout4 = `checklist-ems-rtu-navod.toc'.
+
+ (navod.tex
+
+[3]
+
+File: img/logo.png Graphic file (type png)
+<use img/logo.png>
+Package pdftex.def Info: img/logo.png  used on input line 2.
+(pdftex.def)             Requested size: 50.23245pt x 20.0pt.
+[4
+
+]
+
+[5]
+<img/navod/mtp.png, id=30, 189.70876pt x 254.9525pt>
+File: img/navod/mtp.png Graphic file (type png)
+<use img/navod/mtp.png>
+Package pdftex.def Info: img/navod/mtp.png  used on input line 83.
+(pdftex.def)             Requested size: 182.25081pt x 244.93443pt.
+
+Underfull \hbox (badness 1194) in paragraph at lines 83--83
+[]\T1/cmr/m/n/10 Obr^^e1zek 1.1: |Za-po-jen^^ed po-lo-p^^b0^^ed-m^^e9ho m^^a5-^
+^b0en^^ed
+ []
+
+<img/navod/mtn.png, id=31, 175.65625pt x 245.91875pt>
+File: img/navod/mtn.png Graphic file (type png)
+<use img/navod/mtn.png>
+Package pdftex.def Info: img/navod/mtn.png  used on input line 83.
+(pdftex.def)             Requested size: 182.25081pt x 255.17159pt.
+
+Overfull \hbox (2.22166pt too wide) in paragraph at lines 83--83
+[]$[]$ $[]$ 
+ []
+
+<img/navod/nastavenimtp.png, id=32, 283.0575pt x 316.18124pt>
+File: img/navod/nastavenimtp.png Graphic file (type png)
+<use img/navod/nastavenimtp.png>
+Package pdftex.def Info: img/navod/nastavenimtp.png  used on input line 83.
+(pdftex.def)             Requested size: 383.0046pt x 427.8587pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+File: img/logo.png Graphic file (type png)
+<use img/logo.png>
+Package pdftex.def Info: img/logo.png  used on input line 83.
+(pdftex.def)             Requested size: 50.23245pt x 20.0pt.
+[6 <./img/navod/mtp.png> <./img/navod/mtn.png>]
+<img/navod/nastavenip0105.png, id=38, 316.18124pt x 132.495pt>
+File: img/navod/nastavenip0105.png Graphic file (type png)
+<use img/navod/nastavenip0105.png>
+Package pdftex.def Info: img/navod/nastavenip0105.png  used on input line 83.
+(pdftex.def)             Requested size: 383.0046pt x 160.50745pt.
+
+
+File: img/logo.png Graphic file (type png)
+<use img/logo.png>
+Package pdftex.def Info: img/logo.png  used on input line 83.
+(pdftex.def)             Requested size: 50.23245pt x 20.0pt.
+[7 <./img/navod/nastavenimtp.png> <./img/navod/nastavenip0105.png>]
+<img/navod/plc.jpg, id=45, 701.62125pt x 395.4775pt>
+File: img/navod/plc.jpg Graphic file (type jpg)
+<use img/navod/plc.jpg>
+Package pdftex.def Info: img/navod/plc.jpg  used on input line 98.
+(pdftex.def)             Requested size: 202.50229pt x 114.14243pt.
+
+
+File: img/logo.png Graphic file (type png)
+<use img/logo.png>
+Package pdftex.def Info: img/logo.png  used on input line 160.
+(pdftex.def)             Requested size: 50.23245pt x 20.0pt.
+[8 <./img/navod/plc.jpg>]
+
+File: img/logo.png Graphic file (type png)
+<use img/logo.png>
+Package pdftex.def Info: img/logo.png  used on input line 161.
+(pdftex.def)             Requested size: 50.23245pt x 20.0pt.
+[9]
+
+File: img/logo.png Graphic file (type png)
+<use img/logo.png>
+Package pdftex.def Info: img/logo.png  used on input line 182.
+(pdftex.def)             Requested size: 50.23245pt x 20.0pt.
+[10])
+
+[11
+
+] (checklist-ems-rtu-navod.aux)
+ ***********
+LaTeX2e <2025-11-01>
+L3 programming layer <2026-01-19>
+ ***********
+ ) 
+Here is how much of TeX's memory you used:
+ 19286 strings out of 467870
+ 391098 string characters out of 5408760
+ 773822 words of memory out of 5000000
+ 47830 multiletter control sequences out of 15000+600000
+ 637379 words of font info for 60 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 84i,15n,94p,782b,708s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ </Users/macbook/Library/Application Support/MiKTeX/texmfs/data/fonts/pk/ljfo
+ur/jknappen/ec/dpi600/ecbx1200.pk> </Users/macbook/Library/Application Support/
+MiKTeX/texmfs/data/fonts/pk/ljfour/jknappen/ec/dpi600/ecbx1000.pk> </Users/macb
+ook/Library/Application Support/MiKTeX/texmfs/data/fonts/pk/ljfour/jknappen/ec/
+dpi600/tcrm1000.pk> </Users/macbook/Library/Application Support/MiKTeX/texmfs/d
+ata/fonts/pk/ljfour/jknappen/ec/dpi600/ecbx2488.pk> </Users/macbook/Library/App
+lication Support/MiKTeX/texmfs/data/fonts/pk/ljfour/jknappen/ec/dpi600/ecrm1000
+.pk> </Users/macbook/Library/Application Support/MiKTeX/texmfs/data/fonts/pk/lj
+four/jknappen/ec/dpi600/ecbx1440.pk> </Users/macbook/Library/Application Suppor
+t/MiKTeX/texmfs/data/fonts/pk/ljfour/jknappen/ec/dpi600/ecbx2074.pk></Users/mac
+book/Library/Application Support/MiKTeX/texmfs/install/fonts/type1/public/amsfo
+nts/cm/cmr10.pfb></Users/macbook/Library/Application Support/MiKTeX/texmfs/inst
+all/fonts/type1/public/amsfonts/symbols/msam10.pfb>
+Output written on checklist-ems-rtu-navod.pdf (11 pages, 367874 bytes).
+PDF statistics:
+ 371 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 500000)
+ 43 words of extra memory for PDF output out of 10000 (max. 10000000)
+

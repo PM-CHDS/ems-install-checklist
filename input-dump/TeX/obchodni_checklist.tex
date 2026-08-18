@@ -1,0 +1,239 @@
+%\documentclass[10pt,a4paper]{article}
+\documentclass{book}
+\usepackage{a4}
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{subcaption}
+\usepackage{gensymb}
+\usepackage{pdfpages}
+\usepackage{float}
+\usepackage{subfiles}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{amssymb}
+%podminene formatovani
+\usepackage{ifthen}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage[top=2cm, headheight=25pt]{geometry} % Adjust headheight
+
+\usepackage{tikz}
+\usetikzlibrary{calligraphy}
+
+\newcommand{\mycheckbox}{\large\color{black!80}$\Box$}
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{} % Clear header/footer
+\rhead{\includegraphics[height=20pt]{img/logo.png}} % Right header
+\lhead{Obchodní checklist} % Left header
+\renewcommand{\headrulewidth}{0.4pt} % Optional rule
+
+\begin{titlepage}
+\begin{flushright}
+\includegraphics[width=0.35\linewidth]{img/logo.png}
+\end{flushright}
+\vskip.1in
+\begin{center}
+  \bfseries
+  \huge OBCHODNÍ CHECKLIST
+  \vskip.1in
+\end{center}
+
+\vskip2in
+\begin{tabbing}
+\hspace{0em} \= \textbf{NÁZEV PROJEKTU:} \hspace{8em} \=  ....................................................................................... \\[1.0cm]
+\> \textbf{ADRESA PROJEKTU:} \> .......................................................................................  \\[1.0cm]
+\> \textbf{KONTAKTNÍ OSOBA:} \> .......................................................................................  \\[1.0cm]
+\end{tabbing}
+
+\vskip1.0in
+\begin{tabbing}
+\hspace{0em} \= Kontaktní údaje pro zaslání checklistu: \hspace{8em} \= projekty@energostation.com\\[0.5cm]
+\> V případě dotazů kontaktujte: \> Ing. Barbora Říčková \\[0.5cm]
+\>   \> Tel. : +420 776 343 150 \\[0.5cm]
+\>   \> barbora.rickova@energostation.com  \\[0.5cm]
+\end{tabbing}
+ 
+\vskip.5in
+\centering
+\bfseries
+\Large Vydáno \the\year
+
+
+\end{titlepage}
+
+\tableofcontents
+
+\setcounter{chapter}{1}
+\chapter*{Technologie}
+
+\section{Střídače}
+\begin{enumerate}[label=\alph*)]
+	\item Výkon panelů a střídačů:
+	\begin{itemize}
+                \item Plánovaný výkon FVE: \hfill ...............  \quad [kWp]
+                \item Plánovaný výkon střídačů: \hfill ...............  \, \quad  [kW]
+            \end{itemize}
+
+        	\item Připojení a řízení střídačů
+   	\begin{enumerate}[label=\Alph*)]
+               	\item Přímé zapojení a ovládání střídačů přes PLC. 
+                	\item Zapojení a ovládání střídačů přes Logger (SmartLogger, DataHub,...).
+		\item Ovládání střídačů přes existující řídící systém třetí strany. 
+		\item Ovládání střídačů pomocí 0/1 kontaktů.
+		\item Jiný: ...................................................................................................
+            \vskip.2in
+	\end{enumerate}
+             \vskip.2in
+            \textbf{Vybraný režim řízení:} \hfill ...............
+
+	\item Informace o střídačích (výrobce,  množství a typ střídačů, doplňující informace o instalaci):
+            \begin{center}
+            \vskip.2in
+            ............................................................................................................................................
+            \vskip.2in
+            ............................................................................................................................................
+            \vskip.2in
+            ............................................................................................................................................
+            \vskip.2in
+            ............................................................................................................................................
+            \vskip.2in
+            ............................................................................................................................................
+            \vskip.2in
+            ............................................................................................................................................
+            \vskip.2in
+            \end{center}
+
+	\item Driver pro instalované střídače:
+		\begin{itemize}
+	                	\item Existující driver. \hfill $\square$
+	             	\item Programování nového driveru. \hfill $\square$
+		\end{itemize}
+		\vskip.2in
+		Poznámky k driverům:
+		\begin{center}
+	            \vskip.2in
+	            ............................................................................................................................................
+	            \vskip.2in
+	            ............................................................................................................................................
+	            \vskip.2in
+		   ............................................................................................................................................
+	            \vskip.2in
+	            ............................................................................................................................................
+	            \vskip.2in
+		\end{center}
+		
+	\item Dispečerské řízení:
+		\begin{itemize}
+	            \item ČEZ. \hfill $\square$
+	            \item EGD. \hfill $\square$	        
+	            \item PRE. \hfill $\square$	
+		   \item Nadřazený systém: .................................................  \hfill $\square$	
+	            \item Bez dispečerského řízení. \hfill $\square$	        
+	        \end{itemize}
+
+	\item Režim řízení EMS (Energy Management Systému):
+		\begin{enumerate}[label=\Alph*)]
+	               	\item SPOT. 
+			\item Kompenzace vlastní spotřeby.
+			\item SPOT + Kompenzace vlastní spotřeby.
+	                	\item PEAK-SHAVING.
+			\item Bez řízení EMS.
+			\item Jiný \footnote{Jiné režimy podléhají technickému schválení!}: ...................................................................................................
+	            \vskip.2in
+		\end{enumerate}
+	             \vskip.2in
+	            \textbf{Vybraný režim řízení:} \hfill ...............
+
+
+ \end{enumerate}
+
+
+\section{Baterie}
+\begin{enumerate}[label=\alph*)]
+	\item Výkon bateriových střídačů a kapacita baterie:
+	\begin{itemize}
+                \item Plánovaný výkon střídačů: \hfill ...............  \, \quad [kW]
+                \item Plánovaná kapacita baterie: \hfill ...............   \quad  [kWh]
+            \end{itemize}
+        	\item Připojení a řízení baterií
+   	\begin{enumerate}[label=\Alph*)]
+               	\item Přímé zapojení a ovládání střídačů přes PLC. 
+                	\item Zapojení a ovládání baterií přes Logger (SmartLogger, DataHub,...).
+		\item Ovládání baterií přes existující řídící systém třetí strany. 
+		\item Jiný: ...................................................................................................
+	\end{enumerate}
+             \vskip.2in
+            \textbf{Vybraný režim řízení:} \hfill ...............
+
+	\item Informace o bateriích (výrobce,  množství a typ baterií,  zapojení přes MBMS, doplňující informace o instalaci):
+            \begin{center}
+            \vskip.2in
+            ............................................................................................................................................
+            \vskip.2in
+            ............................................................................................................................................
+            \vskip.2in
+            ............................................................................................................................................
+            \vskip.2in
+            ............................................................................................................................................
+            \vskip.2in
+            ............................................................................................................................................
+            \vskip.2in
+            ............................................................................................................................................
+            \vskip.2in
+            \end{center}
+
+	\item Driver pro instalované střídače:
+		\begin{itemize}
+	                	\item Existující driver. \hfill $\square$
+	             	\item Programování nového driveru. \hfill $\square$
+		\end{itemize}
+		\vskip.2in
+		Poznámky k driverům:
+		\begin{center}
+	            \vskip.2in
+	            ............................................................................................................................................
+	            \vskip.2in
+	            ............................................................................................................................................
+	            \vskip.2in
+		   ............................................................................................................................................
+	            \vskip.2in
+	            ............................................................................................................................................
+	            \vskip.2in
+		\end{center}
+
+	\item Dispečerské řízení:
+		\begin{itemize}
+	            \item ČEZ. \hfill $\square$
+	            \item EGD. \hfill $\square$	        
+	            \item PRE. \hfill $\square$	        
+		   \item Nadřazený systém: .................................................  \hfill $\square$
+	            \item Bez dispečerského řízení. \hfill $\square$	        
+	        \end{itemize}
+
+	\item Režim řízení EMS (Energy Management Systému):
+		\begin{enumerate}[label=\Alph*)]
+	               	\item SPOT. 
+			\item Kompenzace vlastní spotřeby.
+			\item SPOT + Kompenzace vlastní spotřeby.
+	                	\item PEAK-SHAVING.
+			\item SVR (Služby výkonové rovnováhy).
+			\item Koompenzace 1/4hod maxima.
+			\item Bez řízení EMS.
+			\item Jiný \footnote{Jiné režimy podléhají technickému schválení!}: ...................................................................................................
+	            \vskip.2in
+		\end{enumerate}
+	             \vskip.2in
+	            \textbf{Vybraný režim řízení:} \hfill ...............
+
+ \end{enumerate}
+
+
+\chapter*{Obecné}
+	
+
+\end{document}

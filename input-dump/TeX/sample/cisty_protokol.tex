@@ -1,0 +1,259 @@
+\documentclass{book}
+\usepackage{a4}
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{subcaption}
+\usepackage{gensymb}
+\usepackage{pdfpages}
+\usepackage{float}
+\usepackage{subfiles}
+%podminene formatovani
+\usepackage{ifthen}
+\usepackage{array}
+
+\usepackage{tikz}
+%\usepackage{background}
+%\backgroundsetup{contents=Pracovní verze}
+
+\usetikzlibrary{calligraphy}
+
+%\backgroundsetup{
+%    scale=2.5,
+%    angle=90,
+%    firstpage = true, 
+%    opacity=0.1, 
+%    contents = {
+%        \begin{tikzpicture}[opacity=.2]
+%    			\clip (1,-15) rectangle (11,15);
+%    			\foreach \x in {0,0.05,...,2}{
+%      			\draw (0,\x) .. controls (4-\x,-4-3*\x) and (11-2*\x,4-3*\x) .. (12,-5+3*\x);
+%      			\draw (0,\x-1) .. controls (4-\x,\x-2) and (11-2*\x,-4-3*\x) .. (12,-3+3*\x);
+%      			\draw (0,\x-3) .. controls (4-\x,\x-2) and (11-4*\x,-1-4*\x) .. (12,-5+3.5*\x);
+%    			}
+%  		\end{tikzpicture}
+%    }
+%} 
+
+%udaje o zhotoviteli
+\newcommand{\zhotovitel}{secureWORK s.r.o.}
+\newcommand{\zhotovitelIC}{06694497}
+\newcommand{\zhotovitelUlice}{Bělehradská 858/23}
+\newcommand{\zhotovitelMesto}{Praha}
+\newcommand{\zhotovitelPSC}{120 00}
+
+%udaje o zadateli
+\newcommand{\objednatel}{}
+\newcommand{\objednatelEmail}{}
+
+\newcommand{\objednatelInstalaceUlice}{}
+\newcommand{\objednatelInstalaceMesto}{}
+\newcommand{\objednatelInstalacePSC}{}
+
+
+%udaje o elektrarne
+\newcommand{\vykonFVE}{}
+\newcommand{\kapacitaBaterii}{}
+\newcommand{\stridac}{}
+\newcommand{\baterie}{}
+\newcommand{\wallbox}{}
+\newcommand{\pocetPanelu}{} %umisti mezeru za cislo!
+\newcommand{\pocetVstupuPoleA}{} %pokud je pouzit jen 1 vstup = 1, pokud oba = 2
+\newcommand{\pocetPaneluPoleAA}{}
+\newcommand{\pocetPaneluPoleAB}{}
+\newcommand{\pocetPaneluPoleB}{} %umisti mezeru za cislo!
+
+\newcommand{\zjisteniceMenic}{}
+\newcommand{\zjisteniceWallbox}{}
+\newcommand{\zjistenicePanely}{}
+
+\newcommand{\zjisteniceDCBOX}{}
+
+\newcommand{\zjisteniceRevize}{}
+
+\newcommand{\zjisteniceTermokontrola}{Termografická kontrola komponent \newline Střídač: \newline Baterie: \newline DCBOX: \newline Rozvaděč: \newline Kabelové vedení:}
+
+\newcommand{\zjisteniceACDC}{}
+
+\newcommand{\zjisteniceChyby}{}
+
+\newcommand{\zjisteniceOstatni}{}
+
+
+\newcommand{\mistoMereni}{}
+\newcommand{\datumMereni}{}
+
+
+\begin{document}
+ 
+	\chapter*{Periodická kontrola FVE1}
+	
+
+	\subsection*{Provádějící}		
+	\begin{tabbing}
+	\hspace{2em} \= \textbf{Firma:}\hspace{6em}  \= \textbf{\zhotovitel}, \zhotovitelIC / CZ\zhotovitelIC \\[0.3cm]
+	\> \textbf{Adresa:} \>  \zhotovitelUlice\\[0.3cm]
+	\> \textbf{PSČ:} \>  \zhotovitelPSC\\[0.3cm]
+	\> \textbf{E-mail:} \>   kobrle@securework.cz\\
+	\end{tabbing}
+	
+
+	\subsection*{Místo instalace}	
+	
+	\begin{tabbing}
+	\hspace{2em} \= \textbf{Adresa:} \hspace{10em}  \= \objednatelInstalaceUlice \objednatelInstalaceMesto \\[0.3cm]
+	\> \textbf{PSČ:} \>  \objednatelInstalacePSC \\[0.3cm]
+	\> \textbf{Majitel:} \>   \objednatel \\[0.3cm]
+	\> \textbf{E-mail:} \>   \objednatelEmail \\[0.3cm]
+	\end{tabbing}
+	
+	\subsection*{Konfigurace instalace}	
+	
+	\begin{tabbing}
+	\hspace{2em} \= \textbf{Výkon panelů:} \hspace{6em}  \= \vykonFVE \\[0.3cm]
+	\> \textbf{Konfigurace stringů:} \>  \pocetPaneluPoleAA  \pocetPaneluPoleB \\[0.3cm]
+	\> \textbf{Střídač:} \>  \stridac \\[0.3cm]
+	\> \textbf{Akumulátory:} \>   \baterie \,  \kapacitaBaterii \\[0.3cm]
+	\> \textbf{Wallbox:} \>   \wallbox \\[0.3cm]
+	\end{tabbing}
+	
+	\newpage
+	
+	\section*{Kontrola}
+
+	Obsah kontroly byl proveden v rozsahu minimálně dle rozsahu v Tab. \ref{tabulka_kontrolni_seznam} a výsledky zaznamenány v Tab. \ref{tabulka_protokol_kontrolniho_seznamu}. 
+	
+	Případné další zaznamenané nedostatky fotovoltaické elektrárny:
+	
+	\begin{center}
+	\vskip.2in
+	............................................................................................................
+	\vskip.2in
+	............................................................................................................
+	\vskip.2in
+	............................................................................................................
+	\vskip.2in
+	............................................................................................................
+	\vskip.2in
+	............................................................................................................
+	\vskip.2in
+	............................................................................................................
+	\vskip.2in
+	\end{center}
+	
+	
+	Podpisem prováděcí technik potvrzuje provedené úkony ke dni kontroly.
+	\vskip0.5in
+	\begin{tabbing}
+	
+	\hspace{18em} \= V \mistoMereni \, dne: \datumMereni \\[2.5cm]
+	
+	\hspace{21em} \= ............................................. \\[0.5cm]
+	
+	\hspace{25em} \= \textbf{TECHNIK} \\[1.5cm]
+	\end{tabbing}
+	
+
+	\begin{table}
+	\begin{tabular}{|c|p{.3\textwidth}|p{.5\textwidth}|}
+	\hline 
+	\textbf{PERIODA} & \textbf{KOMPONENTA} & \textbf{ČINNOST} \\ 
+	\hline 
+	DENNĚ & Měnič & Je v provozu bez indikace poruchy? \\ 
+	\hline 
+	MĚSÍČNĚ & Kontrola výnosu & Pravidelně zaznamenávejte stavy elektroměru! \\ 
+	\hline 
+	PŮL ROČNĚ & Plocha panelů & 
+	\begin{itemize}
+	\item V případě silného znečištění listím, ptačím trusem , znečištěným ovzduším nebo něčím jiným - proveďte čištění.
+	\item Jsou moduly správně upevněny?
+	\item Je plocha generátoru pod mechanickým pnutím?
+	\end{itemize} \\ 
+	\hline 
+	ROČNĚ & Termografická kontrola & 
+	\begin{itemize}
+	\item Termální foto panelů.
+	\item Termální foto DCBOXU + vodičů.
+	\item Termální foto měniče + aku.
+	\item Termální rozvaděčů a svorkovnic.
+	\end{itemize} \\ 
+	\hline 
+	ROČNĚ & Rozváděč generátoru / DCBOXu & 
+	\begin{itemize}
+	\item Vniklý hmyz / vlhkost?
+	\item Zkontrolujte pojistky.
+	\item Utažení svorek vodičů.
+	\end{itemize} \\ 
+	\hline 
+	ROČNĚ & Přepěťová ochrana  & 
+	\textbf{Zkontrolujte i po bouřkách!}
+	\begin{itemize}
+	\item Je přepěťová ochrana v pořádku?
+	\end{itemize} \\ 
+	\hline 
+	ROČNĚ & Vedení  & 
+	\begin{itemize}
+	\item Seškvařená místa, přerušená izolace či jiná poškození?
+	\item Zkontrolujte spojky.
+	\end{itemize} \\ 
+	\hline 
+	1x za 3-4 ROKY & Opakování měření pro uvádění do provozu  & 
+	Kontrolu provede odborník. \\ 
+	\hline 
+	1x za 3-4 ROKY & Měnič (venkovní)  & 
+	Kontrola proti vniknutí vlhkosti, zvířat či jiných těles. Kontrolu provede odborník. \\ 
+	\hline 
+	PŘI PODEZŘENÍ & Moduly  & 
+	Měření charakteristiky, termografická kontrola nebo analýza funkce provedená odborníkem. \\ 
+	\hline 
+	PŘI PODEZŘENÍ & Rozváděč generátoru  & 
+	Zkontrolujte DC pojistky všech stringů. \\ 
+	\hline 
+	PŘI PODEZŘENÍ & Ochrany na AC straně  & 
+	\begin{itemize}
+	\item Kontrola jištění vedení.
+	\item AC pojistky a proudový chránič.
+	\end{itemize}
+	 \\ 
+	\hline 
+	
+	\end{tabular} 
+	\caption{Kontrolní seznam pro údržbu a servis}
+	\label{tabulka_kontrolni_seznam}
+	\end{table}
+	
+	\begin{table}
+	\begin{tabular}{| m{4cm} | p{.2\textwidth} | p{.5\textwidth} |}
+	\hline 
+	\textbf{KOMPONENTA} & \textbf{VÝSLEDEK} & \textbf{POZNÁMKA} \\ 
+	\hline 
+	  MĚNIČ & \begin{tabular}{@{}c@{}}V POŘÁDKU \\ S VÝHRADOU \\ ZÁVADA\end{tabular} & \zjisteniceMenic \\[0.5cm]
+	\hline 
+	  WALLBOX & \begin{tabular}{@{}c@{}}V POŘÁDKU \\ S VÝHRADOU \\ ZÁVADA\end{tabular} & \zjisteniceWallbox \\[0.5cm]
+	\hline 
+	  FV PANELY & \begin{tabular}{@{}c@{}}V POŘÁDKU \\ S VÝHRADOU \\ ZÁVADA\end{tabular} & \zjistenicePanely \\[0.5cm]
+	\hline 
+	  DCBOX & \begin{tabular}{@{}c@{}}V POŘÁDKU \\ S VÝHRADOU \\ ZÁVADA\end{tabular} & \zjisteniceDCBOX \\[0.5cm]
+	\hline 
+	  REVIZNÍ MĚŘENÍ & \begin{tabular}{@{}c@{}}V POŘÁDKU \\ S VÝHRADOU \\ ZÁVADA\end{tabular} & \zjisteniceRevize \\[0.5cm]
+	\hline 
+	  TERMOGRAFICKÁ KONTROLA & \begin{tabular}{@{}c@{}}V POŘÁDKU \\ S VÝHRADOU \\ ZÁVADA\end{tabular} & \zjisteniceTermokontrola \\[0.5cm]
+	\hline 
+	  ROZVADĚČE AC / DC & \begin{tabular}{@{}c@{}}V POŘÁDKU \\ S VÝHRADOU \\ ZÁVADA\end{tabular} & \zjisteniceACDC \\[0.5cm]
+	\hline 
+	  KONTROLA CHYB & \begin{tabular}{@{}c@{}}V POŘÁDKU \\ S VÝHRADOU \\ ZÁVADA\end{tabular} & \zjisteniceChyby \\[3.5cm]
+	\hline 
+	  OSTATNÍ & \begin{tabular}{@{}c@{}}V POŘÁDKU \\ S VÝHRADOU \\ ZÁVADA\end{tabular} & \zjisteniceOstatni \\[2.5cm]
+	\hline 
+	
+	\end{tabular} 
+		
+	\caption{Protokol údržby a servisu FVE}
+	\label{tabulka_protokol_kontrolniho_seznamu}
+	\end{table}
+	
+	%\newpage
+	%\includepdf[pages=-, angle=0]{revize.pdf}
+	
+\end{document}

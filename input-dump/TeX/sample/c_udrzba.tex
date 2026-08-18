@@ -1,0 +1,348 @@
+\documentclass{book}
+\usepackage{a4}
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{subcaption}
+\usepackage{gensymb}
+\usepackage{pdfpages}
+\usepackage{float}
+\usepackage{subfiles}
+%podminene formatovani
+\usepackage{ifthen}
+\usepackage{array}
+
+\usepackage{tikz}
+\usepackage{background}
+
+\backgroundsetup{contents=Pracovní verze}
+
+\usetikzlibrary{calligraphy}
+
+\newcommand{\denMereni}{20}
+\newcommand{\mesicMereni}{3}
+
+\backgroundsetup{
+    scale=2.5,
+    angle=90,
+    firstpage = true, 
+    opacity=0.1, 
+    contents = {
+        \begin{tikzpicture}[opacity=.2]
+    			\clip (1,-15) rectangle (11,15);
+    			\foreach \x in {0,0.05,...,2}{
+      			\draw (0,\x) .. controls (4-\x,-4-3*\x) and (\denMereni-2*\x,4-3*\x) .. (12,-5+3*\x);
+      			\draw (0,\x-1) .. controls (4-\x,\x-2) and (11-2*\x,-4-3*\x) .. (\mesicMereni,-3+3*\x);
+      			\draw (0,\x-3) .. controls (4-\x,\x-2) and (11-4*\x,-1-4*\x) .. (12,-5+3.5*\x);
+    			}
+  		\end{tikzpicture}
+    }
+} 
+
+\input{cc_zakaznik.tex}
+
+\newcommand{\termalAC}{1}
+\newcommand{\termalDC}{1}
+\newcommand{\termalRSS}{1}
+\newcommand{\termalSTRIDAC}{1}
+\newcommand{\termalBATERIE}{1}
+\newcommand{\termalPANELY}{0}
+
+\newcommand{\zjisteniceMenic}{Provoz bez zjevných problémů. Střídač čistý, suchý, bez známek rzi nebo vlivu přehřátí.}
+\newcommand{\zjisteniceMenicVysledek}{BEZ ZÁVAD}
+
+\newcommand{\zjisteniceWallbox}{Provoz bez zjevných problémů. Nabíječka čistá, suchá, bez známek rzi. Vodiče nepoškozené. STOP tlačítko funkční.}
+\newcommand{\zjisteniceWallboxVysledek}{BEZ ZÁVAD}
+
+\newcommand{\zjistenicePanely}{Povrch panelů pouze s mírnými nečistotami, bez viditelných poškození.}%{Povrch panelů s mírnými nečistotami, avšak bez zjevných poškození.}
+\newcommand{\zjistenicePanelyVysledek}{BEZ ZÁVAD}
+
+\newcommand{\zjisteniceDCBOX}{Bez nečistot a zjevných poškození. \newline Bez vniklého hmyzu. \newline Bez vniklé vlhkosti. \newline DC pojistky bez poškození.} %\newline Provedeno kontrolní dotažení svorek, kde nebylo zjištěno žádné uvolnění.}
+\newcommand{\zjisteniceDCBOXVysledek}{BEZ ZÁVAD}
+
+\newcommand{\zjisteniceRevize}{Revizní měření bez nedostatků, viz. přiložený protokol.}
+\newcommand{\zjisteniceRevizeVysledek}{BEZ ZÁVAD}
+
+\newcommand{\zjisteniceTermokontrola}{Termografická kontrola komponent bez nedostatků. \newline Střídač: OK \newline Baterie: OK \newline DCBOX: OK \newline Rozvaděč: OK \newline Kabelové vedení: OK}
+\newcommand{\zjisteniceTermokontrolaVysledek}{BEZ ZÁVAD}
+
+\newcommand{\zjisteniceACDC}{Rozvaděče bez nečistot a vniklé vlhkosti. \newline Jističe a pojistky nejeví známky poruchy. \newline Přepěťové ochrany nesignalizují poruchu.}
+\newcommand{\zjisteniceACDCVysledek}{BEZ ZÁVAD}
+
+\newcommand{\zjisteniceChyby}{Bez chyb.}%{Střídač - 2025: \newline 23.10.2025 IE04 \newline 27.9.2025 IE02 \newline 23.7.2025 IE04 \newline 20.6.2025 IE04 \newline 20.6.2025 IE12 \newline 6.6.2025 IE08 \newline Poruchy jsou pouze přechodné a nejsou závažné.} 
+\newcommand{\zjisteniceChybyVysledek}{BEZ ZÁVAD}
+
+\newcommand{\zjisteniceOstatni}{Kontrola funkce RSS - odstavení panelů proběhlo do 10s.}
+\newcommand{\zjisteniceOstatniVysledek}{BEZ ZÁVAD}
+
+
+\newcommand{\mistoMereni}{Praze}
+\newcommand{\datumMereni}{\denMereni . \mesicMereni .2026}
+
+
+\begin{document}
+ 
+	\chapter*{Periodická kontrola FVE}
+	
+
+	\subsection*{Provádějící}		
+	\begin{tabbing}
+	\hspace{2em} \= \textbf{Firma:}\hspace{6em}  \= \textbf{\zhotovitel}, \zhotovitelIC / CZ\zhotovitelIC \\[0.3cm]
+	\> \textbf{Adresa:} \>  \zhotovitelUlice\\[0.3cm]
+	\> \textbf{PSČ:} \>  \zhotovitelPSC\\[0.3cm]
+	\> \textbf{E-mail:} \>   kobrle@securework.cz\\
+	\end{tabbing}
+	
+
+	\subsection*{Místo instalace}	
+	
+	\begin{tabbing}
+	\hspace{2em} \= \textbf{Adresa:} \hspace{10em}  \= \objednatelInstalaceUlice , \objednatelInstalaceMesto \\[0.3cm]
+	\> \textbf{PSČ:} \>  \objednatelInstalacePSC \\[0.3cm]
+	\> \textbf{Majitel:} \>   \objednatel \\[0.3cm]
+	\> \textbf{E-mail:} \>   \objednatelEmail \\[0.3cm]
+	\end{tabbing}
+	
+	\subsection*{Konfigurace instalace}	
+	
+	\begin{tabbing}
+	\hspace{2em} \= \textbf{Výkon panelů:} \hspace{6em}  \= \vykonFVE \\[0.3cm]
+	\> \textbf{Konfigurace stringů:} \>  \pocetPaneluPoleAA \, + \pocetPaneluPoleB \\[0.3cm]
+	\> \textbf{Střídač:} \>  \stridac \\[0.3cm]
+	\> \textbf{Akumulátory:} \>   \baterie \, - \kapacitaBaterii \\[0.3cm]
+	\> \textbf{Wallbox:} \>   \wallbox \\[0.3cm]
+	\> \textbf{RSS:} \>   \rss \\[0.3cm]
+	\end{tabbing}
+	
+	\newpage
+	
+	\section*{Kontrola}
+
+	Obsah kontroly byl proveden v rozsahu minimálně dle rozsahu pro \uv{periodické kontroly} a výsledky zaznamenány v Tab. \ref{tabulka_protokol_kontrolniho_seznamu}. 
+	
+	Případné další zaznamenané nedostatky fotovoltaické elektrárny:
+	
+
+	\vskip.2in
+	%Při výpadcích elektřiny bývá problém při opětovném zapojení, kdy dochází k vybavení jističů. Po analýze problému se jedná s největší pravděpodobností o problém velkého souběhového proudu. Problém po diskuzi s majitelem bude řešen zpožďovacím relé, které bude část rozvodů domu spínat s 30s zpožděním. Řešení bylo testováno a jeho funkčnost ověřena.
+	\vskip.2in
+
+	
+	
+	Podpisem prováděcí technik potvrzuje provedené úkony ke dni kontroly.
+	\vskip0.5in
+	\begin{tabbing}
+	
+	\hspace{18em} \= V \mistoMereni \, dne: \datumMereni \\[2.5cm]
+	
+	\hspace{21em} \= ............................................. \\[0.5cm]
+	
+	\hspace{25em} \= \textbf{TECHNIK} \\[1.5cm]
+	\end{tabbing}
+	
+
+	
+	\begin{table}
+	\begin{tabular}{| m{4cm} | p{.2\textwidth} | p{.5\textwidth} |}
+	\hline 
+	\textbf{KOMPONENTA} & \textbf{VÝSLEDEK} & \textbf{POZNÁMKA} \\ 
+	\hline 
+	MĚNIČ & \zjisteniceMenicVysledek & \zjisteniceMenic \\
+	\hline 
+	WALLBOX & \zjisteniceWallboxVysledek & \zjisteniceWallbox \\
+	\hline 
+	FV PANELY & \zjistenicePanelyVysledek & \zjistenicePanely \\
+	\hline 
+	DCBOX & \zjisteniceDCBOXVysledek & \zjisteniceDCBOX \\
+	\hline 
+	REVIZNÍ MĚŘENÍ & \zjisteniceRevizeVysledek & \zjisteniceRevize \\
+	\hline 
+	TERMOGRAFICKÁ KONTROLA & \zjisteniceTermokontrolaVysledek & \zjisteniceTermokontrola \\
+	\hline 
+	ROZVADĚČE AC / DC & \zjisteniceACDCVysledek & \zjisteniceACDC \\
+	\hline 
+	KONTROLA CHYB & \zjisteniceChybyVysledek & \zjisteniceChyby \\
+	\hline 
+	OSTATNÍ & \zjisteniceOstatniVysledek & \zjisteniceOstatni \\
+	\hline 
+\end{tabular}
+
+	\caption{Protokol údržby a servisu FVE}
+	\label{tabulka_protokol_kontrolniho_seznamu}
+	\end{table}
+	
+	\chapter*{Přílohy měření FVE}
+	\includepdf[pages=-, angle=0]{revize.pdf}
+	
+		
+	\ifthenelse{\equal{\termalAC}{1}}{
+	\begin{figure}
+	    \centering
+	    \begin{subfigure}[b]{0.45\textwidth}
+	       	\includegraphics[width=\textwidth]{termal/act1.jpeg}
+			\caption{Termální snímek AC}
+			\label{fig_ac1}
+	    \end{subfigure}
+	    ~
+	    \begin{subfigure}[b]{0.45\textwidth}
+	        \includegraphics[width=\textwidth]{termal/ac1.jpeg}
+			\caption{Snímek AC}
+			\label{fig_ac1t}
+	    \end{subfigure}
+	    
+	    \begin{subfigure}[b]{0.45\textwidth}
+	       	\includegraphics[width=\textwidth]{termal/act2.jpeg}
+			\caption{Termální snímek AC}
+			\label{fig_ac1}
+	    \end{subfigure}
+	    ~
+	    \begin{subfigure}[b]{0.45\textwidth}
+	        \includegraphics[width=\textwidth]{termal/ac2.jpeg}
+			\caption{Snímek AC}
+			\label{fig_ac1t}
+	    \end{subfigure}
+	    \caption{Snímky AC rozvaděče}
+	\end{figure}
+	}
+	
+	
+	\ifthenelse{\equal{\termalDC}{1}}{
+	\begin{figure}
+	    \centering
+	    \begin{subfigure}[b]{0.45\textwidth}
+	       	\includegraphics[width=\textwidth]{termal/dct1.jpeg}
+			\caption{Termální snímek STRINGBOX}
+			\label{fig_ac1}
+	    \end{subfigure}
+	    ~
+	    \begin{subfigure}[b]{0.45\textwidth}
+	        \includegraphics[width=\textwidth]{termal/dc1.jpeg}
+			\caption{Snímek STRINGBOX}
+			\label{fig_ac1t}
+	    \end{subfigure}
+	    \caption{Snímky DC rozvaděče / STRINGBOXU}
+	\end{figure}
+	}
+	
+	\ifthenelse{\equal{\termalRSS}{1}}{	
+	\begin{figure}
+	    \centering
+	    \begin{subfigure}[b]{0.45\textwidth}
+	       	\includegraphics[width=\textwidth]{termal/rsst.jpeg}
+			\caption{Termální snímek RSS}
+			\label{fig_ac1}
+	    \end{subfigure}
+	    ~
+	    \begin{subfigure}[b]{0.45\textwidth}
+	        \includegraphics[width=\textwidth]{termal/rss.jpeg}
+			\caption{Snímek RSS}
+			\label{fig_ac1t}
+	    \end{subfigure}
+	    \caption{Snímky RSS}
+	\end{figure}
+	}
+	
+	\ifthenelse{\equal{\termalSTRIDAC}{1}}{	
+	\begin{figure}
+	    \centering
+	    \begin{subfigure}[b]{0.45\textwidth}
+	       	\includegraphics[width=\textwidth]{termal/stridact1.jpeg}
+			\caption{Termální snímek střídače}
+			\label{fig_ac1}
+	    \end{subfigure}
+	    ~
+	    \begin{subfigure}[b]{0.45\textwidth}
+	        \includegraphics[width=\textwidth]{termal/stridac1.jpeg}
+			\caption{Snímek střídače}
+			\label{fig_ac1t}
+	    \end{subfigure}
+	    
+	    \begin{subfigure}[b]{0.45\textwidth}
+	       	\includegraphics[width=\textwidth]{termal/stridact2.jpeg}
+			\caption{Termální snímek střídače}
+			\label{fig_ac1}
+	    \end{subfigure}
+	    ~
+	    \begin{subfigure}[b]{0.45\textwidth}
+	        \includegraphics[width=\textwidth]{termal/stridac2.jpeg}
+			\caption{Snímek střídače}
+			\label{fig_ac1t}
+	    \end{subfigure}
+	    
+	    \begin{subfigure}[b]{0.45\textwidth}
+	       	\includegraphics[width=\textwidth]{termal/stridact3.jpeg}
+			\caption{Termální snímek střídače}
+			\label{fig_ac1}
+	    \end{subfigure}
+	    ~
+	    \begin{subfigure}[b]{0.45\textwidth}
+	        \includegraphics[width=\textwidth]{termal/stridac3.jpeg}
+			\caption{Snímek střídače}
+			\label{fig_ac1t}
+	    \end{subfigure}
+	    \caption{Snímky střídače}
+	\end{figure}
+	}
+	
+	\ifthenelse{\equal{\termalBATERIE}{1}}{	
+	\begin{figure}
+	    \centering
+	    \begin{subfigure}[b]{0.45\textwidth}
+	       	\includegraphics[width=\textwidth]{termal/bateriet1.jpeg}
+			\caption{Termální snímek baterie}
+			\label{fig_ac1}
+	    \end{subfigure}
+	    ~
+	    \begin{subfigure}[b]{0.45\textwidth}
+	        \includegraphics[width=\textwidth]{termal/baterie1.jpeg}
+			\caption{Snímek baterie}
+			\label{fig_ac1t}
+	    \end{subfigure}
+	    
+	    \begin{subfigure}[b]{0.45\textwidth}
+	       	\includegraphics[width=\textwidth]{termal/bateriet2.jpeg}
+			\caption{Termální snímek baterie}
+			\label{fig_ac1}
+	    \end{subfigure}
+	    ~
+	    \begin{subfigure}[b]{0.45\textwidth}
+	        \includegraphics[width=\textwidth]{termal/baterie2.jpeg}
+			\caption{Snímek baterie}
+			\label{fig_ac1t}
+	    \end{subfigure}
+	    \caption{Snímky baterie}
+	\end{figure}
+	}
+	
+	\ifthenelse{\equal{\termalPANELY}{1}}{	
+	\begin{figure}
+	    \centering
+	    \begin{subfigure}[b]{0.45\textwidth}
+	       	\includegraphics[width=\textwidth]{termal/panelyt1.jpeg}
+			\caption{Termální snímek panelu}
+			\label{fig_ac1}
+	    \end{subfigure}
+	    ~
+	    \begin{subfigure}[b]{0.45\textwidth}
+	        \includegraphics[width=\textwidth]{termal/panely1.jpeg}
+			\caption{Snímek panelu}
+			\label{fig_ac1t}
+	    \end{subfigure}
+	    
+	    \begin{subfigure}[b]{0.45\textwidth}
+	       	\includegraphics[width=\textwidth]{termal/panelyt2.jpeg}
+			\caption{Termální snímek panelu}
+			\label{fig_ac1}
+	    \end{subfigure}
+	    ~
+	    \begin{subfigure}[b]{0.45\textwidth}
+	        \includegraphics[width=\textwidth]{termal/panely2.jpeg}
+			\caption{Snímek panelu}
+			\label{fig_ac1t}
+	    \end{subfigure}
+	    \caption{Snímky panelu}
+	\end{figure}
+	}
+	
+\end{document}
