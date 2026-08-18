@@ -3,6 +3,7 @@ import { eq } from 'drizzle-orm';
 import { db } from '@/db';
 import { attachments, formInstances } from '@/db/schema';
 import { isAdmin } from '@/lib/auth';
+import { isUuid } from '@/lib/instances';
 import { storage } from '@/lib/storage';
 
 /**
@@ -14,6 +15,7 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> },
 ) {
   const { id } = await params;
+  if (!isUuid(id)) return new NextResponse('not found', { status: 404 });
   const [row] = await db
     .select({
       attachment: attachments,

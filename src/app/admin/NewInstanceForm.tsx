@@ -58,7 +58,7 @@ export function NewInstanceForm({ checklists }: Props) {
           </label>
           <select id="checklistSlug" name="checklistSlug" className="field-input mt-1">
             {checklists.map((c) => (
-              <option key={`${c.slug}-${c.version}`} value={c.slug}>
+              <option key={`${c.slug}-${c.version}`} value={`${c.slug}@${c.version}`}>
                 {c.title} (v{c.version})
               </option>
             ))}

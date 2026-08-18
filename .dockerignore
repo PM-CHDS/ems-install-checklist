@@ -2,7 +2,6 @@ node_modules
 .next
 .git
 var
-generated
 public/checklists
 input-dump
 tests

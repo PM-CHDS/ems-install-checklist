@@ -40,6 +40,10 @@ export async function GET(
           type: f.type,
           value: state.values[f.id] ?? null,
           failNote: state.failNotes[f.id] ?? null,
+          // Fixed-row tables are positional; ship the row labels so the export
+          // stands on its own without the checklist definition beside it.
+          ...(f.fixedRows ? { rowLabels: f.fixedRows } : {}),
+          ...(f.columns ? { columns: f.columns.map((c) => c.id) } : {}),
         })),
     })),
     attachments: attachments.map((a) => ({

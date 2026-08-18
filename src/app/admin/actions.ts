@@ -6,6 +6,7 @@ import { checkPassword, endSession, isAdmin, startSession } from '@/lib/auth';
 import {
   createInstance,
   deleteInstance,
+  isUuid,
   loadById,
   setStatus,
 } from '@/lib/instances';
@@ -33,8 +34,12 @@ export async function createInstanceAction(_prev: unknown, formData: FormData) {
   const label = String(formData.get('label') ?? '').trim();
   if (!label) return { error: 'label-required' as const };
   const langValue = formData.get('lang');
+  // The picker sends `slug@version`; pinning the version matters when several
+  // versions of the same checklist are published.
+  const [slug, version] = String(formData.get('checklistSlug') ?? '').split('@');
   const instance = await createInstance({
-    checklistSlug: String(formData.get('checklistSlug') ?? ''),
+    checklistSlug: slug,
+    checklistVersion: version ? Number(version) : undefined,
     label,
     customerName: String(formData.get('customerName') ?? '') || undefined,
     customerEmail: String(formData.get('customerEmail') ?? '') || undefined,
@@ -47,6 +52,7 @@ export async function createInstanceAction(_prev: unknown, formData: FormData) {
 export async function markReviewed(formData: FormData) {
   await requireAdmin();
   const id = String(formData.get('id'));
+  if (!isUuid(id)) redirect('/admin');
   await setStatus(id, 'reviewed', 'admin');
   revalidatePath(`/admin/${id}`);
 }
@@ -54,6 +60,7 @@ export async function markReviewed(formData: FormData) {
 export async function reopenForm(formData: FormData) {
   await requireAdmin();
   const id = String(formData.get('id'));
+  if (!isUuid(id)) redirect('/admin');
   await setStatus(id, 'in_progress', 'admin');
   revalidatePath(`/admin/${id}`);
 }
@@ -61,6 +68,7 @@ export async function reopenForm(formData: FormData) {
 export async function deleteInstanceAction(formData: FormData) {
   await requireAdmin();
   const id = String(formData.get('id'));
+  if (!isUuid(id)) redirect('/admin');
   const loaded = await loadById(id);
   if (loaded) {
     // Remove the blobs first; the DB cascade takes the rows with the instance.

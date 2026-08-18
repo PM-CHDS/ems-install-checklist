@@ -388,7 +388,9 @@ export function compileChecklist(dir: string): CompileResult {
       );
     if (target.options) {
       const values = target.options.map((o) => o.value);
-      if (!values.includes(c.equals as never))
+      // Numeric option values are normalized to strings during compilation, so
+      // compare textually rather than failing a schema that is actually valid.
+      if (!values.some((v) => v === c.equals || String(v) === String(c.equals)))
         fail(
           `field \`${f.id}\``,
           `conditional_on equals \`${String(c.equals)}\`, which is not an option of ` +

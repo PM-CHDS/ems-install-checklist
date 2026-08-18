@@ -6,6 +6,12 @@
 import { chromium } from 'playwright';
 import { execFileSync } from 'node:child_process';
 
+/** Smallest valid PNG, used as stand-in photo evidence. */
+const PNG = Buffer.from(
+  'iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFUlEQVR42mNk+M9QzzCKRsEoGgWjAAB2gwSFLo0ZBwAAAABJRU5ErkJggg==',
+  'base64',
+);
+
 const BASE = process.env.BASE ?? 'http://localhost:3000';
 const stamp = process.env.E2E_LABEL ?? `E2E ${Date.now()}`;
 const out = execFileSync('npx', ['tsx', 'scripts/dev-create-instance.ts', stamp], {
@@ -113,6 +119,55 @@ check(
 const submitBtn = page.getByRole('button', { name: 'Odeslat checklist' });
 check('submit is disabled while incomplete', await submitBtn.isDisabled());
 
+// --- signature + full submit, entirely through the UI ------------------------
+// Fills every remaining required field via the API, then signs in the browser and
+// submits — this is the path where a saved signature has to satisfy its own
+// required-field check without a page reload.
+execFileSync('npx', ['tsx', 'scripts/dev-fill.ts', token], { encoding: 'utf8' });
+for (const field of [
+  'cloud_connectivity_note',
+  'photos_control_unit_displays',
+  'photos_technology_nameplates',
+  'distribution_portal_screenshot',
+]) {
+  const body = new FormData();
+  body.append('file', new Blob([PNG], { type: 'image/png' }), 'evidence.png');
+  body.append('fieldId', field);
+  body.append('kind', 'photo');
+  const r = await fetch(`${BASE}/api/f/${token}/attachments`, { method: 'POST', body });
+  if (!r.ok) throw new Error(`photo upload for ${field}: ${await r.text()}`);
+}
+
+await page.reload({ waitUntil: 'networkidle' });
+await page.getByRole('button', { name: '7', exact: true }).click();
+await page.waitForTimeout(500);
+
+const pad = page.locator('#field-signature canvas');
+await pad.scrollIntoViewIfNeeded();
+const box = await pad.boundingBox();
+await page.mouse.move(box.x + 20, box.y + 60);
+await page.mouse.down();
+await page.mouse.move(box.x + 90, box.y + 20, { steps: 8 });
+await page.mouse.move(box.x + 160, box.y + 80, { steps: 8 });
+await page.mouse.up();
+await page.locator('#field-signature').getByRole('button', { name: 'Uložit podpis' }).click();
+await page.waitForTimeout(1500);
+check(
+  'drawn signature is saved',
+  await page.locator('#field-signature').getByText('Podpis uložen').isVisible(),
+);
+
+await page.getByRole('button', { name: /Kontrola a odeslání/ }).first().click();
+await page.waitForTimeout(1000);
+const finalSubmit = page.getByRole('button', { name: 'Odeslat checklist' });
+check('submit enabled once everything is filled', await finalSubmit.isEnabled());
+await finalSubmit.click();
+await page.waitForTimeout(2500);
+check(
+  'submitting locks the form',
+  await page.getByText('Checklist byl odeslán').isVisible(),
+);
+
 // --- admin sign-in -----------------------------------------------------------
 const admin = await browser.newPage();
 await admin.goto(`${BASE}/admin`, { waitUntil: 'networkidle' });
@@ -133,6 +188,7 @@ check('new instance listed', (await row.count()) === 1);
 await row.click();
 await admin.waitForTimeout(1000);
 check('detail shows saved answer', await admin.getByText('FVE Kolín E2E').first().isVisible());
+check('detail shows the submitted status', await admin.getByText('Odesláno').first().isVisible());
 // The check was flipped back to ANO, so it must no longer be listed as failed —
 // but the audit trail must still carry the note that was written at the time.
 check(

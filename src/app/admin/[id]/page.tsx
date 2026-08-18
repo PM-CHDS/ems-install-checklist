@@ -249,15 +249,21 @@ function Value({
 
   if (field.type === 'table' && isTableValue(value)) {
     const cols = field.columns ?? [];
-    const rows = value.rows.filter((r) =>
-      Object.values(r).some((c) => c !== null && c !== undefined && String(c).trim() !== ''),
-    );
-    if (!rows.length) return <span className="text-slate-300">—</span>;
+    const fixed = field.fixedRows;
+    const nonEmpty = (r: Record<string, unknown>) =>
+      Object.values(r).some((c) => c !== null && c !== undefined && String(c).trim() !== '');
+    // A fixed-row table's meaning is positional (row 2 = MaR1), so its rows are kept
+    // in place and shown with their labels; only free-form tables drop blank rows.
+    const rows = fixed
+      ? value.rows.map((r, i) => ({ row: r, label: fixed[i] ? label(fixed[i], lang) : '' }))
+      : value.rows.filter(nonEmpty).map((r) => ({ row: r, label: '' }));
+    if (!rows.some((r) => nonEmpty(r.row))) return <span className="text-slate-300">—</span>;
     return (
       <div className="overflow-x-auto">
         <table className="min-w-max border-collapse text-xs">
           <thead>
             <tr className="text-slate-500">
+              {fixed && <th className="border-b border-slate-200 px-2 py-1" />}
               {cols.map((c) => (
                 <th key={c.id} className="border-b border-slate-200 px-2 py-1 text-left">
                   {label(c, lang)}
@@ -268,9 +274,16 @@ function Value({
           <tbody>
             {rows.map((r, i) => (
               <tr key={i}>
+                {fixed && (
+                  <th className="border-b border-slate-100 px-2 py-1 text-left font-normal whitespace-nowrap text-slate-500">
+                    {r.label}
+                  </th>
+                )}
                 {cols.map((c) => (
                   <td key={c.id} className="border-b border-slate-100 px-2 py-1">
-                    {r[c.id] === null || r[c.id] === undefined ? '' : String(r[c.id])}
+                    {r.row[c.id] === null || r.row[c.id] === undefined
+                      ? ''
+                      : String(r.row[c.id])}
                   </td>
                 ))}
               </tr>

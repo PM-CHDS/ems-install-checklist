@@ -69,13 +69,20 @@ export function FormApp({
 
   const formState: FormState = useMemo(
     () => ({
-      values,
+      // A signature field's answer is its uploaded image, so fold saved signatures
+      // into the values the completeness rules see.
+      values: {
+        ...values,
+        ...Object.fromEntries(
+          Array.from(signatureByField.entries()).map(([id, a]) => [id, a.id]),
+        ),
+      },
       failNotes,
       photoCounts: Object.fromEntries(
         Array.from(photosByField.entries()).map(([k, v]) => [k, v.length]),
       ),
     }),
-    [values, failNotes, photosByField],
+    [values, failNotes, photosByField, signatureByField],
   );
 
   const summary = useMemo(() => summarize(checklist, formState), [checklist, formState]);
@@ -115,7 +122,12 @@ export function FormApp({
     setSubmitting(true);
     setSubmitError(null);
     try {
-      await flushNow();
+      // Don't submit on top of unsaved edits — the server would judge the form
+      // against a state the installer isn't looking at.
+      if (!(await flushNow())) {
+        setSubmitError(t(lang, 'form.saveError'));
+        return;
+      }
       const res = await fetch(`/api/f/${token}/submit`, { method: 'POST' });
       if (!res.ok) {
         setSubmitError(await res.text());

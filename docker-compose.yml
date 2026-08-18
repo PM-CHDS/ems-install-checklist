@@ -14,6 +14,9 @@ services:
       PUBLIC_BASE_URL: ${PUBLIC_BASE_URL:-http://localhost:3000}
       STORAGE_DRIVER: ${STORAGE_DRIVER:-local}
       STORAGE_LOCAL_PATH: /app/var/uploads
+      # The app applies migrations and publishes checklists on startup.
+      # Set to false if you'd rather run those steps yourself.
+      AUTO_BOOTSTRAP: ${AUTO_BOOTSTRAP:-true}
     volumes:
       - uploads:/app/var/uploads
     depends_on:

@@ -9,9 +9,16 @@ to put uploaded files.
 cp .env.example .env
 # set at minimum: ADMIN_PASSWORD, SESSION_SECRET, PUBLIC_BASE_URL, POSTGRES_PASSWORD
 docker compose up -d --build
-docker compose exec app npm run db:migrate
-docker compose exec app npm run db:sync-schema
 ```
+
+That's the whole install. On startup the app applies any pending migrations and
+publishes the compiled checklists itself (`src/lib/bootstrap.ts`) — both steps are
+idempotent, so restarts are safe. Watch it happen with `docker compose logs -f app`;
+look for `[bootstrap] database ready`.
+
+If you'd rather control migrations yourself — several replicas, or a DBA-managed
+database — set `AUTO_BOOTSTRAP=false` and run `npm run db:migrate` and
+`npm run db:sync-schema` from a checkout against the same `DATABASE_URL`.
 
 `PUBLIC_BASE_URL` must be the URL installers will actually open (e.g.
 `https://checklist.example.com`) — the customer links shown in the admin are built from it.
@@ -23,8 +30,8 @@ Put a TLS-terminating reverse proxy (nginx, Caddy, Traefik) in front. Uploads ca
 ## Using managed Postgres instead
 
 Remove the `db` service from `docker-compose.yml` and point `DATABASE_URL` at your
-instance — a Supabase/Neon/RDS connection string works as-is. Run the two `db:` commands
-above once against it.
+instance — a Supabase/Neon/RDS connection string works as-is. Startup bootstrap handles
+the schema exactly the same way.
 
 ## File storage
 
@@ -50,15 +57,16 @@ the form's own link token. Nothing relies on bucket ACLs.
 | `STORAGE_LOCAL_PATH` | no | Upload directory for the local driver |
 | `MAX_UPLOAD_BYTES` | no | Per-file limit, default 10 MB |
 | `DATABASE_POOL_MAX` | no | Connection pool size, default 10 |
+| `AUTO_BOOTSTRAP` | no | `false` disables migrate-and-publish on startup |
 
 ## Upgrading
 
 ```bash
 git pull
 docker compose up -d --build
-docker compose exec app npm run db:migrate      # if there are new migrations
-docker compose exec app npm run db:sync-schema  # if any checklist changed
 ```
+
+New migrations and changed checklists are picked up on startup.
 
 Neither command touches forms that already exist: each instance carries its own copy of the
 checklist definition it was created with.

@@ -124,9 +124,13 @@ export function storage(): StorageAdapter {
   return cached;
 }
 
-export const MAX_UPLOAD_BYTES = Number(
-  process.env.MAX_UPLOAD_BYTES ?? 10 * 1024 * 1024,
-);
+const DEFAULT_MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
+
+/** A malformed override must not silently remove the limit. */
+export const MAX_UPLOAD_BYTES =
+  Number(process.env.MAX_UPLOAD_BYTES) > 0
+    ? Number(process.env.MAX_UPLOAD_BYTES)
+    : DEFAULT_MAX_UPLOAD_BYTES;
 
 export const ALLOWED_UPLOAD_MIME = [
   'image/jpeg',

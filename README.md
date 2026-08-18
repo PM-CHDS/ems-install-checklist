@@ -42,10 +42,11 @@ Open <http://localhost:3000/admin>, sign in with `ADMIN_PASSWORD`, and create a 
 ## Deploying
 
 ```bash
+cp .env.example .env   # set ADMIN_PASSWORD, SESSION_SECRET, PUBLIC_BASE_URL
 docker compose up -d --build
-docker compose exec app npm run db:migrate
-docker compose exec app npm run db:sync-schema
 ```
+
+The app migrates the database and publishes the checklists on startup.
 
 See [docs/DEPLOY.md](docs/DEPLOY.md) for storage options, upgrades and backups.
 

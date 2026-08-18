@@ -1,5 +1,5 @@
 import { randomBytes } from 'node:crypto';
-import { and, desc, eq, inArray } from 'drizzle-orm';
+import { and, desc, eq, inArray, notInArray } from 'drizzle-orm';
 import { db } from '@/db';
 import {
   answers,
@@ -60,7 +60,15 @@ export async function loadByToken(token: string): Promise<LoadedInstance | null>
   return hydrate(instance);
 }
 
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/** Postgres rejects a non-UUID literal outright, so screen it here and 404. */
+export function isUuid(v: string): boolean {
+  return UUID_RE.test(v);
+}
+
 export async function loadById(id: string): Promise<LoadedInstance | null> {
+  if (!isUuid(id)) return null;
   const [instance] = await db
     .select()
     .from(formInstances)
@@ -169,6 +177,8 @@ export async function saveAnswer(
     checklist,
   );
 
+  // Never let a late-arriving autosave downgrade a form that has since been
+  // submitted — that would silently unlock it.
   await db
     .update(formInstances)
     .set({
@@ -176,7 +186,12 @@ export async function saveAnswer(
       updatedAt: new Date(),
       lastActivityAt: new Date(),
     })
-    .where(eq(formInstances.id, instance.id));
+    .where(
+      and(
+        eq(formInstances.id, instance.id),
+        notInArray(formInstances.status, LOCKED_STATUSES),
+      ),
+    );
 
   return { status };
 }

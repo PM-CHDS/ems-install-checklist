@@ -51,8 +51,11 @@ export function PhotoUploader({
   async function upload(files: FileList) {
     setBusy(true);
     setError(null);
-    try {
-      for (const file of Array.from(files)) {
+    const failures: string[] = [];
+    // Each file stands alone: one rejected file must not hide the ones that
+    // did upload, or the field would keep reporting missing photos.
+    for (const file of Array.from(files)) {
+      try {
         const body = new FormData();
         const blob = await compress(file);
         body.append('file', blob, file.name);
@@ -62,15 +65,15 @@ export function PhotoUploader({
           method: 'POST',
           body,
         });
-        if (!res.ok) throw new Error(await res.text());
+        if (!res.ok) failures.push(`${file.name}: ${await res.text()}`);
+      } catch (e) {
+        failures.push(`${file.name}: ${e instanceof Error ? e.message : String(e)}`);
       }
-      onChanged();
-    } catch (e) {
-      setError(e instanceof Error ? e.message : String(e));
-    } finally {
-      setBusy(false);
-      if (input.current) input.current.value = '';
     }
+    setError(failures.length ? failures.join('; ') : null);
+    setBusy(false);
+    if (input.current) input.current.value = '';
+    onChanged();
   }
 
   async function remove(id: string) {
