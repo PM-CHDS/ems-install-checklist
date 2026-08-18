@@ -61,9 +61,19 @@ Next.js (Docker) ─────────────────────
 
 ### Non-obvious implementation notes
 
-- A `signature` field's answer *is* its attachment, so uploading one also writes an
-  `answers` row — otherwise the required-field check could never be satisfied. (Found and
-  fixed during end-to-end testing.)
+- A `signature` field's answer *is* its attachment. Both halves matter: the server writes
+  an `answers` row on upload, **and** the client folds saved signatures into the values its
+  completeness rules see. Missing either one leaves Submit permanently disabled.
+- **The container migrates and publishes checklists itself on startup**
+  (`src/lib/bootstrap.ts` via `src/instrumentation.ts`); there is no separate deploy step
+  to forget. `AUTO_BOOTSTRAP=false` disables it for multi-replica setups. Bootstrap reads
+  the compiled JSON in `generated/`, not the markdown, so the YAML parser and checklist
+  sources stay out of the runtime image.
+- Autosave must be drained before submit: `flushNow()` waits for in-flight requests and
+  anything queued behind them, and submit refuses to run while edits are unsaved.
+  A late autosave can't downgrade a `submitted` form — the status update skips locked rows.
+- Fixed-row tables are **positional** (row 2 = MaR1). Never filter their blank rows in a
+  view or export; render the labels alongside.
 - Autosave batches all pending fields into one request, retries with backoff, and only
   clears an entry if it didn't change while in flight — designed for flaky switchroom
   connectivity.
@@ -74,17 +84,24 @@ Next.js (Docker) ─────────────────────
 
 ## Status (2026-08-18): MVP complete and verified
 
-Verified end to end against a live Postgres, both by API and in a real browser
-(21/21 Playwright checks pass — `npm run test:e2e`):
+Verified end to end against a live Postgres, by API and in a real browser — **25/25
+Playwright checks pass** (`npm run test:e2e`), against both `next start` and the
+production standalone entry point (`node server.js`) on a freshly created empty database:
 
 form renders CZ **and** EN · autosave reaches "Uloženo" · values survive a reload ·
 NE opens the explanation box and flags the form `issues` · flipping back to ANO clears it
 while the audit trail keeps the earlier note · conditional fields appear/hide on their gate ·
 table rows add · review lists missing items and disables submit · photo upload + access
 control (403 without the token) · non-image upload rejected 415 · full fill → submit 200 →
-form locked read-only, further writes 409 · admin sign-in (wrong password rejected), list,
-detail, JSON export · schema compiler rejects bad `conditional_on`, typo'd keys and
-`blocking` on a non-boolean.
+form locked read-only, further writes 409 · drawing a signature then submitting entirely
+through the UI · admin sign-in (wrong password rejected), list, detail, JSON export ·
+non-UUID ids 404 rather than 500 · fixed-row table labels line up with their values in
+both the admin view and the export · schema compiler rejects bad `conditional_on`, typo'd
+keys, `blocking` on a non-boolean and `photo_required` without `photo`.
+
+A code review after the first commit found 11 issues; all are fixed in `6fc3ed2` and the
+two that a browser test could have caught (signature submit, autosave/submit race) are now
+covered by the suite.
 
 ### Not built (deliberately deferred)
 
