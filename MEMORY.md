@@ -110,9 +110,48 @@ the other checklists in `input-dump/` (basic, RTU-PDS verification, obchodní) �
 compiler already supports multiple checklists, they just need their sections authored ·
 any Airtable mirror (would be an export job, never the system of record).
 
-## Local dev environment notes
+## Local deployment on this machine (2026-08-19)
 
-This machine had no Node, Postgres, Docker or sudo. Node 22 was installed to
-`~/.local/node`, and a portable Postgres 17 runs from the session scratch directory. If a
-future session needs the same, the pattern is: download the tarball, extract locally, and
-fetch missing shared libraries with `apt-get download <pkg>` + `dpkg-deb -x`.
+A running instance for hands-on testing lives **outside** the repo, in
+`~/.local/state/ems-checklist/` — deliberately, because the session scratch directory an
+earlier attempt used is wiped between sessions and took the database with it.
+
+```
+~/.local/state/ems-checklist/
+  ems.sh      start | stop | restart | status | logs | rebuild | new-form "Label"
+  pgsql/      portable Postgres 17.10 binaries (initdb, pg_ctl, postgres — no psql)
+  data/       the ems + ems_test databases        run/  pidfile + unix socket
+  app/        deployed standalone bundle (mirrors the Dockerfile's runner stage)
+  uploads/    STORAGE_LOCAL_PATH for the deployment
+  libs/root/  shared libraries Chromium needs, for the Playwright suite
+  log/        postgres.log, app.log
+```
+
+- App on <http://localhost:3000>, bound to **127.0.0.1** (this box has a public IP and the
+  admin password is not production-grade — reach it through VS Code port forwarding).
+  Postgres on 55432, trust auth, user `ems`.
+- `ems.sh rebuild` is the deploy step after a code change: `npm run build`, re-copy the
+  standalone bundle, restart. Credentials come from the repo `.env`; the deployment
+  overrides `DATABASE_URL`, `PUBLIC_BASE_URL` and `STORAGE_LOCAL_PATH` to the paths above.
+- **`next start` cannot serve this app** (`output: 'standalone'`); it warns and misbehaves.
+  Run `node server.js` from an assembled standalone directory — same as the container.
+  `npm run start` now does exactly that (`scripts/serve.mjs`) and binds to 127.0.0.1
+  unless `HOSTNAME` says otherwise, so a local production check isn't exposed to the
+  network. The Dockerfile still sets `HOSTNAME=0.0.0.0`, where being reachable is the point.
+- `ems_test` is a second database for the Playwright suite, so validating never puts test
+  forms in the database being demoed:
+  `BASE=http://127.0.0.1:3100 DATABASE_URL=…/ems_test ADMIN_PASSWORD=devpassword npm run test:e2e`
+  against a second server started on 3100 with that DATABASE_URL.
+- Playwright's Chromium needs libs Ubuntu 26.04 doesn't ship here. They are extracted under
+  `libs/root`; export
+  `LD_LIBRARY_PATH=~/.local/state/ems-checklist/libs/root/usr/lib/x86_64-linux-gnu`
+  before running the suite or Chromium fails on `libnspr4.so`.
+
+### If a future session has to rebuild this from nothing
+
+No Docker and no usable sudo on this machine, so the containers in `docker-compose.yml`
+are untestable here — the local deployment above is the substitute. Node 22 is at
+`~/.local/node`. Postgres came from the Zonky embedded-postgres jar
+(`repo1.maven.org/maven2/io/zonky/test/postgres/embedded-postgres-binaries-linux-amd64`,
+a zip containing `postgres-linux-x86_64.txz`); missing shared libraries came from
+`apt-get download <pkg>` + `dpkg-deb -x <deb> <dir>`.

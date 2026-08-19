@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "npm run compile-schema && next build",
-    "start": "next start",
+    "start": "node scripts/serve.mjs",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "compile-schema": "tsx scripts/compile-schema.ts",

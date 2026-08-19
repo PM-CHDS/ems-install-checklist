@@ -14,6 +14,8 @@ const PNG = Buffer.from(
 
 const BASE = process.env.BASE ?? 'http://localhost:3000';
 const stamp = process.env.E2E_LABEL ?? `E2E ${Date.now()}`;
+/** Must match the server under test; the deployment's password is not the dev default. */
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? 'devpassword';
 const out = execFileSync('npx', ['tsx', 'scripts/dev-create-instance.ts', stamp], {
   encoding: 'utf8',
 });
@@ -176,7 +178,7 @@ await admin.getByRole('button', { name: 'Přihlásit se' }).click();
 await admin.waitForTimeout(1200);
 check('wrong password rejected', await admin.getByText('Nesprávné heslo').isVisible());
 
-await admin.getByLabel('Heslo').fill('devpassword');
+await admin.getByLabel('Heslo').fill(ADMIN_PASSWORD);
 await admin.getByRole('button', { name: 'Přihlásit se' }).click();
 await admin.waitForURL('**/admin', { timeout: 10000 });
 await admin.waitForTimeout(800);
