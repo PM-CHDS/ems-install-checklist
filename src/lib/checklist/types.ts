@@ -54,12 +54,6 @@ export interface CompiledColumn {
   options?: CompiledOption[];
 }
 
-export interface CompiledFixedRow {
-  rowId: string;
-  labelCs: string;
-  labelEn: string;
-}
-
 /**
  * A gate on another field's answer. Exactly one operator is set:
  *   equals — the answer matches this value
@@ -69,6 +63,14 @@ export interface CompiledCondition {
   field: string;
   equals?: OptionValue | number;
   gt?: number;
+}
+
+export interface CompiledFixedRow {
+  rowId: string;
+  labelCs: string;
+  labelEn: string;
+  /** Same gate vocabulary as a field's `conditionalOn`. */
+  conditionalOn?: CompiledCondition;
 }
 
 export interface OnFail {

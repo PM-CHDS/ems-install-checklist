@@ -191,6 +191,7 @@ export function FormApp({
                   field={field}
                   lang={lang}
                   value={values[field.id]}
+                  values={formState.values}
                   failNote={failNotes[field.id]}
                   photos={photosByField.get(field.id) ?? []}
                   signature={signatureByField.get(field.id)}

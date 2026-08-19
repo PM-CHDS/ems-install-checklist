@@ -7,6 +7,7 @@ import {
   isTableValue,
   isVisible,
   summarize,
+  visibleFixedRows,
   type FormState,
 } from '@/lib/checklist/state';
 import {
@@ -227,7 +228,7 @@ function AnswerRow({
         <span className="ml-1.5 font-mono text-[10px] text-slate-400">{field.id}</span>
       </dt>
       <dd className="text-sm">
-        <Value field={field} value={value} lang={lang} />
+        <Value field={field} value={value} values={state.values} lang={lang} />
         {failed && state.failNotes[field.id] && (
           <p className="mt-1 rounded border border-amber-200 bg-amber-50 px-2 py-1 text-xs text-amber-900">
             ⚠ {state.failNotes[field.id]}
@@ -242,10 +243,12 @@ function AnswerRow({
 function Value({
   field,
   value,
+  values,
   lang,
 }: {
   field: CompiledField;
   value: unknown;
+  values: Record<string, unknown>;
   lang: Lang;
 }) {
   if (value === undefined || value === null || value === '')
@@ -258,8 +261,12 @@ function Value({
       Object.values(r).some((c) => c !== null && c !== undefined && String(c).trim() !== '');
     // A fixed-row table's meaning is positional (row 2 = MaR1), so its rows are kept
     // in place and shown with their labels; only free-form tables drop blank rows.
+    // Same gating the installer saw: a row that didn't apply isn't shown here either.
     const rows = fixed
-      ? value.rows.map((r, i) => ({ row: r, label: fixed[i] ? label(fixed[i], lang) : '' }))
+      ? visibleFixedRows(field, values).map(({ row, index }) => ({
+          row: value.rows[index] ?? {},
+          label: label(row, lang),
+        }))
       : value.rows.filter(nonEmpty).map((r) => ({ row: r, label: '' }));
     if (!rows.some((r) => nonEmpty(r.row))) return <span className="text-slate-300">—</span>;
     return (

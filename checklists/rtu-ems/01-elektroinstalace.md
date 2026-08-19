@@ -40,12 +40,20 @@ fields:
     help_cs: "Jedná se o stavební montáž rozvaděče na určené místo definované projektovou dokumentací. Dále pak připojení silových a signálních vodičů na svorky dle dokumentace (řeší se pouze, pokud je obsažen v projektové dokumentaci). Rozvaděče zajišťují komunikaci, případně měření výrobních modulů a mají charakter podružného rozvaděče."
     help_en: "Physical mounting plus power/signal wiring per documentation (only applicable if included in the project documentation). These panels handle communication and/or metering of generation modules and are sub-panels."
 
+  - id: remote_metering_switchboard_count
+    label_cs: "Počet skutečně instalovaných rozvaděčů Oddáleného měření"
+    label_en: "Number of Remote-Metering switchboards actually installed"
+    type: number
+    help_cs: "Uveďte počet skutečně instalovaných rozvaděčů. Pokud žádné nejsou, uveďte 0 — následující otázky k rozvaděči Oddáleného měření se pak nezobrazí."
+    help_en: "State the number of switchboards actually installed. Enter 0 if there are none — the follow-up questions about the Remote-Metering switchboard are then not shown."
+
   - id: remote_metering_switchboard_installed
     label_cs: "Osazení a silové připojení rozvaděče Oddáleného měření"
     label_en: "Mounting and power connection of the Remote-Metering switchboard"
     type: boolean
     blocking: true
     photo: true
+    conditional_on: {field: remote_metering_switchboard_count, gt: 0}
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
     help_cs: "Jedná se o stavební montáž rozvaděče na určené místo definované projektovou dokumentací. Dále pak připojení silových a signálních vodičů na svorky dle dokumentace (řeší se pouze, pokud je obsažen v projektové dokumentaci). Jedná se o podružný rozvaděč pro ty případy, kdy jsou MTP/MTN vzdálená v kabelové délce od EMS/DŘ rozvaděče dále než 20 m."
     help_en: "Physical mounting plus power/signal wiring per documentation (only applicable if included in the project documentation). This sub-switchboard is used when the current/voltage transformers (MTP/MTN) are more than 20 m of cable length from the EMS/DSO RTU switchboard. Called \"ELMĚR switchboard\" in the source Legend section."
@@ -69,9 +77,18 @@ fields:
     help_en: "If more switchboards are installed than fit here, use the Notes field (§7). Enter the names of the installed switchboards exactly as labeled on site — this name is then used during configuration."
     fixed_rows:
       - {row_id: ems_dr, label_cs: "Rozvaděč EMS/DŘ", label_en: "EMS/DSO RTU switchboard"}
-      - {row_id: mar1, label_cs: "MaR1", label_en: "ISC1"}
-      - {row_id: mar2, label_cs: "MaR2", label_en: "ISC2"}
-      - {row_id: remote_metering, label_cs: "Oddálené měření", label_en: "Remote metering"}
+      - row_id: mar1
+        label_cs: "MaR1"
+        label_en: "ISC1"
+        conditional_on: {field: mar_switchboard_count, gt: 0}
+      - row_id: mar2
+        label_cs: "MaR2"
+        label_en: "ISC2"
+        conditional_on: {field: mar_switchboard_count, gt: 1}
+      - row_id: remote_metering
+        label_cs: "Oddálené měření"
+        label_en: "Remote metering"
+        conditional_on: {field: remote_metering_switchboard_count, gt: 0}
     columns:
       - id: jps_label
         label_cs: "Označení rozvaděče dle JPS"

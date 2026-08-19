@@ -13,6 +13,7 @@ import { z } from 'zod';
 import type {
   CompiledChecklist,
   CompiledColumn,
+  CompiledCondition,
   CompiledField,
   CompiledOption,
   CompiledSection,
@@ -54,8 +55,19 @@ const rawColumn = bilingualLabel.extend({
   options: z.array(rawSelectOption).optional(),
 });
 
+const rawCondition = z
+  .object({
+    field: z.string(),
+    equals: z.union([z.string(), z.boolean(), z.number()]).optional(),
+    gt: z.number().optional(),
+  })
+  .refine((c) => (c.equals === undefined) !== (c.gt === undefined), {
+    message: 'conditional_on needs exactly one of `equals` or `gt`',
+  });
+
 const rawFixedRow = bilingualLabel.extend({
   row_id: z.string().regex(/^[a-z0-9_]+$/),
+  conditional_on: rawCondition.optional(),
 });
 
 const rawOnFail = z.object({
@@ -87,16 +99,7 @@ const rawField = z
     severity: z.literal('warning').optional(),
     options: z.union([z.array(rawSelectOption), rawBooleanOptions]).optional(),
     images: z.array(rawImage).optional(),
-    conditional_on: z
-      .object({
-        field: z.string(),
-        equals: z.union([z.string(), z.boolean(), z.number()]).optional(),
-        gt: z.number().optional(),
-      })
-      .refine((c) => (c.equals === undefined) !== (c.gt === undefined), {
-        message: 'conditional_on needs exactly one of `equals` or `gt`',
-      })
-      .optional(),
+    conditional_on: rawCondition.optional(),
     blocking: z.boolean().optional(),
     on_fail: rawOnFail.optional(),
     photo: z.boolean().optional(),
@@ -318,6 +321,13 @@ function compileField(
       rowId: r.row_id,
       labelCs: r.label_cs,
       labelEn: r.label_en,
+      conditionalOn: r.conditional_on
+        ? {
+            field: r.conditional_on.field,
+            equals: r.conditional_on.equals,
+            gt: r.conditional_on.gt,
+          }
+        : undefined,
     })),
   };
 }
@@ -380,24 +390,20 @@ export function compileChecklist(dir: string): CompileResult {
     }
   }
   const order = [...byId.keys()];
-  for (const f of byId.values()) {
-    const c = f.conditionalOn;
-    if (!c) continue;
+
+  /** Validates one gate: target exists, comes earlier, and the operator fits it. */
+  function checkCondition(c: CompiledCondition, where: string, ownerId: string) {
     const target = byId.get(c.field);
-    if (!target)
+    if (!target) fail(where, `conditional_on references unknown field \`${c.field}\``);
+    if (order.indexOf(c.field) > order.indexOf(ownerId))
       fail(
-        `field \`${f.id}\``,
-        `conditional_on references unknown field \`${c.field}\``,
-      );
-    if (order.indexOf(c.field) > order.indexOf(f.id))
-      fail(
-        `field \`${f.id}\``,
+        where,
         `conditional_on references \`${c.field}\`, which appears later in the form`,
       );
     if (c.gt !== undefined) {
       if (target.type !== 'number')
         fail(
-          `field \`${f.id}\``,
+          where,
           `conditional_on uses \`gt\`, which needs a number field, but ` +
             `\`${c.field}\` is type ${target.type}`,
         );
@@ -407,9 +413,21 @@ export function compileChecklist(dir: string): CompileResult {
       // compare textually rather than failing a schema that is actually valid.
       if (!values.some((v) => v === c.equals || String(v) === String(c.equals)))
         fail(
-          `field \`${f.id}\``,
+          where,
           `conditional_on equals \`${String(c.equals)}\`, which is not an option of ` +
             `\`${c.field}\` (has: ${values.map(String).join(', ')})`,
+        );
+    }
+  }
+
+  for (const f of byId.values()) {
+    if (f.conditionalOn) checkCondition(f.conditionalOn, `field \`${f.id}\``, f.id);
+    for (const row of f.fixedRows ?? []) {
+      if (row.conditionalOn)
+        checkCondition(
+          row.conditionalOn,
+          `field \`${f.id}\` → row \`${row.rowId}\``,
+          f.id,
         );
     }
   }

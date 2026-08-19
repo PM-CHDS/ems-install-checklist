@@ -109,6 +109,31 @@ check(
   (await page.locator('#field-mar_switchboard_installed').count()) === 1,
 );
 
+// A fixed-row table follows the same gate: rows for panels that don't exist are
+// not shown, and hiding one must not shift another row's answer.
+const jpsRowLabels = async () =>
+  (await page.locator('#field-switchboard_jps_labels tbody th').allInnerTexts())
+    .map((t) => t.trim())
+    .filter(Boolean);
+check(
+  'JPS table shows the MaR rows once the count allows them',
+  (await jpsRowLabels()).join('|') === 'Rozvaděč EMS/DŘ|MaR1|MaR2',
+);
+await count.fill('1');
+await page.waitForTimeout(1000);
+check(
+  'JPS table drops MaR2 when only one panel is installed',
+  (await jpsRowLabels()).join('|') === 'Rozvaděč EMS/DŘ|MaR1',
+);
+await count.fill('0');
+await page.waitForTimeout(1000);
+check(
+  'JPS table drops both MaR rows at 0',
+  (await jpsRowLabels()).join('|') === 'Rozvaděč EMS/DŘ',
+);
+await count.fill('2');
+await page.waitForTimeout(1000);
+
 // --- conditional visibility --------------------------------------------------
 await page.getByRole('button', { name: '5', exact: true }).click();
 await page.waitForTimeout(400);

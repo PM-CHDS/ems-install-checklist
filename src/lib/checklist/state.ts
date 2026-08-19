@@ -5,7 +5,9 @@
  */
 import type {
   CompiledChecklist,
+  CompiledCondition,
   CompiledField,
+  CompiledFixedRow,
   CompiledSection,
   Lang,
   OptionValue,
@@ -38,19 +40,42 @@ function eq(a: unknown, b: OptionValue | number): boolean {
   return false;
 }
 
-/** A field is shown only when its `conditional_on` gate matches the current answer. */
-export function isVisible(field: CompiledField, values: Record<string, unknown>): boolean {
-  const c = field.conditionalOn;
+/** Evaluates one `conditional_on` gate against the current answers. */
+export function conditionMet(
+  c: CompiledCondition | undefined,
+  values: Record<string, unknown>,
+): boolean {
   if (!c) return true;
   const value = values[c.field];
   if (c.gt !== undefined) {
-    // An unanswered or non-numeric gate keeps the field hidden: asking about
-    // switchboards before knowing whether there are any is noise.
+    // An unanswered or non-numeric gate stays closed: asking about switchboards
+    // before knowing whether there are any is noise.
     const n = typeof value === 'number' ? value : Number(value);
-    return value !== null && value !== undefined && value !== '' && Number.isFinite(n) && n > c.gt;
+    return (
+      value !== null && value !== undefined && value !== '' && Number.isFinite(n) && n > c.gt
+    );
   }
   // The compiler guarantees exactly one operator is set.
   return c.equals !== undefined && eq(value, c.equals);
+}
+
+/** A field is shown only when its `conditional_on` gate matches the current answer. */
+export function isVisible(field: CompiledField, values: Record<string, unknown>): boolean {
+  return conditionMet(field.conditionalOn, values);
+}
+
+/**
+ * Which rows of a fixed-row table to show. The returned index is the row's position
+ * in the stored `rows` array — that array always keeps one slot per declared row, so
+ * hiding a row never shifts anyone else's answer.
+ */
+export function visibleFixedRows(
+  field: CompiledField,
+  values: Record<string, unknown>,
+): { row: CompiledFixedRow; index: number }[] {
+  return (field.fixedRows ?? [])
+    .map((row, index) => ({ row, index }))
+    .filter(({ row }) => conditionMet(row.conditionalOn, values));
 }
 
 /** Does this field hold a real answer? */

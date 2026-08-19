@@ -91,9 +91,19 @@ of the PLC display showing cloud registration [100]" item is modelled.
 definition is **copied into that instance**, so edits in git never change a form someone is
 already filling in — or one already submitted.
 
-- Fixing a typo or clarifying help text: edit in place, keep the version.
-- Adding/removing/re-meaning fields: bump `version`. New links use the new version;
-  existing ones keep the old.
+**Bumping the version is the checklist owner's call, not something to do on every
+change.** While a checklist is still being shaped, keep editing the same version — a new
+version per edit just litters the database with definitions nobody will use again. Ask
+before bumping.
+
+When you do bump, new links use the new version and existing ones keep the old. Edits
+made without a bump reach new links immediately; forms already created keep the snapshot
+they were made with, so they will not show the edit.
+
+After a bump, `npx tsx scripts/db-prune-checklists.ts --apply` removes published
+definitions that no longer exist in `generated/`. Existing forms are unaffected — they
+carry their own snapshot — but the admin's picker offers only the newest published
+version, so a stale higher version would otherwise hide the current one.
 
 ## Adding a whole new checklist
 

@@ -2,13 +2,15 @@
 
 import type { CompiledField, Lang } from '@/lib/checklist/types';
 import { help, label } from '@/lib/checklist/types';
-import { isTableValue, type TableValue } from '@/lib/checklist/state';
+import { isTableValue, visibleFixedRows, type TableValue } from '@/lib/checklist/state';
 import { t } from '@/lib/i18n';
 
 interface Props {
   field: CompiledField;
   lang: Lang;
   value: unknown;
+  /** All current answers — fixed rows may be gated on one. */
+  values: Record<string, unknown>;
   disabled?: boolean;
   onChange: (v: TableValue) => void;
 }
@@ -18,13 +20,22 @@ interface Props {
  * counts on the paper form were a print-layout constraint, not a business rule.
  * Fixed-row tables (e.g. the JPS switchboard designations) keep their labelled rows.
  */
-export function TableField({ field, lang, value, disabled, onChange }: Props) {
+export function TableField({ field, lang, values, value, disabled, onChange }: Props) {
   const columns = field.columns ?? [];
   const fixed = field.fixedRows;
 
   const current: TableValue = isTableValue(value)
     ? value
     : { rows: initialRows(field) };
+
+  // Fixed rows keep their slot in `rows` even when gated out, so hiding one never
+  // shifts another row's answer; only the rendering is filtered.
+  const rows = fixed
+    ? visibleFixedRows(field, values).map(({ row, index }) => ({
+        label: label(row, lang),
+        index,
+      }))
+    : current.rows.map((_, index) => ({ label: '', index }));
 
   function setCell(rowIdx: number, colId: string, v: unknown) {
     const rows = current.rows.map((r, i) => (i === rowIdx ? { ...r, [colId]: v } : r));
@@ -61,11 +72,11 @@ export function TableField({ field, lang, value, disabled, onChange }: Props) {
             </tr>
           </thead>
           <tbody>
-            {current.rows.map((row, i) => (
+            {rows.map(({ label: rowLabel, index: i }) => (
               <tr key={i} className="border-t border-slate-100">
                 {fixed && (
                   <th className="bg-slate-50/60 px-3 py-2 text-left font-normal text-slate-600 whitespace-nowrap">
-                    {fixed[i] ? label(fixed[i], lang) : ''}
+                    {rowLabel}
                   </th>
                 )}
                 {columns.map((c) => (
@@ -73,7 +84,7 @@ export function TableField({ field, lang, value, disabled, onChange }: Props) {
                     {c.type === 'select' ? (
                       <select
                         className="field-input py-1.5 text-sm"
-                        value={String(row[c.id] ?? '')}
+                        value={String(current.rows[i]?.[c.id] ?? '')}
                         disabled={disabled}
                         onChange={(e) => setCell(i, c.id, e.target.value || null)}
                       >
@@ -91,7 +102,7 @@ export function TableField({ field, lang, value, disabled, onChange }: Props) {
                         }
                         inputMode={c.type === 'number' ? 'decimal' : undefined}
                         className="field-input py-1.5 text-sm"
-                        value={String(row[c.id] ?? '')}
+                        value={String(current.rows[i]?.[c.id] ?? '')}
                         disabled={disabled}
                         onChange={(e) =>
                           setCell(

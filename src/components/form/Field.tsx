@@ -15,6 +15,8 @@ interface Props {
   field: CompiledField;
   lang: Lang;
   value: unknown;
+  /** All current answers — a table's fixed rows may be gated on one. */
+  values: Record<string, unknown>;
   failNote: string | null | undefined;
   photos: Attachment[];
   signature?: Attachment;
@@ -31,6 +33,7 @@ export function Field({
   field,
   lang,
   value,
+  values,
   failNote,
   photos,
   signature,
@@ -152,6 +155,7 @@ export function Field({
           field={field}
           lang={lang}
           value={value}
+          values={values}
           disabled={disabled}
           onChange={onChange}
           token={token}
@@ -223,6 +227,7 @@ function Control({
   field,
   lang,
   value,
+  values,
   disabled,
   onChange,
   token,
@@ -232,6 +237,7 @@ function Control({
   field: CompiledField;
   lang: Lang;
   value: unknown;
+  values: Record<string, unknown>;
   disabled?: boolean;
   onChange: (v: unknown) => void;
   token: string;
@@ -328,6 +334,7 @@ function Control({
           field={field}
           lang={lang}
           value={value}
+          values={values}
           disabled={disabled}
           onChange={onChange}
         />

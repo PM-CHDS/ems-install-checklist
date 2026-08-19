@@ -60,20 +60,28 @@ Next.js (Docker) ─────────────────────
 - **Schema keys added for the web form** (not in the source document): `blocking`,
   `on_fail: {require_note, require_photo}`, `photo`, `photo_required`. Documented in
   `docs/AUTHORING.md`.
-- **v9 is "EMS FULL" and covers EMS + dispatching control**, the same scope as the v7
-  source document. (v8 briefly narrowed it to EMS-only; that was reverted.) Terminology
+- **Version bumps are Denys's call — do not bump automatically** (his instruction,
+  2026-08-19). Everything through the EMS FULL rename, ISC terminology, count gating and
+  footnote cleanup lives at **v8**. `scripts/db-prune-checklists.ts --apply` clears
+  published definitions that no longer exist in `generated/`; without it a stale higher
+  version hides the current one in the admin picker.
+- **v8 is "EMS FULL" and covers EMS + dispatching control**, the same scope as the v7
+  source document. Terminology
   table — MaR → ISC, DŘ → Dispatching control (DSO RTU) — is in
   `checklists/rtu-ems/README.md`. Czech labels keep the on-site terms (`EMS/DŘ`, `MaR`);
   English mirrors them as `EMS/DSO RTU` and `ISC`, spelled out in help text.
-- `conditional_on` takes `equals` **or** `gt` (numeric, `number` fields only). `gt` keeps
-  a field hidden while its gate is unanswered — used so a count of 0 MaR/ISC panels hides
-  the blocking checks about them instead of forcing a false NE.
+- `conditional_on` takes `equals` **or** `gt` (numeric, `number` fields only), and works
+  on **fields and on a table's `fixed_rows`**. `gt` keeps its target hidden while the gate
+  is unanswered — so a count of 0 MaR/ISC panels hides the blocking checks about them
+  instead of forcing a false NE, and drops their rows from the JPS table.
+  Gated fixed rows keep their slot in the stored `rows` array, so hiding one never shifts
+  another row's answer.
 - The compiler wipes `generated/` before writing, so a version bump doesn't leave the old
   JSON behind for the startup bootstrap to republish. The admin picker offers only the
   current version of each checklist; superseded rows stay in the table for existing
   instances.
-- rtu-ems v9 compiles to **8 sections, 128 fields (111 inputs, 31 blocking checks,
-  26 conditionals, 20 photo-capable fields)**.
+- rtu-ems v8 compiles to **8 sections, 129 fields (112 inputs, 31 blocking checks,
+  27 conditionals, 20 photo-capable fields)**.
 
 ### Non-obvious implementation notes
 
