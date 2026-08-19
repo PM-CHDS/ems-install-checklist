@@ -277,8 +277,8 @@ fields:
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
 
   - id: compensation_affects_fve_control
-    label_cs: "bude ovlivňovat řízení fve a povely z EMS"
-    label_en: "Will it affect PV control and EMS commands"
+    label_cs: "bude ovlivňovat řízení fve a povely z DŘ"
+    label_en: "Will it affect PV control and dispatching-control (DSO RTU) commands"
     type: boolean
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
     conditional_on: {field: compensation_installed, equals: true}

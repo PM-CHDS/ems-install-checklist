@@ -136,7 +136,7 @@ equivalents rather than a literal translation.
 | Czech | English | Note |
 |---|---|---|
 | MaR (měření a regulace) | **ISC** — Instrumentation and Control panel/switchboard | `mar_*` field ids are kept for stability; only the English labels use ISC |
-| DŘ (dispečerské řízení) | **Dispatching control (DSO RTU)** | Not used in this checklist — see below |
+| DŘ (dispečerské řízení) | **Dispatching control (DSO RTU)** | Labels use the short `EMS/DSO RTU` to mirror the Czech `EMS/DŘ`; help text spells it out |
 | EMS | EMS (energy management system) | |
 | MTP / MTN | current transformer / voltage transformer | |
 | JPS (jednopólové schéma) | single-line diagram | |
@@ -144,18 +144,16 @@ equivalents rather than a literal translation.
 | SoP (smlouva o připojení) | grid connection agreement | |
 | PDS | DSO (distribution system operator) | |
 
-## Scope: EMS only (from v8)
+## Scope
 
-The v7 source document covered EMS **and** dispatch control (DŘ), marking shared items
-"EMS/DŘ". From v8 this checklist is **EMS only**: those markers are gone, the switchboard
-is "the EMS switchboard", and the dispatch-control-specific requirement to draw all
-commands and signals into the single-line diagram has been dropped.
+This checklist covers **EMS together with dispatching control (DSO RTU)** — the same
+scope as the v7 source document. Items marked `EMS/DŘ` (`EMS/DSO RTU` in English) apply
+to both, and §5's intro keeps the source's instruction to fill those in even when only
+dispatching control was ordered.
 
-No fields were removed for this — DŘ appeared throughout as naming and as "fill this in
-even if you only ordered DŘ" markers, not as separate questions. If a dispatch-control
-checklist is authored later (the `Checklist_RTU_Ověření-komunikace-s-PDS` document in
-`input-dump/` is the obvious candidate), it should be its own checklist directory using
-the English terminology above.
+If a dispatching-control-only checklist is wanted later (the
+`Checklist_RTU_Ověření-komunikace-s-PDS` document in `input-dump/` is the obvious
+candidate), it should be its own checklist directory rather than a variant of this one.
 
 ## Relationship to the web form
 

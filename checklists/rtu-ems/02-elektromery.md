@@ -16,12 +16,12 @@
 fields:
   - id: meter_main_heading
     type: group
-    label_cs: "Elektroměr v EMS rozvaděči (SML133) pro měření na předacím místě"
-    label_en: "Meter in the EMS switchboard (SML133) for metering at the delivery point"
+    label_cs: "Elektroměr v EMS/DŘ rozvaděči (SML133) pro měření na předacím místě"
+    label_en: "Meter in the EMS/DSO RTU switchboard (SML133) for metering at the delivery point"
 
   - id: mtp_installed
-    label_cs: "Osazení a připojení MTP k EMS rozvaděči"
-    label_en: "Mounting and connection of the current transformer (MTP) to the EMS switchboard"
+    label_cs: "Osazení a připojení MTP k EMS/DŘ rozvaděči"
+    label_en: "Mounting and connection of the current transformer (MTP) to the EMS/DSO RTU switchboard"
     type: boolean
     blocking: true
     photo: true
@@ -30,8 +30,8 @@ fields:
     help_en: "Mounting of current transformers (MTP) at the locations specified in the documentation, with the correct ratio. Verify the correct transformation ratio and accuracy class during mounting."
 
   - id: mtn_installed
-    label_cs: "Osazení a připojení MTN k EMS rozvaděči"
-    label_en: "Mounting and connection of the voltage transformer (MTN) to the EMS switchboard"
+    label_cs: "Osazení a připojení MTN k EMS/DŘ rozvaděči"
+    label_en: "Mounting and connection of the voltage transformer (MTN) to the EMS/DSO RTU switchboard"
     type: boolean
     blocking: true
     photo: true
@@ -76,8 +76,8 @@ fields:
 
   - id: meter_settings_heading
     type: group
-    label_cs: "Nastavení elektroměru v EMS rozvaděči (pro měření předacího místa)"
-    label_en: "Meter settings in the EMS switchboard (for delivery-point metering)"
+    label_cs: "Nastavení elektroměru v EMS/DŘ rozvaděči (pro měření předacího místa)"
+    label_en: "Meter settings in the EMS/DSO RTU switchboard (for delivery-point metering)"
     help_cs: "Elektroměr je potřeba nastavit dle místních parametrů a připojených MTP/MTN."
     help_en: "The meter must be configured per local parameters and the connected MTP/MTN."
     images:

@@ -36,7 +36,7 @@ page.on('pageerror', (e) => fails.push(`page error: ${e.message}`));
 
 await page.goto(`${BASE}/f/${token}`, { waitUntil: 'networkidle' });
 
-check('form renders', await page.getByText('Checklist instalace EMS').isVisible());
+check('form renders', await page.getByText('Checklist instalace EMS FULL').isVisible());
 check('instance label shown', await page.getByText(stamp).isVisible());
 
 // --- typing into the cover section, then reload to prove autosave -------------
@@ -64,11 +64,11 @@ await page.getByRole('button', { name: '2', exact: true }).click();
 await page.waitForTimeout(400);
 check(
   'section 1 renders its checks',
-  await page.getByText('Osazení a silové připojení EMS rozvaděče').isVisible(),
+  await page.getByText('Osazení a silové připojení EMS/DŘ rozvaděče').isVisible(),
 );
 
 // answer the first blocking check with NE
-const firstCard = page.locator('#field-ems_switchboard_installed');
+const firstCard = page.locator('#field-em_dr_switchboard_installed');
 await firstCard.getByRole('button', { name: 'NE', exact: true }).click();
 await page.waitForTimeout(400);
 check(

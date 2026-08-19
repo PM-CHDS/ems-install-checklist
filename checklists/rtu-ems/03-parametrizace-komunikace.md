@@ -10,9 +10,9 @@
 
 ```yaml
 fields:
-  - id: eth_connected_ems
-    label_cs: "Zapojení Eth kabelu (datová síť) do rozvaděče EMS"
-    label_en: "Ethernet cable (data network) connected to the EMS switchboard"
+  - id: eth_connected_ems_dr
+    label_cs: "Zapojení Eth kabelu (datová síť) do rozvaděče EMS/DŘ"
+    label_en: "Ethernet cable (data network) connected to the EMS/DSO RTU switchboard"
     type: boolean
     blocking: true
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}

@@ -60,11 +60,11 @@ Next.js (Docker) ─────────────────────
 - **Schema keys added for the web form** (not in the source document): `blocking`,
   `on_fail: {require_note, require_photo}`, `photo`, `photo_required`. Documented in
   `docs/AUTHORING.md`.
-- **v8 is EMS-only.** The v7 source document covered EMS *and* dispatch control (DŘ),
-  marking shared items "EMS/DŘ"; v8 drops that scope. No fields had to be removed — DŘ
-  was naming plus "fill this in even if you only ordered DŘ" markers, not separate
-  questions. Terminology table (MaR → ISC, DŘ → Dispatching control (DSO RTU), etc.) is
-  in `checklists/rtu-ems/README.md`; Czech labels keep the on-site terms.
+- **v9 is "EMS FULL" and covers EMS + dispatching control**, the same scope as the v7
+  source document. (v8 briefly narrowed it to EMS-only; that was reverted.) Terminology
+  table — MaR → ISC, DŘ → Dispatching control (DSO RTU) — is in
+  `checklists/rtu-ems/README.md`. Czech labels keep the on-site terms (`EMS/DŘ`, `MaR`);
+  English mirrors them as `EMS/DSO RTU` and `ISC`, spelled out in help text.
 - `conditional_on` takes `equals` **or** `gt` (numeric, `number` fields only). `gt` keeps
   a field hidden while its gate is unanswered — used so a count of 0 MaR/ISC panels hides
   the blocking checks about them instead of forcing a false NE.
@@ -72,7 +72,7 @@ Next.js (Docker) ─────────────────────
   JSON behind for the startup bootstrap to republish. The admin picker offers only the
   current version of each checklist; superseded rows stay in the table for existing
   instances.
-- rtu-ems v8 compiles to **8 sections, 128 fields (111 inputs, 31 blocking checks,
+- rtu-ems v9 compiles to **8 sections, 128 fields (111 inputs, 31 blocking checks,
   26 conditionals, 20 photo-capable fields)**.
 
 ### Non-obvious implementation notes

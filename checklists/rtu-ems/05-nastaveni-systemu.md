@@ -2,14 +2,18 @@
 
 *(System settings)*
 
-> Pro potřeby nastavení EMS je potřeba vyplnit několik základních parametrů samotné
+> Pro potřeby nastavení EMS/DŘ je potřeba vyplnit několik základních parametrů samotné
 > služby "řízení energií", obsluhovaných "zařízení" (střídač, bateriové úložiště) a
 > řízených "spotřebičů". Na základě uvedených hodnot bude nastaven a předán řídící systém
-> EMS.
+> EMS. Některé hodnoty jsou potřeba i pro DŘ — tam, kde je uvedeno EMS/DŘ, vyplňte i v
+> případě, kdy máte objednáno pouze dispečerské řízení.
 >
-> *(A handful of core parameters are needed to configure the EMS "energy management"
-> service, the "devices" it operates (inverter, battery storage) and the "loads" it
-> controls. The EMS control system is configured and handed over based on these values.)*
+> *(A handful of core parameters are needed to configure the EMS / dispatching control
+> (DSO RTU) "energy management" service, the "devices" it operates (inverter, battery
+> storage) and the "loads" it controls. The EMS control system is configured and handed
+> over based on these values. Some values are needed for dispatching control (DSO RTU)
+> too — where a field says EMS/DSO RTU, fill it in even if only dispatching control was
+> ordered.)*
 
 > **_notes**: `battery_mode` and the SPOT-price sub-blocks below are each rendered in the
 > source as multiple separate `ANO/NE` lines; where they're genuinely mutually exclusive
@@ -22,8 +26,8 @@
 fields:
   - id: om_parameters_heading
     type: group
-    label_cs: "Parametry OM (EMS)"
-    label_en: "Metering-point (OM) parameters (EMS)"
+    label_cs: "Parametry OM (EMS/DŘ)"
+    label_en: "Metering-point (OM) parameters (EMS/DSO RTU)"
 
   - id: main_breaker_current
     label_cs: "jmenovitá hodnota proudu hlavního jističe (IN)"
@@ -250,8 +254,8 @@ fields:
     help_en: "Manufacturer-specified percentage self-loss of the battery storage."
 
   - id: additional_sources_installed
-    label_cs: "jsou instalovány další zdroje (EMS)"
-    label_en: "Are other sources installed (EMS)"
+    label_cs: "jsou instalovány další zdroje (EMS/DŘ)"
+    label_en: "Are other sources installed (EMS/DSO RTU)"
     type: boolean
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
     help_cs: "[FN12] Pokud jsou instalovány další zdroje jako např. KGJ (kogenerační jednotka), uveďte jejich seznam a informace dle bodu \"3.m\" do Poznámek (§7)."
@@ -298,13 +302,13 @@ fields:
     help_en: "For correct operation, the opto-isolator must be wired to the ¼-hour-maximum switchboard. Pulses connect to the inputs of the C-AM-0006I element."
 
   - id: quarter_hour_switchboard_connected_ems
-    label_cs: "připojen rozvaděč ¼ hod. maxima k EMS rozvaděči"
-    label_en: "¼-hour-maximum switchboard connected to the EMS switchboard"
+    label_cs: "připojen rozvaděč ¼ hod. maxima k EMS/DŘ rozvaděči"
+    label_en: "¼-hour-maximum switchboard connected to the EMS/DSO RTU switchboard"
     type: boolean
     required: false
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
-    help_cs: "Jedná se o komunikační připojení k EMS rozvaděči pomocí CIB sběrnice, případně pomocí datové sítě."
-    help_en: "This is the communication link to the EMS switchboard, via the CIB bus or the data network."
+    help_cs: "Jedná se o komunikační připojení k EMS/DŘ rozvaděči pomocí CIB sběrnice, případně pomocí datové sítě."
+    help_en: "This is the communication link to the EMS/DSO RTU switchboard, via the CIB bus or the data network."
 
   - id: cib_address_ak_puls
     label_cs: "CIB adresa prvku AK.PULS (C-AM-0006I)"
