@@ -2,6 +2,9 @@ import Link from 'next/link';
 import { isAdmin } from '@/lib/auth';
 import { listInstances, listPublishedChecklists } from '@/lib/instances';
 import { t } from '@/lib/i18n';
+import { adminLang, dateLocale } from '@/lib/admin-lang';
+import type { Lang } from '@/lib/checklist/types';
+import { LanguageSwitch } from './LanguageSwitch';
 import { LoginForm } from './LoginForm';
 import { NewInstanceForm } from './NewInstanceForm';
 import { StatusBadge } from './StatusBadge';
@@ -10,29 +13,33 @@ import { signOut } from './actions';
 export const dynamic = 'force-dynamic';
 
 export default async function AdminPage() {
-  if (!(await isAdmin())) return <LoginForm />;
+  const lang = await adminLang();
+  if (!(await isAdmin())) return <LoginForm lang={lang} />;
 
   const [rows, available] = await Promise.all([
     listInstances(),
     listPublishedChecklists(),
   ]);
-  const lang = 'cs' as const;
   const baseUrl = process.env.PUBLIC_BASE_URL ?? '';
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8">
       <header className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-xl font-semibold text-slate-900">{t(lang, 'admin.title')}</h1>
-        <form action={signOut}>
-          <button className="btn-ghost text-sm">{t(lang, 'admin.signOut')}</button>
-        </form>
+        <div className="flex items-center gap-3">
+          <LanguageSwitch lang={lang} />
+          <form action={signOut}>
+            <button className="btn-ghost text-sm">{t(lang, 'admin.signOut')}</button>
+          </form>
+        </div>
       </header>
 
       <NewInstanceForm
+        lang={lang}
         checklists={available.map((c) => ({
           slug: c.slug,
           version: c.version,
-          title: c.titleCs,
+          title: lang === 'en' ? c.titleEn : c.titleCs,
         }))}
       />
 
@@ -102,7 +109,7 @@ export default async function AdminPage() {
                         </div>
                       </td>
                       <td className="px-4 py-3 text-xs text-slate-500">
-                        {formatDate(instance.lastActivityAt ?? instance.createdAt)}
+                        {formatDate(instance.lastActivityAt ?? instance.createdAt, lang)}
                       </td>
                       <td className="px-4 py-3">
                         <a
@@ -125,9 +132,9 @@ export default async function AdminPage() {
   );
 }
 
-function formatDate(d: Date | null) {
+function formatDate(d: Date | null, lang: Lang) {
   if (!d) return '—';
-  return new Intl.DateTimeFormat('cs-CZ', {
+  return new Intl.DateTimeFormat(dateLocale(lang), {
     dateStyle: 'short',
     timeStyle: 'short',
   }).format(d);

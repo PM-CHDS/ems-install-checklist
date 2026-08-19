@@ -53,6 +53,10 @@ Next.js (Docker) ─────────────────────
   *derived* from the answers on every save, never set by the client.
 - **One validation engine** (`src/lib/checklist/state.ts`) runs in both the browser (live
   feedback) and the server (authoritative at submit), so they can't disagree.
+- **Two independent languages.** A form instance's `lang` is what the installer sees and is
+  fixed when the link is created. The admin panel's language is separate — English by
+  default (`src/lib/admin-lang.ts`), switchable to Czech, remembered in the
+  `ems_admin_lang` cookie. Changing one must never change the other.
 - **Schema keys added for the web form** (not in the source document): `blocking`,
   `on_fail: {require_note, require_photo}`, `photo`, `photo_required`. Documented in
   `docs/AUTHORING.md`.
@@ -84,7 +88,7 @@ Next.js (Docker) ─────────────────────
 
 ## Status (2026-08-18): MVP complete and verified
 
-Verified end to end against a live Postgres, by API and in a real browser — **25/25
+Verified end to end against a live Postgres, by API and in a real browser — **28/28
 Playwright checks pass** (`npm run test:e2e`), against both `next start` and the
 production standalone entry point (`node server.js`) on a freshly created empty database:
 
@@ -95,6 +99,7 @@ table rows add · review lists missing items and disables submit · photo upload
 control (403 without the token) · non-image upload rejected 415 · full fill → submit 200 →
 form locked read-only, further writes 409 · drawing a signature then submitting entirely
 through the UI · admin sign-in (wrong password rejected), list, detail, JSON export ·
+admin panel English by default and its Czech switch surviving a reload ·
 non-UUID ids 404 rather than 500 · fixed-row table labels line up with their values in
 both the admin view and the export · schema compiler rejects bad `conditional_on`, typo'd
 keys, `blocking` on a non-boolean and `photo_required` without `photo`.

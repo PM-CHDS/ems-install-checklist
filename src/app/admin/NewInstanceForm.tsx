@@ -1,23 +1,23 @@
 'use client';
 
 import { useActionState, useState } from 'react';
+import type { Lang } from '@/lib/checklist/types';
 import { t } from '@/lib/i18n';
 import { createInstanceAction } from './actions';
 
 interface Props {
+  lang: Lang;
   checklists: { slug: string; version: number; title: string }[];
 }
 
-export function NewInstanceForm({ checklists }: Props) {
+export function NewInstanceForm({ lang, checklists }: Props) {
   const [open, setOpen] = useState(false);
   const [state, action, pending] = useActionState(createInstanceAction, null);
-  const lang = 'cs' as const;
 
   if (checklists.length === 0) {
     return (
       <p className="card mt-6 border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
-        Žádný checklist není publikovaný v databázi. Spusťte{' '}
-        <code className="rounded bg-amber-100 px-1">npm run db:sync-schema</code>.
+        {t(lang, 'admin.noChecklists')}
       </p>
     );
   }
@@ -45,11 +45,11 @@ export function NewInstanceForm({ checklists }: Props) {
             name="label"
             required
             autoFocus
-            placeholder="např. FVE Kolín — hala B"
+            placeholder={t(lang, 'admin.labelPlaceholder')}
             className="field-input mt-1"
           />
           {state?.error === 'label-required' && (
-            <p className="mt-1 text-sm text-rose-600">Vyplňte označení.</p>
+            <p className="mt-1 text-sm text-rose-600">{t(lang, 'admin.labelRequired')}</p>
           )}
         </div>
         <div>
@@ -69,8 +69,8 @@ export function NewInstanceForm({ checklists }: Props) {
             {t(lang, 'admin.language')}
           </label>
           <select id="lang" name="lang" className="field-input mt-1" defaultValue="cs">
-            <option value="cs">Čeština</option>
-            <option value="en">English</option>
+            <option value="cs">{t(lang, 'admin.langCs')}</option>
+            <option value="en">{t(lang, 'admin.langEn')}</option>
           </select>
         </div>
         <div>
@@ -96,7 +96,7 @@ export function NewInstanceForm({ checklists }: Props) {
           {t(lang, 'admin.create')}
         </button>
         <button type="button" className="btn-secondary" onClick={() => setOpen(false)}>
-          Zrušit
+          {t(lang, 'admin.cancel')}
         </button>
       </div>
     </form>

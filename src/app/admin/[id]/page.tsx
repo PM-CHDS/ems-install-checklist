@@ -18,6 +18,7 @@ import {
 } from '@/lib/checklist/types';
 import type { Attachment } from '@/db/schema';
 import { t } from '@/lib/i18n';
+import { adminLang, dateLocale } from '@/lib/admin-lang';
 import { StatusBadge } from '../StatusBadge';
 import { CopyLink } from '../CopyLink';
 import { deleteInstanceAction, markReviewed, reopenForm } from '../actions';
@@ -29,6 +30,7 @@ export default async function InstanceDetail({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const lang = await adminLang();
   if (!(await isAdmin())) redirect('/admin');
 
   const { id } = await params;
@@ -38,7 +40,6 @@ export default async function InstanceDetail({
   const { instance, checklist, state, attachments } = loaded;
   const events = await listEvents(instance.id, 200);
   const summary = summarize(checklist, state);
-  const lang = 'cs' as const;
   const url = `${process.env.PUBLIC_BASE_URL ?? ''}/f/${instance.token}`;
 
   const filesByField = new Map<string, Attachment[]>();
@@ -63,7 +64,8 @@ export default async function InstanceDetail({
           <div>
             <h1 className="text-xl font-semibold text-slate-900">{instance.label}</h1>
             <p className="mt-0.5 text-sm text-slate-500">
-              {checklist.titleCs} · {instance.checklistSlug} v{instance.checklistVersion}
+              {lang === 'en' ? checklist.titleEn : checklist.titleCs} ·{' '}
+              {instance.checklistSlug} v{instance.checklistVersion}
               {instance.customerName ? ` · ${instance.customerName}` : ''}
               {instance.customerEmail ? ` · ${instance.customerEmail}` : ''}
             </p>
@@ -72,7 +74,7 @@ export default async function InstanceDetail({
         </div>
 
         <div className="mt-4">
-          <CopyLink url={url} />
+          <CopyLink url={url} lang={lang} />
         </div>
 
         <dl className="mt-4 grid grid-cols-2 gap-4 text-sm sm:grid-cols-4">
@@ -85,7 +87,7 @@ export default async function InstanceDetail({
             </span>
           </Stat>
           <Stat label={t(lang, 'admin.attachments')}>{attachments.length}</Stat>
-          <Stat label={t(lang, 'admin.created')}>{fmt(instance.createdAt)}</Stat>
+          <Stat label={t(lang, 'admin.created')}>{fmt(instance.createdAt, lang)}</Stat>
         </dl>
 
         <div className="mt-4 flex flex-wrap gap-2">
@@ -107,7 +109,7 @@ export default async function InstanceDetail({
           {(instance.status === 'submitted' || instance.status === 'reviewed') && (
             <form action={reopenForm}>
               <input type="hidden" name="id" value={instance.id} />
-              <button className="btn-secondary text-xs">Znovu otevřít pro vyplnění</button>
+              <button className="btn-secondary text-xs">{t(lang, 'admin.reopen')}</button>
             </form>
           )}
           <form action={deleteInstanceAction}>
@@ -130,7 +132,7 @@ export default async function InstanceDetail({
                 <p className="text-sm font-medium text-slate-800">{label(f, lang)}</p>
                 <p className="mt-0.5 text-sm text-slate-600">
                   {state.failNotes[f.id]?.trim() || (
-                    <em className="text-rose-600">bez vysvětlení</em>
+                    <em className="text-rose-600">{t(lang, 'admin.noExplanation')}</em>
                   )}
                 </p>
                 <Files files={filesByField.get(f.id) ?? []} />
@@ -148,7 +150,7 @@ export default async function InstanceDetail({
           {checklist.sections.map((section) => (
             <div key={section.id} className="card overflow-hidden">
               <h3 className="border-b border-slate-200 bg-slate-50 px-4 py-2.5 text-sm font-semibold text-slate-700">
-                {section.titleCs}
+                {lang === 'en' ? section.titleEn : section.titleCs}
               </h3>
               <dl className="divide-y divide-slate-100">
                 {section.fields
@@ -177,7 +179,7 @@ export default async function InstanceDetail({
             {events.map((e) => (
               <li key={e.id} className="flex gap-3 px-4 py-2">
                 <span className="w-32 shrink-0 text-slate-400 tabular-nums">
-                  {fmt(e.createdAt)}
+                  {fmt(e.createdAt, lang)}
                 </span>
                 <span className="w-36 shrink-0 font-medium text-slate-600">{e.type}</span>
                 <span className="w-48 shrink-0 truncate text-slate-500">
@@ -219,7 +221,9 @@ function AnswerRow({
     >
       <dt className="text-sm text-slate-600">
         {label(field, lang)}
-        {!visible && <span className="ml-1 text-xs text-slate-400">(skryto)</span>}
+        {!visible && (
+          <span className="ml-1 text-xs text-slate-400">({t(lang, 'admin.hidden')})</span>
+        )}
         <span className="ml-1.5 font-mono text-[10px] text-slate-400">{field.id}</span>
       </dt>
       <dd className="text-sm">
@@ -346,9 +350,9 @@ function Stat({ label: l, children }: { label: string; children: React.ReactNode
   );
 }
 
-function fmt(d: Date | null) {
+function fmt(d: Date | null, lang: Lang) {
   if (!d) return '—';
-  return new Intl.DateTimeFormat('cs-CZ', {
+  return new Intl.DateTimeFormat(dateLocale(lang), {
     dateStyle: 'short',
     timeStyle: 'medium',
   }).format(d);

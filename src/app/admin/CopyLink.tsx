@@ -1,11 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+import type { Lang } from '@/lib/checklist/types';
 import { t } from '@/lib/i18n';
 
-export function CopyLink({ url }: { url: string }) {
+export function CopyLink({ url, lang }: { url: string; lang: Lang }) {
   const [copied, setCopied] = useState(false);
-  const lang = 'cs' as const;
 
   return (
     <div className="flex flex-wrap items-center gap-2">

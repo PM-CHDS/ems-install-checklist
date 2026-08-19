@@ -3,6 +3,9 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { checkPassword, endSession, isAdmin, startSession } from '@/lib/auth';
+import { ADMIN_LANG_COOKIE } from '@/lib/admin-lang';
+import type { Lang } from '@/lib/checklist/types';
+import { cookies } from 'next/headers';
 import {
   createInstance,
   deleteInstance,
@@ -83,4 +86,15 @@ export async function deleteInstanceAction(formData: FormData) {
   await deleteInstance(id);
   revalidatePath('/admin');
   redirect('/admin');
+}
+
+/** Remember the admin's interface language for a year. */
+export async function setAdminLang(lang: Lang) {
+  (await cookies()).set(ADMIN_LANG_COOKIE, lang, {
+    httpOnly: false,
+    sameSite: 'lax',
+    path: '/',
+    maxAge: 60 * 60 * 24 * 365,
+  });
+  revalidatePath('/admin', 'layout');
 }

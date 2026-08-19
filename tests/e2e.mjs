@@ -171,18 +171,34 @@ check(
 );
 
 // --- admin sign-in -----------------------------------------------------------
+// The admin panel is English by default; the form itself stays in the language the
+// instance was created with.
 const admin = await browser.newPage();
 await admin.goto(`${BASE}/admin`, { waitUntil: 'networkidle' });
-await admin.getByLabel('Heslo').fill('wrong-password');
-await admin.getByRole('button', { name: 'Přihlásit se' }).click();
+await admin.getByLabel('Password').fill('wrong-password');
+await admin.getByRole('button', { name: 'Sign in' }).click();
 await admin.waitForTimeout(1200);
-check('wrong password rejected', await admin.getByText('Nesprávné heslo').isVisible());
+check('wrong password rejected', await admin.getByText('Incorrect password').isVisible());
 
-await admin.getByLabel('Heslo').fill(ADMIN_PASSWORD);
-await admin.getByRole('button', { name: 'Přihlásit se' }).click();
+await admin.getByLabel('Password').fill(ADMIN_PASSWORD);
+await admin.getByRole('button', { name: 'Sign in' }).click();
 await admin.waitForURL('**/admin', { timeout: 10000 });
 await admin.waitForTimeout(800);
-check('admin signs in', await admin.getByText('Formuláře').first().isVisible());
+check('admin signs in', await admin.getByText('Forms').first().isVisible());
+check(
+  'admin defaults to English',
+  await admin.getByRole('button', { name: 'Sign out' }).isVisible(),
+);
+await admin.getByRole('button', { name: 'cs', exact: true }).click();
+await admin.waitForTimeout(1500);
+check('admin can switch to Czech', await admin.getByText('Administrace checklistů').isVisible());
+await admin.getByRole('button', { name: 'en', exact: true }).click();
+await admin.waitForTimeout(1500);
+check(
+  'admin switches back to English',
+  await admin.getByText('Checklist administration').isVisible(),
+);
+
 const row = admin.locator(`a[href="/admin/${instanceId}"]`);
 check('new instance listed', (await row.count()) === 1);
 
@@ -190,18 +206,21 @@ check('new instance listed', (await row.count()) === 1);
 await row.click();
 await admin.waitForTimeout(1000);
 check('detail shows saved answer', await admin.getByText('FVE Kolín E2E').first().isVisible());
-check('detail shows the submitted status', await admin.getByText('Odesláno').first().isVisible());
+check(
+  'detail shows the submitted status',
+  await admin.getByText('Submitted').first().isVisible(),
+);
 // The check was flipped back to ANO, so it must no longer be listed as failed —
 // but the audit trail must still carry the note that was written at the time.
 check(
   'no longer listed under failed checks',
-  (await admin.getByRole('heading', { name: /Neproběhlé kroky/ }).count()) === 0,
+  (await admin.getByRole('heading', { name: /Steps that did/ }).count()) === 0,
 );
 check(
   'audit trail preserves the earlier explanation',
   (await admin.getByText('Rozvaděč zatím nedorazil').count()) > 0,
 );
-check('detail shows audit trail', await admin.getByText('Historie změn').isVisible());
+check('detail shows audit trail', await admin.getByText(/Change history/).isVisible());
 
 await browser.close();
 

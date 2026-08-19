@@ -1,12 +1,12 @@
 'use client';
 
 import { useActionState } from 'react';
+import type { Lang } from '@/lib/checklist/types';
 import { t } from '@/lib/i18n';
 import { signIn } from './actions';
 
-export function LoginForm() {
+export function LoginForm({ lang }: { lang: Lang }) {
   const [state, action, pending] = useActionState(signIn, null);
-  const lang = 'cs' as const;
 
   return (
     <div className="mx-auto flex min-h-screen max-w-sm items-center px-4">
