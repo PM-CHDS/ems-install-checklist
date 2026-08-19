@@ -62,14 +62,14 @@ fields:
     repeatable: true
     suggested_rows: 2
     help_cs: >
-      [FN8] Při pořizování fotodokumentace IC čísla nezapomeň fotografii označit
+      Při pořizování fotodokumentace IC čísla nezapomeň fotografii označit
       příslušností k rozvaděči. IC číslo je registrační číslo řídící jednotky v
       nadřazeném systému — k němu se lze dostat stisknutím tlačítka "Mode" (na displeji
       se objeví "RUN"), poté šipkou dolů nalistovat příslušný displej. Řídící jednotka má
       na ETH 2 portu zapnutý DHCP server; po připojení lze na displeji nalistovat
       položku ETH 2 a přečíst přidělenou IP adresu.
     help_en: >
-      [FN8] When taking the IC-number photo, remember to label which switchboard it
+      When taking the IC-number photo, remember to label which switchboard it
       belongs to. The IC number is the controller unit's registration number in the
       parent system — reach it by pressing "Mode" (display shows "RUN"), then scroll
       down to the relevant screen. The controller unit runs a DHCP server on its ETH 2

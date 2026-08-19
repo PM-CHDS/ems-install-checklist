@@ -48,8 +48,8 @@ fields:
     required: false
     photo: true
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
-    help_cs: "[FN13] Pouze v případě, že v rámci instalovaných technologií bude zařízení, které není systémem EMS/DŘ podporováno a bude potřeba k němu nový driver. Je nutno dodat tabulku Modbus registrů vč. parametrů pro nastavení komunikace."
-    help_en: "[FN13] Only if the installed technology includes a device not supported by EMS/DSO RTU and a new driver is needed. Supply the Modbus register table including the communication-setup parameters."
+    help_cs: "Pouze v případě, že v rámci instalovaných technologií bude zařízení, které není systémem EMS/DŘ podporováno a bude potřeba k němu nový driver. Je nutno dodat tabulku Modbus registrů vč. parametrů pro nastavení komunikace."
+    help_en: "Only if the installed technology includes a device not supported by EMS/DSO RTU and a new driver is needed. Supply the Modbus register table including the communication-setup parameters."
 
   - id: switchboard_documentation_with_signals
     label_cs: "Dokumentaci k rozvaděčům s vyznačenými realizovanými signály a povely, případně zaznamenanými změnami"

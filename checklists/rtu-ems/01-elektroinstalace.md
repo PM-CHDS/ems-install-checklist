@@ -57,16 +57,16 @@ fields:
     options:
       - {value: inside, label_cs: "uvnitř", label_en: "inside"}
       - {value: outside, label_cs: "venku", label_en: "outside"}
-    help_cs: "[FN2] Specifikace umístění, zda je rozvaděč instalován ve venkovním prostředí nebo je umístěn někde v rozvodně."
-    help_en: "[FN2] Specify whether the switchboard is installed outdoors or inside a switchroom/electrical room."
+    help_cs: "Specifikace umístění, zda je rozvaděč instalován ve venkovním prostředí nebo je umístěn někde v rozvodně."
+    help_en: "Specify whether the switchboard is installed outdoors or inside a switchroom/electrical room."
 
   - id: switchboard_jps_labels
     label_cs: "Označení rozvaděčů dle JPS"
     label_en: "Switchboard designation per single-line diagram (JPS)"
     type: table
     repeatable: false
-    help_cs: "[FN3] Pokud je instalováno více rozvaděčů, využijte pole pro poznámky. Uveďte názvy instalovaných rozvaděčů tak, jak jsou označeny na místě instalace. Tento název bude pak použit při konfiguraci."
-    help_en: "[FN3] If more switchboards are installed than fit here, use the Notes field (§7). Enter the names of the installed switchboards exactly as labeled on site — this name is then used during configuration."
+    help_cs: "Pokud je instalováno více rozvaděčů, využijte pole pro poznámky. Uveďte názvy instalovaných rozvaděčů tak, jak jsou označeny na místě instalace. Tento název bude pak použit při konfiguraci."
+    help_en: "If more switchboards are installed than fit here, use the Notes field (§7). Enter the names of the installed switchboards exactly as labeled on site — this name is then used during configuration."
     fixed_rows:
       - {row_id: ems_dr, label_cs: "Rozvaděč EMS/DŘ", label_en: "EMS/DSO RTU switchboard"}
       - {row_id: mar1, label_cs: "MaR1", label_en: "ISC1"}

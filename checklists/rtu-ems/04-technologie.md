@@ -44,8 +44,8 @@ fields:
     label_en: "Are all inverters connected to the Data Logger"
     type: boolean
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
-    help_cs: "[FN9] Vyplňte pouze v případě, že jsou střídače napojeny do Smart loggeru, Data Hubu nebo podobného zařízení. Kontrola, zda jsou k němu připojeny všechny střídače a komunikují s ním."
-    help_en: "[FN9] Fill in only if the inverters are connected to a Smart Logger, Data Hub, or similar device. Check that all inverters are connected to it and communicating."
+    help_cs: "Vyplňte pouze v případě, že jsou střídače napojeny do Smart loggeru, Data Hubu nebo podobného zařízení. Kontrola, zda jsou k němu připojeny všechny střídače a komunikují s ním."
+    help_en: "Fill in only if the inverters are connected to a Smart Logger, Data Hub, or similar device. Check that all inverters are connected to it and communicating."
 
   - id: datalogger_connected_to_network
     label_cs: "Je Data logger připojen do datové sítě s viditelností na řídící jednotku"
@@ -112,8 +112,8 @@ fields:
     repeatable: true
     suggested_rows: 5
     conditional_on: {field: inverters_connected_to_datalogger, equals: false}
-    help_cs: "[FN10] V případě přímé komunikace se střídači. Pokud je instalováno více střídačů, využijte pole pro poznámky."
-    help_en: "[FN10] For direct communication with the inverters. If more inverters are installed than fit here, use the Notes field (§7)."
+    help_cs: "V případě přímé komunikace se střídači. Pokud je instalováno více střídačů, využijte pole pro poznámky."
+    help_en: "For direct communication with the inverters. If more inverters are installed than fit here, use the Notes field (§7)."
     columns:
       - id: jps_label
         label_cs: "Označení střídače dle JPS"
@@ -155,8 +155,8 @@ fields:
         label_cs: "Master (M) / Slave (S) / 0"
         label_en: "Master (M) / Slave (S) / 0"
         type: text
-        help_cs: "[FN11] Vyplňte pouze pokud se se střídači komunikuje pomocí RS-485 a střídače jsou v režimu Master/Slave; pokud se komunikuje přímo, uveďte 0."
-        help_en: "[FN11] Fill in only if the inverters communicate via RS-485 in Master/Slave mode; if communicating directly, enter 0."
+        help_cs: "Vyplňte pouze pokud se se střídači komunikuje pomocí RS-485 a střídače jsou v režimu Master/Slave; pokud se komunikuje přímo, uveďte 0."
+        help_en: "Fill in only if the inverters communicate via RS-485 in Master/Slave mode; if communicating directly, enter 0."
 
   - id: battery_components_connected
     label_cs: "Jsou všechny prvky bateriového úložiště (střídače, BMS, atd.) připojeny k řídícím jednotkám"

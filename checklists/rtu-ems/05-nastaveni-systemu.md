@@ -258,8 +258,8 @@ fields:
     label_en: "Are other sources installed (EMS/DSO RTU)"
     type: boolean
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
-    help_cs: "[FN12] Pokud jsou instalovány další zdroje jako např. KGJ (kogenerační jednotka), uveďte jejich seznam a informace dle bodu \"3.m\" do Poznámek (§7)."
-    help_en: "[FN12] If other sources are installed (e.g. a CHP/cogeneration unit), list them and their details per point \"3.m\" in the Notes section (§7)."
+    help_cs: "Pokud jsou instalovány další zdroje jako např. KGJ (kogenerační jednotka), uveďte jejich seznam a informace dle bodu \"3.m\" do Poznámek (§7)."
+    help_en: "If other sources are installed (e.g. a CHP/cogeneration unit), list them and their details per point \"3.m\" in the Notes section (§7)."
 
   - id: battery_mode
     label_cs: "Režim bateriového uložiště (vyberte jednu možnost, kombinace je pouze po vzájemné domluvě a ověření, že daná technologie kombinaci podporuje)"

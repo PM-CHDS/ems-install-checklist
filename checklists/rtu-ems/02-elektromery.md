@@ -36,7 +36,7 @@ fields:
     blocking: true
     photo: true
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
-    help_cs: "[FN4 in source is incomplete/stray] Jedná se o montáž měřicích transformátorů napětí (MTN). Trafa se montují na místa dle dokumentace o příslušné velikosti. U montáže je nutné zkontrolovat správný převodový poměr, případně třídu přesnosti."
+    help_cs: "Jedná se o montáž měřicích transformátorů napětí (MTN). Trafa se montují na místa dle dokumentace o příslušné velikosti. U montáže je nutné zkontrolovat správný převodový poměr, případně třídu přesnosti."
     help_en: "Mounting of voltage transformers (MTN) at the locations specified in the documentation, matching the correct size. Verify the correct transformation ratio and accuracy class during mounting."
 
   - id: current_direction_check
@@ -121,8 +121,8 @@ fields:
     blocking: true
     required: false
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
-    help_cs: "[FN5] Vyplňuje se pouze v případě, že elektroměr bude měřit na hladině VN."
-    help_en: "[FN5] Fill in only if the meter measures at the VN (medium/high-voltage) level."
+    help_cs: "Vyplňuje se pouze v případě, že elektroměr bude měřit na hladině VN."
+    help_en: "Fill in only if the meter measures at the VN (medium/high-voltage) level."
 
   - id: mtn_value
     label_cs: "hodnota MTN"
@@ -143,8 +143,8 @@ fields:
     type: table
     repeatable: true
     suggested_rows: 4
-    help_cs: "[FN6] Pokud je instalováno více elektroměrů, využijte pole pro poznámky."
-    help_en: "[FN6] If more meters are installed than fit here, use the Notes field (§7)."
+    help_cs: "Pokud je instalováno více elektroměrů, využijte pole pro poznámky."
+    help_en: "If more meters are installed than fit here, use the Notes field (§7)."
     columns:
       - id: jps_label
         label_cs: "Označení elektroměru dle JPS"
@@ -171,8 +171,8 @@ fields:
         label_cs: "IP adresa + Modbus ID nebo jen Modbus ID (RTU)"
         label_en: "IP address + Modbus ID, or just Modbus ID (RTU)"
         type: text
-        help_cs: "Uveďte příslušnou nastavenou adresu: buď ID adresu (RTU), nebo IP adresu (TCP)."
-        help_en: "Enter the configured address: either the ID address (RTU) or the IP address (TCP)."
+        help_cs: "Uveďte příslušnou nastavenou adresu: buď ID adresu (RTU), nebo IP adresu (TCP). Pokud máte objednán vývoj ovladače (driveru) pro nepodporovaný elektroměr, uveďte do poznámek i rychlost komunikace a paritu."
+        help_en: "Enter the configured address: either the ID address (RTU) or the IP address (TCP). If you have ordered driver development for an unsupported meter, also state the communication speed and parity in the notes."
       - id: mtp_ratio
         label_cs: "Převodový poměr MTP"
         label_en: "MTP transformation ratio"
@@ -183,8 +183,8 @@ fields:
         label_cs: "Svorkovnice X1 nebo X2"
         label_en: "Terminal block X1 or X2"
         type: text
-        help_cs: "[FN7] Kam je v rámci rozvaděče EMS Full připojena Modbus RTU komunikace."
-        help_en: "[FN7] Which terminal block within the EMS Full switchboard the Modbus RTU communication is wired to."
+        help_cs: "Kam je v rámci rozvaděče EMS Full připojena Modbus RTU komunikace."
+        help_en: "Which terminal block within the EMS Full switchboard the Modbus RTU communication is wired to."
 
   - id: meters_notes
     label_cs: "Poznámky k elektroměrům"

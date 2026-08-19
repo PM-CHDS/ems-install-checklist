@@ -155,6 +155,43 @@ If a dispatching-control-only checklist is wanted later (the
 `Checklist_RTU_Ověření-komunikace-s-PDS` document in `input-dump/` is the obvious
 candidate), it should be its own checklist directory rather than a variant of this one.
 
+## Source footnotes
+
+The source docx carries 14 Word footnotes. Their text is folded into the `help_cs` /
+`help_en` of the field each one annotates. Earlier revisions of this schema prefixed that
+help text with a `[FN7]`-style marker; those are **removed** — they reached the installer
+as literal noise in the form. This table is the traceability record instead.
+
+| Footnote | File | Field / column |
+|---|---|---|
+| 2 | `01-elektroinstalace.md` | `ems_full_location` |
+| 3 | `01-elektroinstalace.md` | `switchboard_jps_labels` |
+| 5 | `02-elektromery.md` | `mtn_ratio_set` |
+| 6 | `02-elektromery.md` | `additional_meters_table` |
+| 7 | `02-elektromery.md` | `terminal_block` |
+| 8 | `03-parametrizace-komunikace.md` | `control_units_ip_ic_table` |
+| 9 | `04-technologie.md` | `inverters_connected_to_datalogger` |
+| 10 | `04-technologie.md` | `inverters_info_table` |
+| 11 | `04-technologie.md` | `master_slave` |
+| 12 | `05-nastaveni-systemu.md` | `additional_sources_installed` |
+| 13 | `06-dodane-podklady.md` | `modbus_register_table` |
+| 14 | `02-elektromery.md` | `ip_or_modbus_id` |
+
+Three source footnotes carry nothing usable:
+
+- **FN1** is empty in the source.
+- **FN4** contains only the stray character `I` — anchored on `mtn_installed`, whose help
+  text comes from the Legend instead.
+- FN1 and FN4 are therefore absent from the table above by design, not by omission.
+
+**FN14 was missing until v9** — the source text ("if you have ordered driver development
+for an unsupported meter, also state the communication speed and parity in the notes")
+had been dropped in the original conversion. It is now on the `ip_or_modbus_id` column of
+`additional_meters_table`, which is the paragraph it anchors to in the source.
+
+To re-audit against the source: the docx is a zip; `word/footnotes.xml` holds the text and
+`word/document.xml` holds `w:footnoteReference` elements marking where each one anchors.
+
 ## Relationship to the web form
 
 `checklist.yaml` in this directory adds the checklist-level metadata (slug, version,
