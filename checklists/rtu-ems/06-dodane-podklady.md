@@ -1,6 +1,6 @@
-# 6. Dodané podklady spolu s checklistem (EMS/DŘ)
+# 6. Dodané podklady spolu s checklistem (EMS)
 
-*(Documents supplied together with the checklist — EMS/DŘ)*
+*(Documents supplied together with the checklist — EMS)*
 
 > **_notes**: `distribution_portal_screenshot` has no `ANO/NE` marker in the source docx
 > (every other item in this section does) — modeled as `boolean` for consistency with
@@ -48,8 +48,8 @@ fields:
     required: false
     photo: true
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
-    help_cs: "[FN13] Pouze v případě, že v rámci instalovaných technologií bude zařízení, které není systémem EMS/DŘ podporováno a bude potřeba k němu nový driver. Je nutno dodat tabulku Modbus registrů vč. parametrů pro nastavení komunikace."
-    help_en: "[FN13] Only if the installed technology includes a device not supported by EMS/DŘ and a new driver is needed. Supply the Modbus register table including the communication-setup parameters."
+    help_cs: "[FN13] Pouze v případě, že v rámci instalovaných technologií bude zařízení, které není systémem EMS podporováno a bude potřeba k němu nový driver. Je nutno dodat tabulku Modbus registrů vč. parametrů pro nastavení komunikace."
+    help_en: "[FN13] Only if the installed technology includes a device not supported by EMS and a new driver is needed. Supply the Modbus register table including the communication-setup parameters."
 
   - id: switchboard_documentation_with_signals
     label_cs: "Dokumentaci k rozvaděčům s vyznačenými realizovanými signály a povely, případně zaznamenanými změnami"
@@ -79,8 +79,8 @@ fields:
     blocking: true
     photo: true
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
-    help_cs: "Jednopólové schéma zahrnující skutečný stav na místě s vyznačenými dotčenými technologiemi a (pro DŘ) zakreslenými všemi povely a signály. JPS musí obsahovat pojmenování všech dotčených prvků a technologií vč. základních technických parametrů (např. proudové hodnoty)."
-    help_en: "Single-line diagram reflecting the actual on-site state, marking the relevant technologies and (for DŘ) all commands/signals. It must name every relevant element/technology and include basic technical parameters (e.g. current ratings)."
+    help_cs: "Jednopólové schéma zahrnující skutečný stav na místě s vyznačenými dotčenými technologiemi. JPS musí obsahovat pojmenování všech dotčených prvků a technologií vč. základních technických parametrů (např. proudové hodnoty)."
+    help_en: "Single-line diagram reflecting the actual on-site state, marking the relevant technologies. It must name every relevant element/technology and include basic technical parameters (e.g. current ratings)."
 
   - id: site_layout_diagram
     label_cs: "situační schéma objektů se zakresleným umístěním dotčených technologií a rozvaděčů"

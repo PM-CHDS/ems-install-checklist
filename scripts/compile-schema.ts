@@ -32,6 +32,9 @@ function main() {
     console.error(`No checklists found in ${SRC}`);
     process.exit(1);
   }
+  // Clear previous output: a version bump would otherwise leave the old JSON here,
+  // and the startup bootstrap publishes everything it finds.
+  fs.rmSync(OUT, { recursive: true, force: true });
   fs.mkdirSync(OUT, { recursive: true });
 
   let fields = 0;

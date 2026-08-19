@@ -42,7 +42,15 @@ function eq(a: unknown, b: OptionValue | number): boolean {
 export function isVisible(field: CompiledField, values: Record<string, unknown>): boolean {
   const c = field.conditionalOn;
   if (!c) return true;
-  return eq(values[c.field], c.equals);
+  const value = values[c.field];
+  if (c.gt !== undefined) {
+    // An unanswered or non-numeric gate keeps the field hidden: asking about
+    // switchboards before knowing whether there are any is noise.
+    const n = typeof value === 'number' ? value : Number(value);
+    return value !== null && value !== undefined && value !== '' && Number.isFinite(n) && n > c.gt;
+  }
+  // The compiler guarantees exactly one operator is set.
+  return c.equals !== undefined && eq(value, c.equals);
 }
 
 /** Does this field hold a real answer? */

@@ -36,7 +36,7 @@ page.on('pageerror', (e) => fails.push(`page error: ${e.message}`));
 
 await page.goto(`${BASE}/f/${token}`, { waitUntil: 'networkidle' });
 
-check('form renders', await page.getByText('Checklist instalace RTU / EMS').isVisible());
+check('form renders', await page.getByText('Checklist instalace EMS').isVisible());
 check('instance label shown', await page.getByText(stamp).isVisible());
 
 // --- typing into the cover section, then reload to prove autosave -------------
@@ -64,11 +64,11 @@ await page.getByRole('button', { name: '2', exact: true }).click();
 await page.waitForTimeout(400);
 check(
   'section 1 renders its checks',
-  await page.getByText('Osazení a silové připojení EMS/DŘ rozvaděče').isVisible(),
+  await page.getByText('Osazení a silové připojení EMS rozvaděče').isVisible(),
 );
 
 // answer the first blocking check with NE
-const firstCard = page.locator('#field-em_dr_switchboard_installed');
+const firstCard = page.locator('#field-ems_switchboard_installed');
 await firstCard.getByRole('button', { name: 'NE', exact: true }).click();
 await page.waitForTimeout(400);
 check(
@@ -88,6 +88,25 @@ await page.waitForTimeout(300);
 check(
   'answering ANO closes the explanation box',
   !(await firstCard.getByText('Tento krok neproběhl').isVisible()),
+);
+
+// --- numeric gating: a count of 0 hides the follow-up checks -----------------
+const count = page.locator('#field-mar_switchboard_count input');
+check(
+  'gated check hidden while the count is unanswered',
+  (await page.locator('#field-mar_switchboard_installed').count()) === 0,
+);
+await count.fill('0');
+await page.waitForTimeout(1000);
+check(
+  'gated check stays hidden at 0',
+  (await page.locator('#field-mar_switchboard_installed').count()) === 0,
+);
+await count.fill('2');
+await page.waitForTimeout(1000);
+check(
+  'gated check appears above 0',
+  (await page.locator('#field-mar_switchboard_installed').count()) === 1,
 );
 
 // --- conditional visibility --------------------------------------------------

@@ -10,9 +10,9 @@
 
 ```yaml
 fields:
-  - id: eth_connected_ems_dr
-    label_cs: "Zapojení Eth kabelu (datová síť) do rozvaděče EMS/DŘ"
-    label_en: "Ethernet cable (data network) connected to the EMS/DŘ switchboard"
+  - id: eth_connected_ems
+    label_cs: "Zapojení Eth kabelu (datová síť) do rozvaděče EMS"
+    label_en: "Ethernet cable (data network) connected to the EMS switchboard"
     type: boolean
     blocking: true
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
@@ -21,9 +21,10 @@ fields:
 
   - id: eth_connected_mar
     label_cs: "Zapojení Eth kabelu (datová síť) do všech rozvaděčů MaR"
-    label_en: "Ethernet cable (data network) connected to all MaR switchboards"
+    label_en: "Ethernet cable (data network) connected to all ISC panels"
     type: boolean
     blocking: true
+    conditional_on: {field: mar_switchboard_count, gt: 0}
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
     help_cs: "Fyzické připojení datové sítě do rozvaděče dle příslušné dokumentace."
     help_en: "Physical connection of the data network to the switchboard per the documentation."

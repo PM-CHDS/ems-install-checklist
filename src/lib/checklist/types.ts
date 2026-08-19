@@ -60,9 +60,15 @@ export interface CompiledFixedRow {
   labelEn: string;
 }
 
+/**
+ * A gate on another field's answer. Exactly one operator is set:
+ *   equals — the answer matches this value
+ *   gt     — a numeric answer is greater than this (e.g. "only if the count isn't 0")
+ */
 export interface CompiledCondition {
   field: string;
-  equals: OptionValue | number;
+  equals?: OptionValue | number;
+  gt?: number;
 }
 
 export interface OnFail {

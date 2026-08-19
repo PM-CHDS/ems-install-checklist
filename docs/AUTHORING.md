@@ -34,9 +34,19 @@ bad form edit can't reach production.
   options:                        # boolean shorthand — the exact ANO/NE wording
     {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
   conditional_on: {field: meteo_station_installed, equals: true}
+  # or, to gate on a count: shown only while the answer is greater than 0
+  conditional_on: {field: mar_switchboard_count, gt: 0}
   images:
     - {file: assets/…png, caption_cs: "…", caption_en: "…"}
 ```
+
+A `conditional_on` takes exactly one operator, `equals` or `gt`, and must reference a
+field that appears **earlier** in the form; the compiler enforces both. `gt` only works on
+a `number` field and keeps the gated field hidden while the gate is unanswered — which is
+what you want for "how many are installed?" gating "are they wired up?".
+
+A hidden field is not required and not counted toward completeness, so gating is the way
+to keep an inapplicable blocking check from forcing a false NE.
 
 ### Blocking checks
 

@@ -1,10 +1,11 @@
 # Checklist-level metadata. The section files listed under `sections` hold the fields.
 slug: rtu-ems
-version: 7
-title_cs: "Checklist instalace RTU / EMS"
-title_en: "RTU / EMS Installation Checklist"
-subtitle_cs: "Instalace rozvaděčů EMS a dispečerského řízení"
-subtitle_en: "Installation of EMS and dispatch-control switchboards"
+version: 8
+title_cs: "Checklist instalace EMS"
+title_en: "EMS Installation Checklist"
+subtitle_cs: "Instalace rozvaděčů EMS"
+subtitle_en: "Installation of EMS switchboards"
+# v8 narrows the v7 source document to EMS only (no dispatch control / DSO RTU).
 source_document: "Checklist_Instalace_RTU-EMS_v7.docx"
 author_org: "EnergoStation s.r.o."
 default_language: cs

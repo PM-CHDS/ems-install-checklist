@@ -128,6 +128,35 @@ one field it illustrates via that field's `images` key (see field shape above):
 The 9th image is the company logo (used in both document headers) — not extracted, not
 relevant to the form schema.
 
+## Terminology (CZ → EN)
+
+The Czech labels keep the terms used on site; the English ones use the agreed
+equivalents rather than a literal translation.
+
+| Czech | English | Note |
+|---|---|---|
+| MaR (měření a regulace) | **ISC** — Instrumentation and Control panel/switchboard | `mar_*` field ids are kept for stability; only the English labels use ISC |
+| DŘ (dispečerské řízení) | **Dispatching control (DSO RTU)** | Not used in this checklist — see below |
+| EMS | EMS (energy management system) | |
+| MTP / MTN | current transformer / voltage transformer | |
+| JPS (jednopólové schéma) | single-line diagram | |
+| OM / OPM (odběrné místo) | metering point / offtake point | |
+| SoP (smlouva o připojení) | grid connection agreement | |
+| PDS | DSO (distribution system operator) | |
+
+## Scope: EMS only (from v8)
+
+The v7 source document covered EMS **and** dispatch control (DŘ), marking shared items
+"EMS/DŘ". From v8 this checklist is **EMS only**: those markers are gone, the switchboard
+is "the EMS switchboard", and the dispatch-control-specific requirement to draw all
+commands and signals into the single-line diagram has been dropped.
+
+No fields were removed for this — DŘ appeared throughout as naming and as "fill this in
+even if you only ordered DŘ" markers, not as separate questions. If a dispatch-control
+checklist is authored later (the `Checklist_RTU_Ověření-komunikace-s-PDS` document in
+`input-dump/` is the obvious candidate), it should be its own checklist directory using
+the English terminology above.
+
 ## Relationship to the web form
 
 `checklist.yaml` in this directory adds the checklist-level metadata (slug, version,

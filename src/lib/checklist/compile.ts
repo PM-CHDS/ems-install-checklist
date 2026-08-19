@@ -90,7 +90,11 @@ const rawField = z
     conditional_on: z
       .object({
         field: z.string(),
-        equals: z.union([z.string(), z.boolean(), z.number()]),
+        equals: z.union([z.string(), z.boolean(), z.number()]).optional(),
+        gt: z.number().optional(),
+      })
+      .refine((c) => (c.equals === undefined) !== (c.gt === undefined), {
+        message: 'conditional_on needs exactly one of `equals` or `gt`',
       })
       .optional(),
     blocking: z.boolean().optional(),
@@ -295,7 +299,11 @@ function compileField(
     images,
     severity: raw.severity,
     conditionalOn: raw.conditional_on
-      ? { field: raw.conditional_on.field, equals: raw.conditional_on.equals }
+      ? {
+          field: raw.conditional_on.field,
+          equals: raw.conditional_on.equals,
+          gt: raw.conditional_on.gt,
+        }
       : undefined,
     blocking: raw.blocking,
     onFail: raw.on_fail
@@ -386,7 +394,14 @@ export function compileChecklist(dir: string): CompileResult {
         `field \`${f.id}\``,
         `conditional_on references \`${c.field}\`, which appears later in the form`,
       );
-    if (target.options) {
+    if (c.gt !== undefined) {
+      if (target.type !== 'number')
+        fail(
+          `field \`${f.id}\``,
+          `conditional_on uses \`gt\`, which needs a number field, but ` +
+            `\`${c.field}\` is type ${target.type}`,
+        );
+    } else if (target.options) {
       const values = target.options.map((o) => o.value);
       // Numeric option values are normalized to strings during compilation, so
       // compare textually rather than failing a schema that is actually valid.

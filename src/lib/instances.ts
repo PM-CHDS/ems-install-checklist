@@ -362,8 +362,19 @@ export async function listEvents(instanceId: string, limit = 500) {
     .limit(limit);
 }
 
+/**
+ * The current version of each published checklist — what a new link should use.
+ * Superseded versions stay in the table so existing instances keep resolving, but
+ * offering them for new forms would just be a way to pick the wrong one.
+ */
 export async function listPublishedChecklists() {
-  return db.select().from(checklists).orderBy(checklists.slug, desc(checklists.version));
+  const rows = await db
+    .select()
+    .from(checklists)
+    .orderBy(checklists.slug, desc(checklists.version));
+  const latest = new Map<string, (typeof rows)[number]>();
+  for (const row of rows) if (!latest.has(row.slug)) latest.set(row.slug, row);
+  return [...latest.values()];
 }
 
 export interface CreateInstanceInput {

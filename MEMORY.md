@@ -60,8 +60,20 @@ Next.js (Docker) ─────────────────────
 - **Schema keys added for the web form** (not in the source document): `blocking`,
   `on_fail: {require_note, require_photo}`, `photo`, `photo_required`. Documented in
   `docs/AUTHORING.md`.
-- RTU-EMS v7 compiles to **8 sections, 127 fields (110 inputs, 31 blocking checks,
-  24 conditionals, 20 photo-capable fields)**.
+- **v8 is EMS-only.** The v7 source document covered EMS *and* dispatch control (DŘ),
+  marking shared items "EMS/DŘ"; v8 drops that scope. No fields had to be removed — DŘ
+  was naming plus "fill this in even if you only ordered DŘ" markers, not separate
+  questions. Terminology table (MaR → ISC, DŘ → Dispatching control (DSO RTU), etc.) is
+  in `checklists/rtu-ems/README.md`; Czech labels keep the on-site terms.
+- `conditional_on` takes `equals` **or** `gt` (numeric, `number` fields only). `gt` keeps
+  a field hidden while its gate is unanswered — used so a count of 0 MaR/ISC panels hides
+  the blocking checks about them instead of forcing a false NE.
+- The compiler wipes `generated/` before writing, so a version bump doesn't leave the old
+  JSON behind for the startup bootstrap to republish. The admin picker offers only the
+  current version of each checklist; superseded rows stay in the table for existing
+  instances.
+- rtu-ems v8 compiles to **8 sections, 128 fields (111 inputs, 31 blocking checks,
+  26 conditionals, 20 photo-capable fields)**.
 
 ### Non-obvious implementation notes
 
@@ -88,7 +100,7 @@ Next.js (Docker) ─────────────────────
 
 ## Status (2026-08-18): MVP complete and verified
 
-Verified end to end against a live Postgres, by API and in a real browser — **28/28
+Verified end to end against a live Postgres, by API and in a real browser — **31/31
 Playwright checks pass** (`npm run test:e2e`), against both `next start` and the
 production standalone entry point (`node server.js`) on a freshly created empty database:
 
