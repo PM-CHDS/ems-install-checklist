@@ -36,7 +36,7 @@ page.on('pageerror', (e) => fails.push(`page error: ${e.message}`));
 
 await page.goto(`${BASE}/f/${token}`, { waitUntil: 'networkidle' });
 
-check('form renders', await page.getByText('Checklist instalace EMS FULL').isVisible());
+check('form renders', await page.getByText('Checklist instalace EMS/DŘ – EMS FULL').isVisible());
 check('instance label shown', await page.getByText(stamp).isVisible());
 
 // --- typing into the cover section, then reload to prove autosave -------------
@@ -265,6 +265,25 @@ check(
   (await admin.getByText('Rozvaděč zatím nedorazil').count()) > 0,
 );
 check('detail shows audit trail', await admin.getByText(/Change history/).isVisible());
+
+// The PDF is fetched from inside the signed-in page, the way the download link is.
+const pdf = await admin.evaluate(async (url) => {
+  const r = await fetch(url);
+  const buf = new Uint8Array(await r.arrayBuffer());
+  return {
+    status: r.status,
+    type: r.headers.get('content-type'),
+    size: buf.length,
+    magic: String.fromCharCode(...buf.slice(0, 5)),
+  };
+}, `/admin/${instanceId}/pdf`);
+check(
+  'PDF download works',
+  pdf.status === 200 && pdf.type === 'application/pdf' && pdf.magic === '%PDF-' && pdf.size > 20_000,
+  `${pdf.status} ${pdf.type} ${pdf.size} B`,
+);
+const anon = await fetch(`${BASE}/admin/${instanceId}/pdf`);
+check('PDF needs an admin session', anon.status === 403);
 
 await browser.close();
 

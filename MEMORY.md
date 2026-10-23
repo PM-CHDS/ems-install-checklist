@@ -188,8 +188,11 @@ earlier attempt used is wiped between sessions and took the database with it.
   network. The Dockerfile still sets `HOSTNAME=0.0.0.0`, where being reachable is the point.
 - `ems_test` is a second database for the Playwright suite, so validating never puts test
   forms in the database being demoed:
-  `BASE=http://127.0.0.1:3100 DATABASE_URL=…/ems_test ADMIN_PASSWORD=devpassword npm run test:e2e`
-  against a second server started on 3100 with that DATABASE_URL.
+  `BASE=http://127.0.0.1:3100 PUBLIC_BASE_URL=http://127.0.0.1:3100 DATABASE_URL=…/ems_test ADMIN_PASSWORD=… npm run test:e2e`
+  against a second server started on 3100 with that DATABASE_URL (36 checks as of
+  2026-10-23). `PUBLIC_BASE_URL` matters: the suite's `dev-fill.ts` step posts to it,
+  and the repo `.env` points it at the demo server on 3000 — the fill then silently
+  lands nowhere and "submit enabled" fails.
 - Playwright's Chromium needs libs Ubuntu 26.04 doesn't ship here. They are extracted under
   `libs/root`; export
   `LD_LIBRARY_PATH=~/.local/state/ems-checklist/libs/root/usr/lib/x86_64-linux-gnu`
