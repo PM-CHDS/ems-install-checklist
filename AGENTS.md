@@ -10,11 +10,14 @@ behaviour.
 - [docs/AUTHORING.md](docs/AUTHORING.md) — editing a checklist; field keys, gating, versioning
 - [docs/DEPLOY.md](docs/DEPLOY.md) — self-hosting
 
-Two rules worth knowing before you touch anything:
+Three rules worth knowing before you touch anything:
 
 - **Never rename a field `id`** in a published checklist — answers are stored against it.
 - **Don't bump `version` in `checklist.yaml`** without being asked; it's the checklist
   owner's call.
+- **No comprehensive testing unless explicitly asked** — no full e2e suite, no full
+  example fill. Verify just the change you made (compile/typecheck plus a targeted
+  check), and say what you did and didn't test.
 
 ## Agent skills
 
