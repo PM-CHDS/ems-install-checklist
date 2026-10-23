@@ -48,6 +48,17 @@ what you want for "how many are installed?" gating "are they wired up?".
 A hidden field is not required and not counted toward completeness, so gating is the way
 to keep an inapplicable blocking check from forcing a false NE.
 
+Gates **nest**: a field gated on a field that is itself hidden is hidden too, whatever
+answer is still stored on its gate. That's what makes a decision tree work — switching
+`pv_present` to NE hides the control-method question *and* everything under the method
+that was picked before. To require several answers at once, give a list; all must hold:
+
+```yaml
+  conditional_on:
+    - {field: bess_present, equals: true}
+    - {field: spot_control_enabled, equals: true}
+```
+
 ### Blocking checks
 
 ```yaml

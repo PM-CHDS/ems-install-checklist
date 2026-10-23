@@ -59,9 +59,17 @@ export function conditionMet(
   return c.equals !== undefined && eq(value, c.equals);
 }
 
-/** A field is shown only when its `conditional_on` gate matches the current answer. */
+/** All gates on a field or fixed row, falling back for pre-`visibleWhen` snapshots. */
+function gatesOf(x: { conditionalOn?: CompiledCondition; visibleWhen?: CompiledCondition[] }) {
+  return x.visibleWhen ?? (x.conditionalOn ? [x.conditionalOn] : []);
+}
+
+/**
+ * A field is shown only when every gate on it matches the current answers — its own
+ * and those of the fields it depends on, so a hidden gate hides what's nested under it.
+ */
 export function isVisible(field: CompiledField, values: Record<string, unknown>): boolean {
-  return conditionMet(field.conditionalOn, values);
+  return gatesOf(field).every((c) => conditionMet(c, values));
 }
 
 /**
@@ -75,7 +83,7 @@ export function visibleFixedRows(
 ): { row: CompiledFixedRow; index: number }[] {
   return (field.fixedRows ?? [])
     .map((row, index) => ({ row, index }))
-    .filter(({ row }) => conditionMet(row.conditionalOn, values));
+    .filter(({ row }) => gatesOf(row).every((c) => conditionMet(c, values)));
 }
 
 /** Does this field hold a real answer? */

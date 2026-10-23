@@ -21,7 +21,7 @@ import type {
 } from './types';
 import { INPUT_TYPES } from './types';
 
-export const COMPILER_VERSION = '1';
+export const COMPILER_VERSION = '2';
 
 /* ------------------------------------------------------- raw (authored) shape */
 
@@ -65,9 +65,22 @@ const rawCondition = z
     message: 'conditional_on needs exactly one of `equals` or `gt`',
   });
 
+/** One gate, or a list of gates that must all hold. */
+const rawConditions = z.union([rawCondition, z.array(rawCondition).min(1)]);
+type RawConditions = z.infer<typeof rawConditions>;
+
+function toConditions(raw: RawConditions | undefined): CompiledCondition[] {
+  if (!raw) return [];
+  return (Array.isArray(raw) ? raw : [raw]).map((c) => ({
+    field: c.field,
+    equals: c.equals,
+    gt: c.gt,
+  }));
+}
+
 const rawFixedRow = bilingualLabel.extend({
   row_id: z.string().regex(/^[a-z0-9_]+$/),
-  conditional_on: rawCondition.optional(),
+  conditional_on: rawConditions.optional(),
 });
 
 const rawOnFail = z.object({
@@ -99,7 +112,7 @@ const rawField = z
     severity: z.literal('warning').optional(),
     options: z.union([z.array(rawSelectOption), rawBooleanOptions]).optional(),
     images: z.array(rawImage).optional(),
-    conditional_on: rawCondition.optional(),
+    conditional_on: rawConditions.optional(),
     blocking: z.boolean().optional(),
     on_fail: rawOnFail.optional(),
     photo: z.boolean().optional(),
@@ -301,13 +314,9 @@ function compileField(
     options: normalizeOptions(raw.options, raw.type, w),
     images,
     severity: raw.severity,
-    conditionalOn: raw.conditional_on
-      ? {
-          field: raw.conditional_on.field,
-          equals: raw.conditional_on.equals,
-          gt: raw.conditional_on.gt,
-        }
-      : undefined,
+    // The full `visibleWhen` chain is filled in once every field is known.
+    conditionalOn: toConditions(raw.conditional_on)[0],
+    visibleWhen: toConditions(raw.conditional_on),
     blocking: raw.blocking,
     onFail: raw.on_fail
       ? { requireNote: raw.on_fail.require_note, requirePhoto: raw.on_fail.require_photo }
@@ -321,13 +330,8 @@ function compileField(
       rowId: r.row_id,
       labelCs: r.label_cs,
       labelEn: r.label_en,
-      conditionalOn: r.conditional_on
-        ? {
-            field: r.conditional_on.field,
-            equals: r.conditional_on.equals,
-            gt: r.conditional_on.gt,
-          }
-        : undefined,
+      conditionalOn: toConditions(r.conditional_on)[0],
+      visibleWhen: toConditions(r.conditional_on),
     })),
   };
 }
@@ -421,14 +425,31 @@ export function compileChecklist(dir: string): CompileResult {
   }
 
   for (const f of byId.values()) {
-    if (f.conditionalOn) checkCondition(f.conditionalOn, `field \`${f.id}\``, f.id);
+    for (const c of f.visibleWhen ?? []) checkCondition(c, `field \`${f.id}\``, f.id);
     for (const row of f.fixedRows ?? []) {
-      if (row.conditionalOn)
-        checkCondition(
-          row.conditionalOn,
-          `field \`${f.id}\` → row \`${row.rowId}\``,
-          f.id,
-        );
+      for (const c of row.visibleWhen ?? [])
+        checkCondition(c, `field \`${f.id}\` → row \`${row.rowId}\``, f.id);
+    }
+  }
+
+  // Expand each field's own gates into the full chain it depends on. Gates always
+  // point earlier in the form, so walking in form order sees every target's chain
+  // before it is needed.
+  const chains = new Map<string, CompiledCondition[]>();
+  const expand = (own: CompiledCondition[]) => {
+    const out = new Map<string, CompiledCondition>();
+    for (const c of own) {
+      for (const g of [c, ...(chains.get(c.field) ?? [])]) out.set(JSON.stringify(g), g);
+    }
+    return [...out.values()];
+  };
+  for (const f of byId.values()) {
+    const chain = expand(f.visibleWhen ?? []);
+    chains.set(f.id, chain);
+    f.visibleWhen = chain.length ? chain : undefined;
+    for (const row of f.fixedRows ?? []) {
+      const rowChain = expand(row.visibleWhen ?? []);
+      row.visibleWhen = rowChain.length ? rowChain : undefined;
     }
   }
 

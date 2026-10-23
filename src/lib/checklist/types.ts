@@ -71,6 +71,8 @@ export interface CompiledFixedRow {
   labelEn: string;
   /** Same gate vocabulary as a field's `conditionalOn`. */
   conditionalOn?: CompiledCondition;
+  /** Same as a field's `visibleWhen`. */
+  visibleWhen?: CompiledCondition[];
 }
 
 export interface OnFail {
@@ -93,7 +95,15 @@ export interface CompiledField {
   options?: CompiledOption[];
   images?: CompiledImage[];
   severity?: 'warning';
+  /** The first of the field's own `conditional_on` gates. Kept for older readers. */
   conditionalOn?: CompiledCondition;
+  /**
+   * Every gate that must hold for the field to be shown: its own `conditional_on`
+   * gates plus, transitively, those of the fields they point at — so hiding a gate
+   * also hides everything nested under it. Absent on snapshots compiled before
+   * nested gating existed; `conditionalOn` alone applies to those.
+   */
+  visibleWhen?: CompiledCondition[];
 
   /** A `false` answer on this check is a failure that flags the whole form. */
   blocking?: boolean;
