@@ -95,7 +95,7 @@ fields:
     label_en: "Selected electricity sale (feed-in) mode (EMS)"
     type: select
     options:
-      - {value: spot, label_cs: "SPOT – ceny dle burzy OTE", label_en: "SPOT – OTE exchange prices"}
+      - {value: spot, label_cs: "SPOT – burzovní ceny", label_en: "SPOT – exchange prices"}
       - {value: fix, label_cs: "FIX – pevná cena domluvená s obchodníkem", label_en: "FIX – fixed price agreed with the trader"}
     help_cs: "Jaký obchodní vztah je na odběrném místě smluven pro výkup elektřiny — podle zvolené možnosti se zobrazí příslušné parametry."
     help_en: "Which commercial arrangement the offtake point has for selling electricity — the matching parameters are shown for the chosen option."
@@ -175,9 +175,9 @@ fields:
     label_en: "Selected electricity purchase mode (EMS)"
     type: select
     options:
-      - {value: spot, label_cs: "SPOT – ceny dle burzy OTE", label_en: "SPOT – OTE exchange prices"}
+      - {value: spot, label_cs: "SPOT – burzovní ceny", label_en: "SPOT – exchange prices"}
       - {value: fix, label_cs: "FIX – pevná cena domluvená s obchodníkem", label_en: "FIX – fixed price agreed with the trader"}
-      - {value: spot_fix, label_cs: "SPOT+FIX – ceny dle burzy OTE až do smluveného zastropování cen", label_en: "SPOT+FIX – OTE exchange prices up to an agreed price cap"}
+      - {value: spot_fix, label_cs: "SPOT+FIX – burzovní ceny až do smluveného zastropování cen", label_en: "SPOT+FIX – exchange prices up to an agreed price cap"}
     help_cs: "Jaký obchodní vztah je na odběrném místě smluven pro nákup elektřiny — podle zvolené možnosti se zobrazí příslušné parametry."
     help_en: "Which commercial arrangement the offtake point has for buying electricity — the matching parameters are shown for the chosen option."
 
