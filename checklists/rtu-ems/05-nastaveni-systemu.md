@@ -108,6 +108,22 @@ fields:
     help_cs: "Návod na výpočet: https://support.energostation.com/a/solutions/articles/47001247456?lang=cs&portalId=47000082337"
     help_en: "Calculation guide: https://support.energostation.com/a/solutions/articles/47001247456?lang=cs&portalId=47000082337"
 
+  - id: spot_sale_region
+    label_cs: "Region (trh) SPOT cen"
+    label_en: "SPOT price region (market)"
+    type: select
+    conditional_on: {field: electricity_sale_contract_type, equals: spot}
+    options:
+      - {value: cz, label_cs: "CZ – Česko", label_en: "CZ – Czechia"}
+      - {value: sk, label_cs: "SK – Slovensko", label_en: "SK – Slovakia"}
+      - {value: pl, label_cs: "PL – Polsko", label_en: "PL – Poland"}
+      - {value: hu, label_cs: "HU – Maďarsko", label_en: "HU – Hungary"}
+      - {value: bg, label_cs: "BG – Bulharsko", label_en: "BG – Bulgaria"}
+      - {value: at, label_cs: "AT – Rakousko", label_en: "AT – Austria"}
+      - {value: de, label_cs: "DE – Německo", label_en: "DE – Germany"}
+    help_cs: "Trh, jehož burzovní ceny se pro odběrné místo použijí."
+    help_en: "The market whose exchange prices apply to the offtake point."
+
   - id: spot_sale_grid_fee
     label_cs: "Cena za použití přenosové soustavy"
     label_en: "Transmission-grid usage fee"
@@ -189,6 +205,22 @@ fields:
     help_cs: "Návod na výpočet: https://support.energostation.com/a/solutions/articles/47001247456?lang=cs&portalId=47000082337"
     help_en: "Calculation guide: https://support.energostation.com/a/solutions/articles/47001247456?lang=cs&portalId=47000082337"
 
+  - id: spot_purchase_region
+    label_cs: "Region (trh) SPOT cen"
+    label_en: "SPOT price region (market)"
+    type: select
+    conditional_on: {field: electricity_purchase_contract_type, equals: spot}
+    options:
+      - {value: cz, label_cs: "CZ – Česko", label_en: "CZ – Czechia"}
+      - {value: sk, label_cs: "SK – Slovensko", label_en: "SK – Slovakia"}
+      - {value: pl, label_cs: "PL – Polsko", label_en: "PL – Poland"}
+      - {value: hu, label_cs: "HU – Maďarsko", label_en: "HU – Hungary"}
+      - {value: bg, label_cs: "BG – Bulharsko", label_en: "BG – Bulgaria"}
+      - {value: at, label_cs: "AT – Rakousko", label_en: "AT – Austria"}
+      - {value: de, label_cs: "DE – Německo", label_en: "DE – Germany"}
+    help_cs: "Trh, jehož burzovní ceny se pro odběrné místo použijí."
+    help_en: "The market whose exchange prices apply to the offtake point."
+
   - id: spot_purchase_vt_cost
     label_cs: "Náklady při vysokém tarifu"
     label_en: "Cost at the high tariff (VT)"
@@ -267,6 +299,22 @@ fields:
     conditional_on: {field: electricity_purchase_contract_type, equals: spot_fix}
     help_cs: "Návod na výpočet: https://support.energostation.com/a/solutions/articles/47001247456?lang=cs&portalId=47000082337"
     help_en: "Calculation guide: https://support.energostation.com/a/solutions/articles/47001247456?lang=cs&portalId=47000082337"
+
+  - id: spot_fix_purchase_region
+    label_cs: "Region (trh) SPOT cen"
+    label_en: "SPOT price region (market)"
+    type: select
+    conditional_on: {field: electricity_purchase_contract_type, equals: spot_fix}
+    options:
+      - {value: cz, label_cs: "CZ – Česko", label_en: "CZ – Czechia"}
+      - {value: sk, label_cs: "SK – Slovensko", label_en: "SK – Slovakia"}
+      - {value: pl, label_cs: "PL – Polsko", label_en: "PL – Poland"}
+      - {value: hu, label_cs: "HU – Maďarsko", label_en: "HU – Hungary"}
+      - {value: bg, label_cs: "BG – Bulharsko", label_en: "BG – Bulgaria"}
+      - {value: at, label_cs: "AT – Rakousko", label_en: "AT – Austria"}
+      - {value: de, label_cs: "DE – Německo", label_en: "DE – Germany"}
+    help_cs: "Trh, jehož burzovní ceny se pro odběrné místo použijí."
+    help_en: "The market whose exchange prices apply to the offtake point."
 
   - id: spot_fix_max_purchase_price
     label_cs: "Maximální nákupní cena"
