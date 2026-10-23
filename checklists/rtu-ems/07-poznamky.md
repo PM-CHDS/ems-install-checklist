@@ -8,7 +8,7 @@ field when a table runs out of rows, or when something isn't covered by an expli
 field:
 
 - `02-elektromery.md`: `switchboard_jps_labels` overflow (FN3), `additional_meters_table` overflow (FN6)
-- `04-technologie.md`: `inverters_info_table` overflow (FN10)
+- `04-technologie.md`: `inverters_rtu_table` / `inverters_tcp_table` overflow (FN10)
 - `05-nastaveni-systemu.md`: `additional_sources_installed` — list of extra sources like a CHP/cogeneration unit (FN12)
 
 ```yaml
