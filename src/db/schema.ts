@@ -1,4 +1,5 @@
 import {
+  doublePrecision,
   boolean,
   index,
   integer,
@@ -21,7 +22,8 @@ export const checklists = pgTable(
   {
     id: uuid('id').defaultRandom().primaryKey(),
     slug: text('slug').notNull(),
-    version: integer('version').notNull(),
+    // Decimal so a checklist can carry a minor version (8.1); compared numerically.
+    version: doublePrecision('version').notNull(),
     titleCs: text('title_cs').notNull(),
     titleEn: text('title_en').notNull(),
     definition: jsonb('definition').$type<CompiledChecklist>().notNull(),
@@ -50,7 +52,7 @@ export const formInstances = pgTable(
     id: uuid('id').defaultRandom().primaryKey(),
     token: text('token').notNull(),
     checklistSlug: text('checklist_slug').notNull(),
-    checklistVersion: integer('checklist_version').notNull(),
+    checklistVersion: doublePrecision('checklist_version').notNull(),
     definition: jsonb('definition').$type<CompiledChecklist>().notNull(),
     /** Human label for the admin list, e.g. project / site name. */
     label: text('label').notNull(),

@@ -98,7 +98,9 @@ of the PLC display showing cloud registration [100]" item is modelled.
 
 ## Versioning
 
-`checklist.yaml` carries a `version`. When a form instance is created, the compiled
+`checklist.yaml` carries a `version` — a whole number or a decimal minor revision such as
+`8.1`. Versions compare as numbers, so `8.10` is the same as `8.1`; go `8.9` → `9`, not
+`8.10`. When a form instance is created, the compiled
 definition is **copied into that instance**, so edits in git never change a form someone is
 already filling in — or one already submitted.
 

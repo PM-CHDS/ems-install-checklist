@@ -128,7 +128,8 @@ const rawSectionBlock = z.object({ fields: z.array(rawField).min(1) });
 
 const rawMeta = z.object({
   slug: z.string().regex(/^[a-z0-9-]+$/),
-  version: z.number().int().positive(),
+  // A decimal like 8.1 marks a minor revision; versions compare as numbers.
+  version: z.number().positive(),
   title_cs: z.string(),
   title_en: z.string(),
   subtitle_cs: z.string().optional(),
