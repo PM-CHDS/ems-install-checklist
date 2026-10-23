@@ -76,11 +76,11 @@ fields:
     conditional_on: {field: remote_metering_switchboard_count, gt: 0}
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
     help_cs: "Jedná se o stavební montáž rozvaděče na určené místo definované projektovou dokumentací. Dále pak připojení silových a signálních vodičů na svorky dle dokumentace (řeší se pouze, pokud je obsažen v projektové dokumentaci). Jedná se o podružný rozvaděč pro ty případy, kdy jsou MTP/MTN vzdálená v kabelové délce od EMS/DŘ rozvaděče dále než 20 m."
-    help_en: "Physical mounting plus power/signal wiring per documentation (only applicable if included in the project documentation). This sub-switchboard is used when the current/voltage transformers (MTP/MTN) are more than 20 m of cable length from the EMS/DSO RTU switchboard. Called \"ELMĚR switchboard\" in the source Legend section."
+    help_en: "Physical mounting plus power/signal wiring per documentation (only applicable if included in the project documentation). This sub-switchboard is used when the current/potential transformers (CT/PT) are more than 20 m of cable length from the EMS/DSO RTU switchboard. Called \"ELMĚR switchboard\" in the source Legend section."
 
   - id: switchboard_jps_labels
     label_cs: "Označení rozvaděčů dle JPS"
-    label_en: "Switchboard designation per single-line diagram (JPS)"
+    label_en: "Switchboard designation per single-line diagram (SLD)"
     type: table
     repeatable: false
     help_cs: "Pokud je instalováno více rozvaděčů, využijte pole pro poznámky. Uveďte názvy instalovaných rozvaděčů tak, jak jsou označeny na místě instalace. Tento název bude pak použit při konfiguraci."
@@ -102,6 +102,6 @@ fields:
     columns:
       - id: jps_label
         label_cs: "Označení rozvaděče dle JPS"
-        label_en: "Switchboard designation per JPS"
+        label_en: "Switchboard designation per SLD"
         type: text
 ```

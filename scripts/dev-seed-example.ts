@@ -82,7 +82,7 @@ const values: Record<string, unknown> = {
   meters_notes:
     t(
       'EM-FVE2 a EM-BESS na sběrnici RS-485 9600 Bd, 8N1. Převody MTP ověřeny na displeji elektroměrů i v konfiguraci PLC.',
-      'EM-FVE2 and EM-BESS on the RS-485 bus at 9600 Bd, 8N1. MTP ratios verified on the meter displays and in the PLC configuration.',
+      'EM-FVE2 and EM-BESS on the RS-485 bus at 9600 Bd, 8N1. CT ratios verified on the meter displays and in the PLC configuration.',
     ),
 
   // 3. Parametrizace a komunikace

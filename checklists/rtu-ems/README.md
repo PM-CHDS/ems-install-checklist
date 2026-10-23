@@ -140,8 +140,9 @@ equivalents rather than a literal translation.
 | MaR (měření a regulace) | **ISC** — Instrumentation and Control panel/switchboard | `mar_*` field ids are kept for stability; only the English labels use ISC |
 | DŘ (dispečerské řízení) | **Dispatching control (DSO RTU)** | Labels use the short `EMS/DSO RTU` to mirror the Czech `EMS/DŘ`; help text spells it out |
 | EMS | EMS (energy management system) | |
-| MTP / MTN | current transformer / voltage transformer | |
-| JPS (jednopólové schéma) | single-line diagram | |
+| MTP (měřicí transformátor proudu) | **CT** — current transformer | `mtp_*` / `mtn_*` field ids are kept; English labels use CT / PT |
+| MTN (měřicí transformátor napětí) | **PT** — potential transformer | |
+| JPS (jednopólové schéma) | **SLD** — single-line diagram | |
 | OM / OPM (odběrné místo) | metering point / offtake point | |
 | SoP (smlouva o připojení) | grid connection agreement | |
 | PDS | DSO (distribution system operator) | |

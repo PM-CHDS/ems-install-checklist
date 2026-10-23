@@ -192,7 +192,7 @@ fields:
     columns:
       - id: jps_label
         label_cs: "Značení dle JPS"
-        label_en: "Designation per JPS"
+        label_en: "Designation per SLD"
         type: text
       - id: inverter_type
         label_cs: "Výrobce a typ"
@@ -230,7 +230,7 @@ fields:
     columns:
       - id: jps_label
         label_cs: "Značení dle JPS"
-        label_en: "Designation per JPS"
+        label_en: "Designation per SLD"
         type: text
       - id: inverter_type
         label_cs: "Výrobce a typ"

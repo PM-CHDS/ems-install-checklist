@@ -41,32 +41,32 @@ fields:
     type: boolean
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
     help_cs: "Měření na hladině VN používá i MTN — položky k MTN se zobrazí jen v tom případě."
-    help_en: "Metering at VN also uses voltage transformers (MTN) — the MTN items are shown only in that case."
+    help_en: "Metering at VN also uses potential transformers (PT) — the PT items are shown only in that case."
 
   - id: mtp_installed
     label_cs: "Osazení a připojení MTP k EMS/DŘ rozvaděči"
-    label_en: "Mounting and connection of the current transformer (MTP) to the EMS/DSO RTU switchboard"
+    label_en: "Mounting and connection of the current transformer (CT) to the EMS/DSO RTU switchboard"
     type: boolean
     blocking: true
     photo: true
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
     help_cs: "Jedná se o montáž měřicích transformátorů proudu (MTP). Trafa se montují na místa dle dokumentace o příslušném převodovém poměru. U montáže je nutné zkontrolovat správný převodový poměr, případně třídu přesnosti."
-    help_en: "Mounting of current transformers (MTP) at the locations specified in the documentation, with the correct ratio. Verify the correct transformation ratio and accuracy class during mounting."
+    help_en: "Mounting of current transformers (CT) at the locations specified in the documentation, with the correct ratio. Verify the correct transformation ratio and accuracy class during mounting."
 
   - id: mtn_installed
     label_cs: "Osazení a připojení MTN k EMS/DŘ rozvaděči"
-    label_en: "Mounting and connection of the voltage transformer (MTN) to the EMS/DSO RTU switchboard"
+    label_en: "Mounting and connection of the potential transformer (PT) to the EMS/DSO RTU switchboard"
     type: boolean
     blocking: true
     photo: true
     conditional_on: {field: meter_at_vn, equals: true}
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
     help_cs: "Jedná se o montáž měřicích transformátorů napětí (MTN). Trafa se montují na místa dle dokumentace o příslušné velikosti. U montáže je nutné zkontrolovat správný převodový poměr, případně třídu přesnosti."
-    help_en: "Mounting of voltage transformers (MTN) at the locations specified in the documentation, matching the correct size. Verify the correct transformation ratio and accuracy class during mounting."
+    help_en: "Mounting of potential transformers (PT) at the locations specified in the documentation, matching the correct size. Verify the correct transformation ratio and accuracy class during mounting."
 
   - id: current_direction_check
     label_cs: "Kontrola správnosti směru toku proudu na MTP"
-    label_en: "Check of correct current-flow direction on the MTP"
+    label_en: "Check of correct current-flow direction on the CT"
     type: boolean
     blocking: true
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
@@ -104,18 +104,18 @@ fields:
     label_cs: "Nastavení elektroměru v EMS/DŘ rozvaděči (pro měření předacího místa)"
     label_en: "Meter settings in the EMS/DSO RTU switchboard (for delivery-point metering)"
     help_cs: "Elektroměr je potřeba nastavit dle místních parametrů a připojených MTP/MTN."
-    help_en: "The meter must be configured per local parameters and the connected MTP/MTN."
+    help_en: "The meter must be configured per local parameters and the connected CT/PT."
     images:
       - file: assets/02-mtp-setting-example.png
         caption_cs: "Příklad nastavení MTP"
-        caption_en: "Example MTP setting (display screenshot)"
+        caption_en: "Example CT setting (display screenshot)"
       - file: assets/02-parameter-overview-p01-p05.png
         caption_cs: "Přehled parametrů k nastavení (01-05 je na displeji zastoupen P01-P05)"
         caption_en: "Overview of parameters to set (01-05 is shown on the display as P01-P05)"
 
   - id: mtp_ratio_set
     label_cs: "nastavení převodového poměru MTP"
-    label_en: "MTP transformation ratio configured"
+    label_en: "CT transformation ratio configured"
     type: boolean
     blocking: true
     photo: true
@@ -123,7 +123,7 @@ fields:
 
   - id: mtp_value
     label_cs: "hodnota MTP"
-    label_en: "MTP ratio value"
+    label_en: "CT ratio value"
     type: text
 
   - id: voltage_level_measured_set
@@ -141,7 +141,7 @@ fields:
 
   - id: mtn_ratio_set
     label_cs: "nastaven převodový poměr MTN"
-    label_en: "MTN transformation ratio configured"
+    label_en: "PT transformation ratio configured"
     type: boolean
     blocking: true
     conditional_on: {field: meter_at_vn, equals: true}
@@ -151,7 +151,7 @@ fields:
 
   - id: mtn_value
     label_cs: "hodnota MTN"
-    label_en: "MTN ratio value"
+    label_en: "PT ratio value"
     type: text
     conditional_on: {field: mtn_ratio_set, equals: true}
 
@@ -173,10 +173,10 @@ fields:
     columns:
       - id: jps_label
         label_cs: "Označení elektroměru dle JPS"
-        label_en: "Meter designation per JPS"
+        label_en: "Meter designation per SLD"
         type: text
         help_cs: "Uveďte označení tak, jak je uvedeno v JPS."
-        help_en: "Enter the designation exactly as it appears in the single-line diagram (JPS)."
+        help_en: "Enter the designation exactly as it appears in the single-line diagram (SLD)."
       - id: meter_type
         label_cs: "Typ elektroměru"
         label_en: "Meter type"
@@ -200,10 +200,10 @@ fields:
         help_en: "Enter the configured address: either the ID address (RTU) or the IP address (TCP). If you have ordered driver development for an unsupported meter, also state the communication speed and parity in the notes."
       - id: mtp_ratio
         label_cs: "Převodový poměr MTP"
-        label_en: "MTP transformation ratio"
+        label_en: "CT transformation ratio"
         type: text
         help_cs: "Uveďte hodnotu MTP a potvrďte nastavení hodnoty v elektroměru."
-        help_en: "State the MTP value and confirm it's configured in the meter."
+        help_en: "State the CT value and confirm it's configured in the meter."
       - id: terminal_block
         label_cs: "Svorkovnice X1 nebo X2"
         label_en: "Terminal block X1 or X2"
