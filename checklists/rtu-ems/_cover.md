@@ -8,7 +8,7 @@
 > EMS / dispatching control (DSO RTU) switchboard installation has been done, and thereby
 > speed up the follow-on configuration work.)*
 
-**Submission contact (static, not a field):** projekty@energostation.com. Questions:
+**Submission contact (static, not a field):** hynek.bacik@energostation.com. Questions:
 Ing. Hynek Bačík, +420 737 547 189, hynek.bacik@energostation.com.
 
 ```yaml

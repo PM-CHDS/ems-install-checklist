@@ -30,8 +30,8 @@ fields:
     help_en: "Physical connection of the data network to the switchboard per the documentation."
 
   - id: data_network_configured
-    label_cs: "Je nastavena datová síť pro komunikaci řídících jednotek"
-    label_en: "Data network configured for controller-unit communication"
+    label_cs: "Nastavení datové sítě pro komunikaci řídících jednotek a následujících výjimek v pravidlech FireWallu"
+    label_en: "Data network configured for controller-unit communication, with the firewall exceptions below"
     type: boolean
     blocking: true
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
@@ -42,18 +42,18 @@ fields:
       je vyhrazen pro externí komunikaci (VPN k uživatelské aplikaci, externí datové
       zdroje: synchronizace času, predikce solárního osvitu, počasí, ceny denního trhu
       apod.). Doporučujeme připojit řídící jednotky do vyhrazené části sítě s přístupem
-      do internetu. Při použití firewallu je nutné povolit komunikaci na tyto adresy:
+      do internetu. Ve firewallu je nutné povolit komunikaci na tyto adresy:
       vpn.icool.cloud tcp/1194, cz.pool.ntp.org, 8.8.8.8 (DNS), www.pvforecast.cz,
-      influx.uceeb.cvut.cz:8086, www.ote-cr.cz.
+      www.ote-cr.cz.
     help_en: >
       The data network needs the correct parameters set for controller units to
       communicate with the parent system. The internet-facing data network connects to
       the controller unit's ETH 2 port (or a keystone RJ45/DIN). ETH 2 is reserved for
       external communication (VPN to the user app; external data sources: time sync,
       solar-irradiance forecast, weather, day-ahead prices). Recommended: put controller
-      units on a dedicated network segment with internet access. If a firewall is used,
+      units on a dedicated network segment with internet access. The firewall must
       allow traffic to: vpn.icool.cloud tcp/1194, cz.pool.ntp.org, 8.8.8.8 (DNS),
-      www.pvforecast.cz, influx.uceeb.cvut.cz:8086, www.ote-cr.cz.
+      www.pvforecast.cz, www.ote-cr.cz.
 
   - id: control_units_ip_ic_table
     label_cs: "IP adresy a IC čísla řídících jednotek"
@@ -85,18 +85,21 @@ fields:
         type: text
         help_cs: "IC číslo jednotky opsané z displeje."
         help_en: "IC number copied from the unit's display."
-      - id: dhcp_ip
-        label_cs: "DHCP přidělená IP adresa"
-        label_en: "DHCP-assigned IP address"
+      - id: ip_address
+        label_cs: "IP adresa"
+        label_en: "IP address"
         type: text
-        help_cs: "IP adresa, kterou řídící jednotka získala od DHCP serveru."
-        help_en: "IP address the controller unit received from the DHCP server."
-      - id: static_ip_requested
-        label_cs: "Požadovaná pevná IP adresa"
-        label_en: "Requested static IP address"
-        type: text
-        help_cs: "IP adresa, která má být v řídící jednotce nastavena jako pevná (požadavek od místního IT)."
-        help_en: "IP address to be configured as static on the controller unit (per local IT's request)."
+        help_cs: "Aktuální IP adresa řídící jednotky (na displeji pod položkou ETH 2)."
+        help_en: "The controller unit's current IP address (shown on the display under ETH 2)."
+      - id: addressing
+        label_cs: "Adresace"
+        label_en: "Addressing"
+        type: select
+        options:
+          - {value: static, label_cs: "STATICKÁ", label_en: "STATIC"}
+          - {value: dhcp, label_cs: "DHCP", label_en: "DHCP"}
+        help_cs: "Po připojení do back-endu EnergoStation lze DHCP vypnout a nastavit pevnou IP adresu dle požadavků místního IT."
+        help_en: "Once connected to the EnergoStation back end, DHCP can be switched off and a static IP set per local IT's requirements."
 
   - id: local_network_params_heading
     type: group
@@ -106,12 +109,12 @@ fields:
     help_en: "Used to verify the controller units' network configuration."
 
   - id: ip_range
-    label_cs: "Rozsah IP adresy"
-    label_en: "IP address range"
+    label_cs: "IP adresa sítě"
+    label_en: "Network IP address"
     type: text
 
   - id: subnet_mask
-    label_cs: "Maska sub-sítě"
+    label_cs: "Maska sítě"
     label_en: "Subnet mask"
     type: text
 
@@ -126,14 +129,14 @@ fields:
     type: text
 
   - id: components_correct_subnet
-    label_cs: "Jsou všechny dotčené komponenty (střídače, baterie, atd.) nastaveny ve správné sub-síti"
-    label_en: "Are all relevant components (inverters, battery, etc.) configured on the correct subnet"
+    label_cs: "Všechny komponenty využívající připojení TCP (střídače, baterie, atd.) jsou vzájemně dostupné přes PING příkaz"
+    label_en: "All components using a TCP connection (inverters, batteries, etc.) can reach each other by PING"
     type: boolean
     blocking: true
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
 
   - id: connection_method
-    label_cs: "Způsob připojení instalačního místa, resp. EMS/RTU jednotky"
+    label_cs: "Způsob připojení instalačního místa, resp. EMS/DŘ jednotky k Internetu"
     label_en: "How the installation site / EMS/RTU unit connects to the internet"
     type: select
     options:
@@ -156,10 +159,10 @@ fields:
     label_en: "Starting configuration requires working data connectivity"
     help_cs: >
       Přiložte fotografii displeje PLC, kde je vidět potvrzení o správné komunikaci PLC
-      do cloudu — nutný je stav [100] registrace PLC (viz Legenda 8.3.g).
+      do cloudu — nutný je stav [100]. Fotografii přiložte i v §6 (Dodané podklady).
     help_en: >
       Attach a photo of the PLC display showing confirmation of correct PLC-to-cloud
-      communication — registration status must show [100] (see Legend 8.3.g).
+      communication — the status must show [100]. Also include it with the §6 attachments.
     images:
       - file: assets/03-plc-display-connection-status.png
         caption_cs: "Displej PLC jednotky se stavem připojení"

@@ -2,13 +2,9 @@
 
 *(Technology — PV inverters, battery storage, meteo station, compensation)*
 
-> **_notes**: the source has no Legend entry for "Je na všech připojených zařízeních
-> povolena Modbus komunikace" nor for the three "Kompenzace" sub-items — no `help` is
-> given for those below (not an omission on this file's part). Also: the checklist uses
-> "Max./Min. SOC" wording for the battery fields while the matching Legend paragraphs
-> talk about "kapacita" (capacity) — likely the Legend text wasn't updated when the
-> checklist item was reworded from capacity-% to SOC-%; the help text below is kept as
-> written in the source for faithfulness.
+> **_notes**: source is `checklist-ems-full.pdf` §1.4–1.6 with help text from
+> `checklist-ems-full-navod.pdf`. The guide has no entries for the three "Kompenzace"
+> sub-items, only a one-line note on the heading.
 
 ```yaml
 fields:
@@ -173,28 +169,36 @@ fields:
     label_en: "Battery storage information and component addressing"
 
   - id: battery_type
-    label_cs: "Typ bateriového uložiště"
-    label_en: "Battery storage type"
+    label_cs: "Typ / model bateriového úložiště"
+    label_en: "Battery storage type / model"
     type: text
     photo: true
     help_cs: "Uveďte typ bateriového uložiště co nejpřesněji + doplňte fotografií štítku. Pokud je BÚ složeno z více komponent, rozepište níže do tabulky a pořiďte foto z každé komponenty."
     help_en: "State the battery storage type as precisely as possible + attach a nameplate photo. If the storage consists of multiple components, list them in the table below with a photo of each."
 
+  - id: battery_capacity_kwh
+    label_cs: "Kapacita úložiště"
+    label_en: "Storage capacity"
+    type: number
+    unit: kWh
+    help_cs: "Celková kapacita úložiště udávaná výrobcem."
+    help_en: "The storage's total capacity as stated by the manufacturer."
+
   - id: battery_max_soc
-    label_cs: "Max. SOC pro nabíjení"
-    label_en: "Max. SOC for charging"
+    label_cs: "Max. SoC pro nabíjení"
+    label_en: "Max. SoC for charging"
     type: number
     unit: "%"
-    help_cs: "Legenda (psáno pro starší verzi pojmenování, \"kapacita\"): jedná se o provozní maximální kapacitu, která většinou odpovídá 90–95 % celkové kapacity. Nad tuto hranici se nesmí baterie nabít."
-    help_en: "Legend text (written for an older \"capacity\" naming): the operational maximum, usually 90-95% of total capacity. The battery must not be charged above this."
+    help_cs: "Jedná se o provozní maximální kapacitu, která většinou odpovídá 90–95 % celkové kapacity. Nad tuto hranici se nesmí baterie nabít."
+    help_en: "The operational maximum, usually 90–95 % of total capacity. The battery must not be charged above this."
 
   - id: battery_min_soc
-    label_cs: "Min. SOC pro vybíjení"
-    label_en: "Min. SOC for discharging"
+    label_cs: "Min. SoC pro vybíjení"
+    label_en: "Min. SoC for discharging"
     type: number
     unit: "%"
-    help_cs: "Legenda (psáno pro starší verzi pojmenování, \"kapacita\"): jedná se o provozní minimální kapacitu, která většinou odpovídá 5–12 % celkové kapacity. Pod tuto hranici se nesmí baterie vybít."
-    help_en: "Legend text (written for an older \"capacity\" naming): the operational minimum, usually 5-12% of total capacity. The battery must not be discharged below this."
+    help_cs: "Jedná se o provozní minimální kapacitu, která většinou odpovídá 5–12 % celkové kapacity. Pod tuto hranici se nesmí baterie vybít."
+    help_en: "The operational minimum, usually 5–12 % of total capacity. The battery must not be discharged below this."
 
   - id: battery_components_table
     label_cs: "Doplňující informace k bateriovému úložišti"
@@ -204,11 +208,11 @@ fields:
     suggested_rows: 4
     columns:
       - id: component
-        label_cs: "Komponenta BU (INV, BMS, MBMS)"
-        label_en: "Storage component (INV, BMS, MBMS)"
+        label_cs: "Komponenta INV / BMS / MBMS"
+        label_en: "Component INV / BMS / MBMS"
         type: text
-        help_cs: "Jedná se o střídač, BMS, nebo jinou část BÚ; uveďte přesné typové označení + foto výrobního štítku."
-        help_en: "The inverter, BMS, or other storage part; state the exact model + nameplate photo."
+        help_cs: "Jedná se o střídač, BMS, master BMS nebo jinou část BÚ; uveďte přesné typové označení + foto výrobního štítku."
+        help_en: "The inverter, BMS, master BMS or other storage part; state the exact model + nameplate photo."
       - id: capacity_kwh
         label_cs: "Kapacita BU [kWh]"
         label_en: "Storage capacity [kWh]"
@@ -222,18 +226,20 @@ fields:
         help_cs: "Jedná se o bateriový střídač; uveďte jeho maximální výkon."
         help_en: "The battery inverter's maximum power."
       - id: modbus_rtu_or_ip_address
-        label_cs: "Modbus RTU adresa / IP TCP adresa + Modbus ID"
-        label_en: "Modbus RTU address / IP TCP address + Modbus ID"
+        label_cs: "Modbus ID / IP adresa :: ID"
+        label_en: "Modbus ID / IP address :: ID"
         type: text
-        help_cs: "Pokud je komponenta připojena na Modbus RTU, uveďte ID adresu. Pokud na Modbus TCP, uveďte IP adresu."
-        help_en: "If the component uses Modbus RTU, state the ID address. If Modbus TCP, state the IP address."
+        help_cs: "Pokud je komponenta připojena na Modbus RTU, uveďte ID adresu. Pokud na Modbus TCP, uveďte IP adresu a ID."
+        help_en: "If the component uses Modbus RTU, state the ID address. If Modbus TCP, state the IP address and ID."
       - id: mbms_order
-        label_cs: "Pořadí uložiště v případě použité MBMS"
-        label_en: "Storage order (if MBMS is used)"
+        label_cs: "ID úložiště (v případě MBMS)"
+        label_en: "Storage ID (if an MBMS is used)"
         type: text
+        help_cs: "Bateriové úložiště může být připojené přímo, nebo začleněné do clusteru pod BMS — v takovém případě je identifikováno pomocí ID úložiště v rámci clusteru."
+        help_en: "A battery can be connected directly or as part of a cluster under a BMS — in that case it is identified by its storage ID within the cluster."
 
   - id: battery_notes
-    label_cs: "Poznámky k BU"
+    label_cs: "Poznámky k bateriím"
     label_en: "Notes on battery storage"
     type: text
     multiline: true
@@ -244,12 +250,22 @@ fields:
     label_en: "Is a METEO station installed"
     type: boolean
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
-    help_cs: "Potvrzení, že METEO stanice byla instalována a připojena na datovou síť. Instaluje se na vyvýšené místo (např. střecha); datový kabel musí disponovat napájením (PoE)."
-    help_en: "Confirms the METEO station was installed and connected to the data network. Installed at an elevated location (e.g. roof); the data cable must supply power (PoE)."
+    help_cs: "Instaluje se na vyvýšené místo (např. střecha) a připojuje na datovou síť; datový kabel musí disponovat napájením (PoE)."
+    help_en: "Installed at an elevated location (e.g. roof) and connected to the data network; the data cable must supply power (PoE)."
+
+  - id: meteo_station_irradiance_placement
+    label_cs: "METEO stanice nainstalována s ohledem na měření osvitu elektrárny"
+    label_en: "METEO station installed so that it measures the plant's irradiance"
+    type: boolean
+    blocking: true
+    conditional_on: {field: meteo_station_installed, equals: true}
+    options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
+    help_cs: "Hodnoty z měření METEO stanice se předávají na dispečink. Je proto nutné, aby odpovídaly skutečnému osvitu, rychlosti větru, atp."
+    help_en: "The METEO station's readings are passed on to the dispatch centre, so they must reflect the actual irradiance, wind speed, etc."
 
   - id: meteo_station_correct_subnet
-    label_cs: "Má METEO nastavenou IP adresu ve stejné sub-síti jako řídící jednotky"
-    label_en: "Is the METEO station's IP address on the same subnet as the controller units"
+    label_cs: "IP adresa METEO stanice je ve stejné síti jako EMS/DŘ (vzájemně dostupné přes PING)"
+    label_en: "The METEO station's IP address is on the same network as the EMS/DSO RTU (reachable by PING)"
     type: boolean
     blocking: true
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
@@ -269,22 +285,24 @@ fields:
     type: group
     label_cs: "Kompenzace"
     label_en: "Compensation (reactive power)"
+    help_cs: "Kompenzace a její ovládání bývá řešeno obvykle pouze tehdy, je-li to podmínka distributora nebo zákazníka."
+    help_en: "Compensation and its control are usually only dealt with when the DSO or the customer requires it."
 
   - id: compensation_installed
-    label_cs: "je instalováno kompenzace"
+    label_cs: "Instalována kompenzace?"
     label_en: "Is compensation installed"
     type: boolean
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
 
   - id: compensation_affects_fve_control
-    label_cs: "bude ovlivňovat řízení fve a povely z DŘ"
+    label_cs: "Bude ovlivňovat řízení FVE a povely z DŘ?"
     label_en: "Will it affect PV control and dispatching-control (DSO RTU) commands"
     type: boolean
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
     conditional_on: {field: compensation_installed, equals: true}
 
   - id: compensation_blocking_enabled
-    label_cs: "je umožněno její blokování blokovacím kontaktem"
+    label_cs: "Umožňuje kompenzace blokování pomocí kontaktu?"
     label_en: "Can it be blocked via a blocking contact"
     type: boolean
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}

@@ -16,8 +16,32 @@
 fields:
   - id: meter_main_heading
     type: group
-    label_cs: "Elektroměr v EMS/DŘ rozvaděči (SML133) pro měření na předacím místě"
-    label_en: "Meter in the EMS/DSO RTU switchboard (SML133) for metering at the delivery point"
+    label_cs: "Elektroměr SML133 v EMS/DŘ rozvaděči"
+    label_en: "SML133 meter in the EMS/DSO RTU switchboard"
+
+  - id: main_meter_purpose
+    label_cs: "Elektroměr osazen pro měření"
+    label_en: "The meter is installed to measure"
+    type: select
+    options:
+      - {value: delivery_point, label_cs: "Na předacím místě s D.S.", label_en: "At the delivery point with the distribution grid"}
+      - {value: pv_module, label_cs: "Výrobního modulu (FVE)", label_en: "A generation module (PV)"}
+      - {value: bess_module, label_cs: "Výrobního modulu (BESS)", label_en: "A generation module (BESS)"}
+      - {value: other, label_cs: "Jiné", label_en: "Other"}
+
+  - id: main_meter_purpose_other
+    label_cs: "Jiné – upřesněte"
+    label_en: "Other – please specify"
+    type: text
+    conditional_on: {field: main_meter_purpose, equals: other}
+
+  - id: meter_at_vn
+    label_cs: "Elektroměr měří na hladině VN"
+    label_en: "The meter measures at the VN (medium/high-voltage) level"
+    type: boolean
+    options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
+    help_cs: "Měření na hladině VN používá i MTN — položky k MTN se zobrazí jen v tom případě."
+    help_en: "Metering at VN also uses voltage transformers (MTN) — the MTN items are shown only in that case."
 
   - id: mtp_installed
     label_cs: "Osazení a připojení MTP k EMS/DŘ rozvaděči"
@@ -35,6 +59,7 @@ fields:
     type: boolean
     blocking: true
     photo: true
+    conditional_on: {field: meter_at_vn, equals: true}
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
     help_cs: "Jedná se o montáž měřicích transformátorů napětí (MTN). Trafa se montují na místa dle dokumentace o příslušné velikosti. U montáže je nutné zkontrolovat správný převodový poměr, případně třídu přesnosti."
     help_en: "Mounting of voltage transformers (MTN) at the locations specified in the documentation, matching the correct size. Verify the correct transformation ratio and accuracy class during mounting."
@@ -119,7 +144,7 @@ fields:
     label_en: "MTN transformation ratio configured"
     type: boolean
     blocking: true
-    required: false
+    conditional_on: {field: meter_at_vn, equals: true}
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
     help_cs: "Vyplňuje se pouze v případě, že elektroměr bude měřit na hladině VN."
     help_en: "Fill in only if the meter measures at the VN (medium/high-voltage) level."
@@ -168,8 +193,8 @@ fields:
         help_cs: "Modbus RTU využívá RS-485, Modbus TCP využívá datové sítě a elektroměr musí mít přidělenou IP adresu."
         help_en: "Modbus RTU uses RS-485; Modbus TCP uses the data network and the meter must have an assigned IP address."
       - id: ip_or_modbus_id
-        label_cs: "IP adresa + Modbus ID nebo jen Modbus ID (RTU)"
-        label_en: "IP address + Modbus ID, or just Modbus ID (RTU)"
+        label_cs: "Modbus ID / IP adresa :: ID"
+        label_en: "Modbus ID / IP address :: ID"
         type: text
         help_cs: "Uveďte příslušnou nastavenou adresu: buď ID adresu (RTU), nebo IP adresu (TCP). Pokud máte objednán vývoj ovladače (driveru) pro nepodporovaný elektroměr, uveďte do poznámek i rychlost komunikace a paritu."
         help_en: "Enter the configured address: either the ID address (RTU) or the IP address (TCP). If you have ordered driver development for an unsupported meter, also state the communication speed and parity in the notes."
@@ -182,7 +207,10 @@ fields:
       - id: terminal_block
         label_cs: "Svorkovnice X1 nebo X2"
         label_en: "Terminal block X1 or X2"
-        type: text
+        type: select
+        options:
+          - {value: x1, label_cs: "X1", label_en: "X1"}
+          - {value: x2, label_cs: "X2", label_en: "X2"}
         help_cs: "Kam je v rámci rozvaděče EMS Full připojena Modbus RTU komunikace."
         help_en: "Which terminal block within the EMS Full switchboard the Modbus RTU communication is wired to."
 

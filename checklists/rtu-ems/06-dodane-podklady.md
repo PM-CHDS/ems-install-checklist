@@ -2,9 +2,8 @@
 
 *(Documents supplied together with the checklist — EMS / dispatching control (DSO RTU))*
 
-> **_notes**: `distribution_portal_screenshot` has no `ANO/NE` marker in the source docx
-> (every other item in this section does) — modeled as `boolean` for consistency with
-> the rest of the section, but flagged as inferred rather than literal.
+> **_notes**: source is `checklist-ems-full.pdf` §3.1 "Povinné přílohy" and the
+> signature block.
 
 ```yaml
 fields:
@@ -110,8 +109,6 @@ fields:
     photo: true
     photo_required: true
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
-    help_cs: "Poznámka autora převodu do Markdown: tato položka nemá v původním dokumentu ANO/NE zaškrtávací pole (jediná v této sekci) — doplněno pro konzistenci."
-    help_en: "Markdown-conversion note: unlike every other item in this section, this one has no ANO/NE marker in the source document — added here for consistency."
 
   - id: signoff_declaration
     type: note
@@ -128,6 +125,11 @@ fields:
   - id: filled_by_company
     label_cs: "Společnost"
     label_en: "Company"
+    type: text
+
+  - id: filled_place
+    label_cs: "V (místo)"
+    label_en: "Place"
     type: text
 
   - id: filled_date

@@ -22,6 +22,26 @@ fields:
     help_cs: "Jedná se o stavební montáž rozvaděče na určené místo definované projektovou dokumentací. Dále pak připojení silových a signálních vodičů na svorky dle dokumentace."
     help_en: "Physical mounting of the switchboard at the location defined by the project documentation, plus connecting power and signal conductors to terminals per that documentation."
 
+  - id: ems_full_location
+    label_cs: "Umístění rozvaděče EMS/DŘ"
+    label_en: "Location of the EMS/DSO RTU switchboard"
+    type: select
+    options:
+      - {value: inside, label_cs: "uvnitř", label_en: "inside"}
+      - {value: outside, label_cs: "venku", label_en: "outside"}
+    help_cs: "Specifikace umístění, zda je rozvaděč instalován ve venkovním prostředí nebo je umístěn v rozvodně. Pokud je rozvaděč umístěn ve venkovním prostředí, je vyžadováno aktivování vestavěného vyhřívání rozvaděče."
+    help_en: "Specify whether the switchboard is installed outdoors or inside a switchroom/electrical room. If it is outdoors, the switchboard's built-in heating must be activated."
+
+  - id: switchboard_heating_activated
+    label_cs: "Aktivováno vestavěné vyhřívání rozvaděče EMS/DŘ"
+    label_en: "Built-in heating of the EMS/DSO RTU switchboard activated"
+    type: boolean
+    blocking: true
+    conditional_on: {field: ems_full_location, equals: outside}
+    options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
+    help_cs: "Venkovní rozvaděč musí mít zapnuté vestavěné vyhřívání."
+    help_en: "An outdoor switchboard must have its built-in heating switched on."
+
   - id: mar_switchboard_count
     label_cs: "Počet skutečně instalovaných MaR rozvaděčů"
     label_en: "Number of ISC (Instrumentation and Control) panels actually installed"
@@ -57,16 +77,6 @@ fields:
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
     help_cs: "Jedná se o stavební montáž rozvaděče na určené místo definované projektovou dokumentací. Dále pak připojení silových a signálních vodičů na svorky dle dokumentace (řeší se pouze, pokud je obsažen v projektové dokumentaci). Jedná se o podružný rozvaděč pro ty případy, kdy jsou MTP/MTN vzdálená v kabelové délce od EMS/DŘ rozvaděče dále než 20 m."
     help_en: "Physical mounting plus power/signal wiring per documentation (only applicable if included in the project documentation). This sub-switchboard is used when the current/voltage transformers (MTP/MTN) are more than 20 m of cable length from the EMS/DSO RTU switchboard. Called \"ELMĚR switchboard\" in the source Legend section."
-
-  - id: ems_full_location
-    label_cs: "Umístění rozvaděče EMS Full"
-    label_en: "Location of the EMS Full switchboard"
-    type: select
-    options:
-      - {value: inside, label_cs: "uvnitř", label_en: "inside"}
-      - {value: outside, label_cs: "venku", label_en: "outside"}
-    help_cs: "Specifikace umístění, zda je rozvaděč instalován ve venkovním prostředí nebo je umístěn někde v rozvodně."
-    help_en: "Specify whether the switchboard is installed outdoors or inside a switchroom/electrical room."
 
   - id: switchboard_jps_labels
     label_cs: "Označení rozvaděčů dle JPS"

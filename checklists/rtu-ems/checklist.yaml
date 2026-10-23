@@ -1,16 +1,16 @@
 # Checklist-level metadata. The section files listed under `sections` hold the fields.
 slug: rtu-ems
 version: 8
-title_cs: "Checklist instalace EMS FULL"
-title_en: "EMS FULL Installation Checklist"
+title_cs: "Checklist instalace EMS/DŘ – EMS FULL"
+title_en: "EMS/DSO RTU Installation Checklist – EMS FULL"
 subtitle_cs: "Instalace rozvaděčů EMS a dispečerského řízení"
 subtitle_en: "Installation of EMS and dispatching control (DSO RTU) switchboards"
-source_document: "Checklist_Instalace_RTU-EMS_v7.docx"
+source_document: "checklist-ems-full.pdf + checklist-ems-full-navod.pdf (2026)"
 author_org: "EnergoStation s.r.o."
 default_language: cs
 
 submission_contact:
-  email: projekty@energostation.com
+  email: hynek.bacik@energostation.com
   person: "Ing. Hynek Bačík"
   phone: "+420 737 547 189"
   person_email: hynek.bacik@energostation.com

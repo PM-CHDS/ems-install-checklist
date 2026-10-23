@@ -15,12 +15,10 @@
 > too — where a field says EMS/DSO RTU, fill it in even if only dispatching control was
 > ordered.)*
 
-> **_notes**: `battery_mode` and the SPOT-price sub-blocks below are each rendered in the
-> source as multiple separate `ANO/NE` lines; where they're genuinely mutually exclusive
-> choices they're modeled here as a single `select`/`conditional_on` instead — see
-> `README.md`. Regulation stages 4 and 5 are both labeled "vypnutí zařízení 2" in the
-> source (stage 2 and 3 are already "zařízení 1" and "zařízení 2") — likely a copy-paste
-> typo that should read "zařízení 3" / "zařízení 4"; kept as literally written.
+> **_notes**: source is `checklist-ems-full.pdf` §2 with help text from
+> `checklist-ems-full-navod.pdf`. The source labels regulation stages 2–5 all as
+> "vypnutí zařízení 1" with only a max. power value; here each stage is a yes/no that
+> unfolds its max. power, labelled without the device number.
 
 ```yaml
 fields:
@@ -69,14 +67,6 @@ fields:
     unit: kWp
     help_cs: "Uveďte hodnotu celkového instalovaného výkonu z aktuální SoP."
     help_en: "State the total installed power from the current connection agreement (SoP)."
-
-  - id: reserved_capacity_quarter_hour_max
-    label_cs: "rezervovaná kapacita (¼ hodinové maximum)"
-    label_en: "Reserved capacity (¼-hour maximum)"
-    type: number
-    unit: kW
-    help_cs: "V případě, že má odběrné místo sjednáno ¼hodinové maximum, uveďte nasmlouvanou hodnotu s dodavatelem elektřiny."
-    help_en: "If the offtake point has a contracted ¼-hour maximum, state the value agreed with the electricity supplier."
 
   - id: quarter_hour_billing_warning
     type: note
@@ -254,12 +244,21 @@ fields:
     help_en: "Manufacturer-specified percentage self-loss of the battery storage."
 
   - id: additional_sources_installed
-    label_cs: "jsou instalovány další zdroje (EMS/DŘ)"
-    label_en: "Are other sources installed (EMS/DSO RTU)"
+    label_cs: "Jsou instalovány další zdroje do EMS/DŘ?"
+    label_en: "Are other sources connected to the EMS/DSO RTU?"
     type: boolean
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
-    help_cs: "Pokud jsou instalovány další zdroje jako např. KGJ (kogenerační jednotka), uveďte jejich seznam a informace dle bodu \"3.m\" do Poznámek (§7)."
-    help_en: "If other sources are installed (e.g. a CHP/cogeneration unit), list them and their details per point \"3.m\" in the Notes section (§7)."
+    help_cs: "Například kogenerační jednotky či diesel agregáty — tedy zařízení, která nebyla zmíněna ve výše uvedených bodech."
+    help_en: "For example CHP (cogeneration) units or diesel generators — devices not covered by the items above."
+
+  - id: additional_sources_notes
+    label_cs: "Poznámky – popis dalších zdrojů"
+    label_en: "Notes – description of the other sources"
+    type: text
+    multiline: true
+    conditional_on: {field: additional_sources_installed, equals: true}
+    help_cs: "Popište typ, výkon a způsob připojení / komunikace každého zdroje."
+    help_en: "Describe each source's type, power and how it is connected / communicates."
 
   - id: battery_mode
     label_cs: "Režim bateriového uložiště (vyberte jednu možnost, kombinace je pouze po vzájemné domluvě a ověření, že daná technologie kombinaci podporuje)"
@@ -280,8 +279,17 @@ fields:
 
   - id: quarter_hour_max_heading
     type: group
-    label_cs: "¼ hod. maximum (vyplňte, pokud je součástí projektu)"
-    label_en: "¼-hour maximum (fill in only if part of the project)"
+    label_cs: "Parametry rezervované kapacity ¼h maxima (vyplňte, pokud je součástí projektu)"
+    label_en: "¼-hour maximum reserved-capacity parameters (fill in only if part of the project)"
+
+  - id: reserved_capacity_quarter_hour_max
+    label_cs: "Rezervovaná kapacita ¼h maximum"
+    label_en: "Reserved capacity (¼-hour maximum)"
+    type: number
+    unit: kW
+    required: false
+    help_cs: "V případě, že má odběrné místo sjednáno ¼hodinové maximum, uveďte nasmlouvanou hodnotu s dodavatelem elektřiny."
+    help_en: "If the offtake point has a contracted ¼-hour maximum, state the value agreed with the electricity supplier."
 
   - id: opto_isolator_installed_billing_meter
     label_cs: "instalován a připojen galvanický optooddělovač pro sběr pulsů k fakturačnímu elektroměru"
@@ -363,8 +371,8 @@ fields:
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
 
   - id: stage2_device1_shutdown
-    label_cs: "Stupeň 2 – vypnutí zařízení 1"
-    label_en: "Stage 2 – shut down device 1"
+    label_cs: "Stupeň 2 – vypnutí zařízení"
+    label_en: "Stage 2 – device shutdown"
     type: boolean
     required: false
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
@@ -377,8 +385,8 @@ fields:
     conditional_on: {field: stage2_device1_shutdown, equals: true}
 
   - id: stage3_device2_shutdown
-    label_cs: "Stupeň 3 – vypnutí zařízení 2"
-    label_en: "Stage 3 – shut down device 2"
+    label_cs: "Stupeň 3 – vypnutí zařízení"
+    label_en: "Stage 3 – device shutdown"
     type: boolean
     required: false
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
@@ -391,13 +399,11 @@ fields:
     conditional_on: {field: stage3_device2_shutdown, equals: true}
 
   - id: stage4_device_shutdown
-    label_cs: "Stupeň 4 – vypnutí zařízení 2"
-    label_en: "Stage 4 – shut down device 2"
+    label_cs: "Stupeň 4 – vypnutí zařízení"
+    label_en: "Stage 4 – device shutdown"
     type: boolean
     required: false
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
-    help_cs: "Zdroj takto opakuje \"zařízení 2\" i pro stupeň 4 — pravděpodobně překlep, mělo by být \"zařízení 3\"."
-    help_en: "The source repeats \"device 2\" for stage 4 too — likely a typo, probably should read \"device 3\"."
 
   - id: stage4_device_max_power
     label_cs: "max. příkon (Stupeň 4)"
@@ -407,13 +413,11 @@ fields:
     conditional_on: {field: stage4_device_shutdown, equals: true}
 
   - id: stage5_device_shutdown
-    label_cs: "Stupeň 5 – vypnutí zařízení 2"
-    label_en: "Stage 5 – shut down device 2"
+    label_cs: "Stupeň 5 – vypnutí zařízení"
+    label_en: "Stage 5 – device shutdown"
     type: boolean
     required: false
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
-    help_cs: "Zdroj takto opakuje \"zařízení 2\" i pro stupeň 5 — pravděpodobně překlep, mělo by být \"zařízení 4\"."
-    help_en: "The source repeats \"device 2\" for stage 5 too — likely a typo, probably should read \"device 4\"."
 
   - id: stage5_device_max_power
     label_cs: "max. příkon (Stupeň 5)"
@@ -426,4 +430,23 @@ fields:
     type: note
     label_cs: "další stupně je nutno řešit individuálně"
     label_en: "Additional stages must be handled on a custom/individual basis"
+
+  - id: flexibility_heading
+    type: group
+    label_cs: "Nastavení řízení flexibility"
+    label_en: "Flexibility control settings"
+
+  - id: aggregator_device_connected
+    label_cs: "Zařízení pro komunikaci s agregátorem je připojené k EMS"
+    label_en: "The device for communicating with the aggregator is connected to the EMS"
+    type: boolean
+    options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
+    help_cs: "Vyplňte NE, pokud řízení flexibility není součástí projektu."
+    help_en: "Answer No if flexibility control is not part of the project."
+
+  - id: aggregator_name
+    label_cs: "Zvolený agregátor"
+    label_en: "Selected aggregator"
+    type: text
+    conditional_on: {field: aggregator_device_connected, equals: true}
 ```

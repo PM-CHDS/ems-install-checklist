@@ -6,9 +6,13 @@
 > [`docs/AUTHORING.md`](../../docs/AUTHORING.md). What follows documents how this schema
 > was derived from the original document and the judgment calls made along the way.
 
-Source of truth: `Checklist_Instalace_RTU-EMS_v7.docx` (+ matching `.pdf`), authored by
-EnergoStation s.r.o. This directory is a structured, git-friendly re-encoding of that
-document's fillable content, intended as the schema a web form is generated from.
+Source of truth: `input-dump/EMS-install-checklist/checklist-ems-full.pdf` (the 2026
+"EMS FULL" checklist) and its guide `checklist-ems-full-navod.pdf`, authored by
+EnergoStation s.r.o. The schema was first converted from `Checklist_Instalace_RTU-EMS_v7.docx`
+and then reviewed against the 2026 documents; the sections and footnote tables below still
+describe that first conversion where the 2026 documents didn't change them. This directory
+is a structured, git-friendly re-encoding of the documents' fillable content, intended as
+the schema a web form is generated from.
 
 The original document is Czech-only. Every field below carries both the original Czech
 label (`label_cs`, verbatim from the source) and an English translation (`label_en`,
@@ -104,11 +108,9 @@ paper form's row count was a print-layout constraint, not a business rule.
 Flagged here rather than silently "fixed", since these are judgment calls for whoever
 finalizes the web form — see `_notes` block at the top of each affected section file for
 detail: a mutually-exclusive choice rendered as multiple `ANO/NE` lines (battery mode,
-connection method) collapsed into one `select`; one checklist item (§6, distribution
-portal screenshot) missing its `ANO/NE` marker in the source; a couple of legend
-paragraphs describing table columns that don't actually exist in the printed table; and
-two regulation stages (§5, stages 4 and 5) both labeled "vypnutí zařízení 2", likely a
-copy-paste typo in the source that should probably read "zařízení 3" / "zařízení 4".
+connection method) collapsed into one `select`; a couple of legend paragraphs describing
+table columns that don't actually exist in the printed table; and regulation stages 2–5
+all labelled "vypnutí zařízení 1" in the 2026 source, shown here without a device number.
 
 ## Images
 
