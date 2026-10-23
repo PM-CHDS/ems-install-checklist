@@ -9,6 +9,7 @@ import { t } from '@/lib/i18n';
 import { PhotoUploader } from './PhotoUploader';
 import { SignaturePad } from './SignaturePad';
 import { TableField } from './TableField';
+import { Linkified } from './Linkified';
 
 interface Props {
   token: string;
@@ -58,7 +59,11 @@ export function Field({
         <h3 className="border-b border-slate-200 pb-1.5 text-base font-semibold text-slate-800">
           {label(field, lang)}
         </h3>
-        {helpText && <p className="help-text">{helpText}</p>}
+        {helpText && (
+          <p className="help-text">
+            <Linkified text={helpText} />
+          </p>
+        )}
         <Images field={field} lang={lang} />
         {field.photo && (
           <PhotoUploader
@@ -98,7 +103,7 @@ export function Field({
               warning ? 'text-amber-800' : 'text-slate-600'
             }`}
           >
-            {helpText}
+            <Linkified text={helpText} />
           </p>
         )}
         <Images field={field} lang={lang} />
@@ -147,7 +152,11 @@ export function Field({
         </label>
       </div>
 
-      {helpText && <p className="help-text">{helpText}</p>}
+      {helpText && (
+          <p className="help-text">
+            <Linkified text={helpText} />
+          </p>
+        )}
       <Images field={field} lang={lang} />
 
       <div className="mt-2">
