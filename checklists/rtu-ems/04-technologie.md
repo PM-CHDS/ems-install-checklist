@@ -257,10 +257,24 @@ fields:
         label_en: "Modbus ID"
         type: text
 
+  - id: bess_heading
+    type: group
+    label_cs: "Bateriové úložiště (BESS)"
+    label_en: "Battery storage (BESS)"
+
+  - id: bess_present
+    label_cs: "Je součástí projektu bateriové úložiště (BESS)?"
+    label_en: "Is battery storage (BESS) part of the project?"
+    type: boolean
+    options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
+    help_cs: "Pokud NE, otázky k bateriovému úložišti se nezobrazí a nevyplňují se — ani nastavení baterie v §5."
+    help_en: "If No, the battery-storage questions are not shown and need not be filled in — nor the battery settings in §5."
+
   - id: battery_components_connected
     label_cs: "Jsou všechny prvky bateriového úložiště (střídače, BMS, atd.) připojeny k řídícím jednotkám"
     label_en: "Are all battery-storage components (inverters, BMS, etc.) connected to the controller units"
     type: boolean
+    conditional_on: {field: bess_present, equals: true}
     blocking: true
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
     help_cs: "Kontrola, zda jsou všechny bateriové technologie připojeny do stejné datové sítě jako řídící jednotky a je ověřena jejich viditelnost, např. pomocí příkazu ping na IP adresu hlavní řídící jednotky."
@@ -268,6 +282,7 @@ fields:
 
   - id: battery_info_heading
     type: group
+    conditional_on: {field: bess_present, equals: true}
     label_cs: "Informace o bateriovém uložišti a adresace komponent"
     label_en: "Battery storage information and component addressing"
 
@@ -275,6 +290,7 @@ fields:
     label_cs: "Typ / model bateriového úložiště"
     label_en: "Battery storage type / model"
     type: text
+    conditional_on: {field: bess_present, equals: true}
     photo: true
     help_cs: "Uveďte typ bateriového uložiště co nejpřesněji + doplňte fotografií štítku. Pokud je BÚ složeno z více komponent, rozepište níže do tabulky a pořiďte foto z každé komponenty."
     help_en: "State the battery storage type as precisely as possible + attach a nameplate photo. If the storage consists of multiple components, list them in the table below with a photo of each."
@@ -283,6 +299,7 @@ fields:
     label_cs: "Kapacita úložiště"
     label_en: "Storage capacity"
     type: number
+    conditional_on: {field: bess_present, equals: true}
     unit: kWh
     help_cs: "Celková kapacita úložiště udávaná výrobcem."
     help_en: "The storage's total capacity as stated by the manufacturer."
@@ -291,6 +308,7 @@ fields:
     label_cs: "Max. SoC pro nabíjení"
     label_en: "Max. SoC for charging"
     type: number
+    conditional_on: {field: bess_present, equals: true}
     unit: "%"
     help_cs: "Jedná se o provozní maximální kapacitu, která většinou odpovídá 90–95 % celkové kapacity. Nad tuto hranici se nesmí baterie nabít."
     help_en: "The operational maximum, usually 90–95 % of total capacity. The battery must not be charged above this."
@@ -299,6 +317,7 @@ fields:
     label_cs: "Min. SoC pro vybíjení"
     label_en: "Min. SoC for discharging"
     type: number
+    conditional_on: {field: bess_present, equals: true}
     unit: "%"
     help_cs: "Jedná se o provozní minimální kapacitu, která většinou odpovídá 5–12 % celkové kapacity. Pod tuto hranici se nesmí baterie vybít."
     help_en: "The operational minimum, usually 5–12 % of total capacity. The battery must not be discharged below this."
@@ -307,6 +326,7 @@ fields:
     label_cs: "Doplňující informace k bateriovému úložišti"
     label_en: "Additional battery-storage information"
     type: table
+    conditional_on: {field: bess_present, equals: true}
     repeatable: true
     suggested_rows: 4
     columns:
@@ -345,6 +365,7 @@ fields:
     label_cs: "Poznámky k bateriím"
     label_en: "Notes on battery storage"
     type: text
+    conditional_on: {field: bess_present, equals: true}
     multiline: true
     required: false
 

@@ -224,6 +224,7 @@ fields:
     label_cs: "povolit vybíjení baterie do sítě (SPOT)"
     label_en: "Allow battery discharge to the grid (SPOT)"
     type: boolean
+    conditional_on: {field: bess_present, equals: true}
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
     help_cs: "Definujte, zda se má BÚ nabíjet a vybíjet dle SPOTu z/do sítě."
     help_en: "Define whether the battery storage should charge/discharge to/from the grid based on SPOT prices."
@@ -232,6 +233,7 @@ fields:
     label_cs: "Amortizace baterie (SPOT)"
     label_en: "Battery amortization (SPOT)"
     type: number
+    conditional_on: {field: bess_present, equals: true}
     required: false
     unit: EUR/MWh
 
@@ -239,6 +241,7 @@ fields:
     label_cs: "ztráty bateriového úložiště"
     label_en: "Battery storage losses"
     type: number
+    conditional_on: {field: bess_present, equals: true}
     unit: "%"
     help_cs: "Výrobcem definovaná procentuální vlastní ztráta BÚ."
     help_en: "Manufacturer-specified percentage self-loss of the battery storage."
@@ -264,6 +267,7 @@ fields:
     label_cs: "Režim bateriového uložiště (vyberte jednu možnost, kombinace je pouze po vzájemné domluvě a ověření, že daná technologie kombinaci podporuje)"
     label_en: "Battery storage mode (select one; combinations only by mutual agreement and after verifying the technology supports the combination)"
     type: select
+    conditional_on: {field: bess_present, equals: true}
     options:
       - value: self_consumption
         label_cs: "Self-consumption – nabíjení z přetoků fve a kompenzace spotřeby"
@@ -367,6 +371,7 @@ fields:
     label_cs: "Stupeň 1 – kompenzace baterií"
     label_en: "Stage 1 – battery compensation"
     type: boolean
+    conditional_on: {field: bess_present, equals: true}
     required: false
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
 
