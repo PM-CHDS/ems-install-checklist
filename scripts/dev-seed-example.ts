@@ -165,6 +165,7 @@ const values: Record<string, unknown> = {
   battery_losses: 4.5,
   additional_sources_installed: false,
   battery_mode: 'spot_control',
+  quarter_hour_max_control: true,
   opto_isolator_installed_billing_meter: true,
   opto_isolator_connected_switchboard: true,
   quarter_hour_switchboard_connected_ems: true,

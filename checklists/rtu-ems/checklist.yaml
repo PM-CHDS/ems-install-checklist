@@ -1,6 +1,6 @@
 # Checklist-level metadata. The section files listed under `sections` hold the fields.
 slug: rtu-ems
-version: 8
+version: 8.1
 title_cs: "Checklist instalace EMS/DŘ – EMS FULL"
 title_en: "EMS/DSO RTU Installation Checklist – EMS FULL"
 subtitle_cs: "Instalace rozvaděčů EMS a dispečerského řízení"

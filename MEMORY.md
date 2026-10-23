@@ -61,7 +61,8 @@ Next.js (Docker) ─────────────────────
   `on_fail: {require_note, require_photo}`, `photo`, `photo_required`. Documented in
   `docs/AUTHORING.md`.
 - **Version bumps are Denys's call — do not bump automatically** (his instruction,
-  2026-08-19). Everything through the EMS FULL rename, ISC terminology, count gating and
+  2026-08-19). Current: **8.1** (2026-10-23, the ¼h gate); versions may be decimals and
+  compare numerically (`double precision` columns since migration 0001). Everything through the EMS FULL rename, ISC terminology, count gating and
   footnote cleanup lives at **v8**. `scripts/db-prune-checklists.ts --apply` clears
   published definitions that no longer exist in `generated/`; without it a stale higher
   version hides the current one in the admin picker.
@@ -89,8 +90,8 @@ Next.js (Docker) ─────────────────────
   JSON behind for the startup bootstrap to republish. The admin picker offers only the
   current version of each checklist; superseded rows stay in the table for existing
   instances.
-- rtu-ems v8 compiles to **8 sections, 168 fields (140 inputs, 36 blocking checks,
-  75 gated, 20 photo-capable fields)**.
+- rtu-ems v8.1 compiles to **8 sections, 169 fields (141 inputs, 36 blocking checks,
+  20 photo-capable fields)**.
 - The day-ahead-price firewall exception is **ENTSO-E** (`transparency.entsoe.eu`), not
   OTE, by the owner's instruction — the 2026 PDF still says www.ote-cr.cz.
 - **PDF export** (`/admin/<id>/pdf`, `src/lib/pdf/form-pdf.ts`) uses PDFKit with DejaVu
@@ -118,8 +119,9 @@ Next.js (Docker) ─────────────────────
   connectivity.
 - Photos are downscaled in the browser before upload (a 12 MP phone photo would otherwise
   be a ~6 MB upload).
-- The §5 "¼-hour maximum" block is marked `required: false` because the source says
-  "fill in only if part of the project" without giving a field to gate it on.
+- The §5 "¼-hour maximum" block (reserved ¼h capacity, opto-isolator, pulses, regulation
+  stages) is gated on `quarter_hour_max_control` since v8.1 and required once that is ANO;
+  only the CIB address (CIB variant only) and imp3 stay optional.
 
 ## Status (2026-08-18): MVP complete and verified
 
