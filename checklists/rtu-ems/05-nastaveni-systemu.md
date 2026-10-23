@@ -68,23 +68,6 @@ fields:
     help_cs: "Uveďte hodnotu celkového instalovaného výkonu z aktuální SoP."
     help_en: "State the total installed power from the current connection agreement (SoP)."
 
-  - id: quarter_hour_billing_warning
-    type: note
-    severity: warning
-    label_cs: "Upozornění k fakturaci ¼h rezervované kapacity"
-    label_en: "Warning: ¼-hour reserved-capacity billing"
-    help_cs: >
-      DŮLEŽITÉ: pokud se bude nabíjet baterie ze SPOTu a OPM je fakturováno dle ¼h
-      rezervované kapacity (RK), je nutné řešit sledování a řízení ¼h výkonu přímo z
-      fakturačního elektroměru. Pokud nebude použito řízení ¼h rezervované kapacity z
-      fakturačního elektroměru, je možné, že se limit RK překročí a OPM může být
-      fakturováno za překročení limitu RK.
-    help_en: >
-      IMPORTANT: if the battery is charged from SPOT prices and the offtake point is
-      billed on a ¼-hour reserved-capacity (RK) basis, ¼-hour power must be monitored
-      and controlled directly from the billing meter. Without ¼-hour RK control from the
-      billing meter, the RK limit may be exceeded and billed as an overage.
-
   - id: test_operation_overflow_allowed
     label_cs: "povolení přetoků do sítě během zkušebního provozu"
     label_en: "Grid feed-in permitted during test operation"
@@ -102,85 +85,39 @@ fields:
     help_cs: "Uveďte hodnotu povoleného přetoku."
     help_en: "State the permitted feed-in value."
 
-  - id: electricity_purchase_contract_type
-    label_cs: "Smlouva o dodávce elektřiny – nákup je (EMS)"
-    label_en: "Electricity supply contract – purchase is (EMS)"
-    type: select
-    options:
-      - {value: spot, label_cs: "SPOT", label_en: "SPOT (market price)"}
-      - {value: fix, label_cs: "FIX", label_en: "Fixed price"}
-    help_cs: "Jaký obchodní vztah je na odběrném místě smluven — řídí se odběrné místo SPOTem, nebo má fixní cenu elektřiny."
-    help_en: "What commercial arrangement applies at the offtake point — SPOT-priced or fixed-price electricity."
+  - id: spot_sale_section_heading
+    type: group
+    label_cs: "Parametry SPOT / PRODEJ"
+    label_en: "SPOT / SALE parameters"
 
   - id: electricity_sale_contract_type
-    label_cs: "Smlouva o výkupu elektřiny – prodej je (EMS)"
-    label_en: "Electricity purchase (feed-in) contract – sale is (EMS)"
+    label_cs: "Vybraný režim výkupu elektřiny (EMS)"
+    label_en: "Selected electricity sale (feed-in) mode (EMS)"
     type: select
     options:
-      - {value: spot, label_cs: "SPOT", label_en: "SPOT (market price)"}
-      - {value: fix, label_cs: "FIX", label_en: "Fixed price"}
-    help_cs: "Jaký obchodní vztah je na odběrném místě smluven — řídí se odběrné místo SPOTem, nebo má fixní cenu elektřiny."
-    help_en: "What commercial arrangement applies at the offtake point — SPOT-priced or fixed-price electricity."
-
-  - id: spot_purchase_group_heading
-    type: group
-    label_cs: "v případě nákupu na SPOTu – návod viz Legenda 8.4.a)"
-    label_en: "If purchasing on SPOT — see Legend 8.4.a for the calculation guide"
-    conditional_on: {field: electricity_purchase_contract_type, equals: spot}
-    help_cs: "Návod na výpočet: https://support.energostation.com/a/solutions/articles/47001247456?lang=cs&portalId=47000082337"
-    help_en: "Calculation guide: https://support.energostation.com/a/solutions/articles/47001247456?lang=cs&portalId=47000082337"
-
-  - id: spot_purchase_vt_cost
-    label_cs: "Náklady na VT"
-    label_en: "VT (high-tariff) cost"
-    type: number
-    unit: EUR/MWh
-    conditional_on: {field: electricity_purchase_contract_type, equals: spot}
-
-  - id: spot_purchase_nt_cost
-    label_cs: "Náklady na NT"
-    label_en: "NT (low-tariff) cost"
-    type: number
-    unit: EUR/MWh
-    conditional_on: {field: electricity_purchase_contract_type, equals: spot}
-
-  - id: spot_purchase_daily_cost
-    label_cs: "Denní náklady (rozpočítané trvalé platby)"
-    label_en: "Daily cost (amortized fixed charges)"
-    type: number
-    unit: EUR/MWh
-    conditional_on: {field: electricity_purchase_contract_type, equals: spot}
-
-  - id: spot_purchase_vat
-    label_cs: "DPH"
-    label_en: "VAT"
-    type: number
-    unit: "%"
-    conditional_on: {field: electricity_purchase_contract_type, equals: spot}
-
-  - id: spot_purchase_trader_margin
-    label_cs: "Marže obchodníka"
-    label_en: "Trader margin"
-    type: number
-    unit: EUR/MWh
-    conditional_on: {field: electricity_purchase_contract_type, equals: spot}
+      - {value: spot, label_cs: "SPOT – ceny dle burzy OTE", label_en: "SPOT – OTE exchange prices"}
+      - {value: fix, label_cs: "FIX – pevná cena domluvená s obchodníkem", label_en: "FIX – fixed price agreed with the trader"}
+    help_cs: "Jaký obchodní vztah je na odběrném místě smluven pro výkup elektřiny — podle zvolené možnosti se zobrazí příslušné parametry."
+    help_en: "Which commercial arrangement the offtake point has for selling electricity — the matching parameters are shown for the chosen option."
 
   - id: spot_sale_group_heading
     type: group
-    label_cs: "v případě prodeje na SPOTu"
-    label_en: "If selling on SPOT"
+    label_cs: "Výkup na SPOTu"
+    label_en: "Selling on SPOT"
     conditional_on: {field: electricity_sale_contract_type, equals: spot}
+    help_cs: "Návod na výpočet: https://support.energostation.com/a/solutions/articles/47001247456?lang=cs&portalId=47000082337"
+    help_en: "Calculation guide: https://support.energostation.com/a/solutions/articles/47001247456?lang=cs&portalId=47000082337"
 
   - id: spot_sale_grid_fee
-    label_cs: "cena za přenosovou soustavu"
-    label_en: "Transmission-grid fee"
+    label_cs: "Cena za použití přenosové soustavy"
+    label_en: "Transmission-grid usage fee"
     type: number
-    unit: EUR/MWh
+    unit: "EUR/MWh"
     conditional_on: {field: electricity_sale_contract_type, equals: spot}
 
   - id: spot_sale_vat
-    label_cs: "DPH"
-    label_en: "VAT"
+    label_cs: "Sazba DPH"
+    label_en: "VAT rate"
     type: number
     unit: "%"
     conditional_on: {field: electricity_sale_contract_type, equals: spot}
@@ -192,94 +129,196 @@ fields:
     unit: "%"
     conditional_on: {field: electricity_sale_contract_type, equals: spot}
 
-  - id: spot_sale_trader_margin
-    label_cs: "Marže obchodníka"
-    label_en: "Trader margin"
-    type: number
-    unit: EUR/MWh
-    conditional_on: {field: electricity_sale_contract_type, equals: spot}
-
   - id: block_negative_spot_price_export
-    label_cs: "zakázat dodávku FVE do sítě při záporných SPOT cenách (EMS)"
-    label_en: "Block PV feed-in to the grid at negative SPOT prices (EMS)"
+    label_cs: "Zakázat dodávku do sítě při záporných SPOT cenách"
+    label_en: "Block feed-in to the grid at negative SPOT prices"
     type: boolean
+    conditional_on: {field: electricity_sale_contract_type, equals: spot}
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
-    help_cs: "V případě SPOTového smluvního vztahu: má systém EMS blokovat dodávku do distribuční sítě při záporných cenách na SPOTu?"
-    help_en: "For SPOT-priced contracts: should the EMS block grid feed-in during negative SPOT prices?"
+    help_cs: "Má systém EMS blokovat dodávku do distribuční sítě při záporných cenách na SPOTu?"
+    help_en: "Should the EMS block feed-in to the distribution grid while SPOT prices are negative?"
 
-  - id: sources_heading
+  - id: fix_sale_group_heading
     type: group
-    label_cs: "FVE, Bateriové úložiště a jiné zdroje (EMS)"
-    label_en: "PV, battery storage and other sources (EMS)"
+    label_cs: "Výkup za fixní cenu"
+    label_en: "Selling at a fixed price"
+    conditional_on: {field: electricity_sale_contract_type, equals: fix}
 
-  - id: spot_control_enabled
-    label_cs: "Povolit/povolení řízení SPOT"
-    label_en: "Allow SPOT-based control"
-    type: boolean
-    options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
-    help_cs: "Definujte, zda se mají technologie řídit SPOTem."
-    help_en: "Define whether the technology should be controlled based on SPOT prices."
-
-  - id: battery_discharge_to_grid_spot
-    label_cs: "povolit vybíjení baterie do sítě (SPOT)"
-    label_en: "Allow battery discharge to the grid (SPOT)"
-    type: boolean
-    conditional_on: {field: bess_present, equals: true}
-    options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
-    help_cs: "Definujte, zda se má BÚ nabíjet a vybíjet dle SPOTu z/do sítě."
-    help_en: "Define whether the battery storage should charge/discharge to/from the grid based on SPOT prices."
-
-  - id: battery_amortization_spot
-    label_cs: "Amortizace baterie (SPOT)"
-    label_en: "Battery amortization (SPOT)"
+  - id: fix_sale_price
+    label_cs: "Fixní prodejní cena"
+    label_en: "Fixed sale price"
     type: number
-    conditional_on: {field: bess_present, equals: true}
-    required: false
-    unit: EUR/MWh
+    unit: "EUR/MWh"
+    conditional_on: {field: electricity_sale_contract_type, equals: fix}
 
-  - id: battery_losses
-    label_cs: "ztráty bateriového úložiště"
-    label_en: "Battery storage losses"
+  - id: fix_sale_grid_fee
+    label_cs: "Cena za použití přenosové soustavy"
+    label_en: "Transmission-grid usage fee"
     type: number
-    conditional_on: {field: bess_present, equals: true}
+    unit: "EUR/MWh"
+    conditional_on: {field: electricity_sale_contract_type, equals: fix}
+
+  - id: fix_sale_vat
+    label_cs: "Sazba DPH"
+    label_en: "VAT rate"
+    type: number
     unit: "%"
-    help_cs: "Výrobcem definovaná procentuální vlastní ztráta BÚ."
-    help_en: "Manufacturer-specified percentage self-loss of the battery storage."
+    conditional_on: {field: electricity_sale_contract_type, equals: fix}
 
-  - id: additional_sources_installed
-    label_cs: "Jsou instalovány další zdroje do EMS/DŘ?"
-    label_en: "Are other sources connected to the EMS/DSO RTU?"
-    type: boolean
-    options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
-    help_cs: "Například kogenerační jednotky či diesel agregáty — tedy zařízení, která nebyla zmíněna ve výše uvedených bodech."
-    help_en: "For example CHP (cogeneration) units or diesel generators — devices not covered by the items above."
+  - id: spot_purchase_section_heading
+    type: group
+    label_cs: "Parametry SPOT / NÁKUP"
+    label_en: "SPOT / PURCHASE parameters"
 
-  - id: additional_sources_notes
-    label_cs: "Poznámky – popis dalších zdrojů"
-    label_en: "Notes – description of the other sources"
-    type: text
-    multiline: true
-    conditional_on: {field: additional_sources_installed, equals: true}
-    help_cs: "Popište typ, výkon a způsob připojení / komunikace každého zdroje."
-    help_en: "Describe each source's type, power and how it is connected / communicates."
-
-  - id: battery_mode
-    label_cs: "Režim bateriového uložiště (vyberte jednu možnost, kombinace je pouze po vzájemné domluvě a ověření, že daná technologie kombinaci podporuje)"
-    label_en: "Battery storage mode (select one; combinations only by mutual agreement and after verifying the technology supports the combination)"
+  - id: electricity_purchase_contract_type
+    label_cs: "Vybraný režim nákupu elektřiny (EMS)"
+    label_en: "Selected electricity purchase mode (EMS)"
     type: select
-    conditional_on: {field: bess_present, equals: true}
     options:
-      - value: self_consumption
-        label_cs: "Self-consumption – nabíjení z přetoků fve a kompenzace spotřeby"
-        label_en: "Self-consumption – charging from PV surplus and consumption offsetting"
-      - value: peak_shaving
-        label_cs: "Peak-shaving – ořezávání/vyrovnání výkonových špiček (standardní spotřeba není kompenzována)"
-        label_en: "Peak-shaving – clipping/smoothing power peaks (standard consumption is not offset)"
-      - value: spot_control
-        label_cs: "SPOT řízení – nabíjení a kompenzace na základě SPOTových cen (neřeší vyrovnávání výkonových špiček)"
-        label_en: "SPOT control – charging and offsetting based on SPOT prices (does not address peak shaving)"
-    help_cs: "Zdroj vykresluje tyto tři možnosti jako samostatné ANO/NE řádky; protože jde o vzájemně se vylučující volby (viz nadpis), zde je to sloučeno do jednoho výběru."
-    help_en: "The source renders these three options as separate ANO/NE lines; since the heading says to pick one, they're modeled here as a single-choice field."
+      - {value: spot, label_cs: "SPOT – ceny dle burzy OTE", label_en: "SPOT – OTE exchange prices"}
+      - {value: fix, label_cs: "FIX – pevná cena domluvená s obchodníkem", label_en: "FIX – fixed price agreed with the trader"}
+      - {value: spot_fix, label_cs: "SPOT+FIX – ceny dle burzy OTE až do smluveného zastropování cen", label_en: "SPOT+FIX – OTE exchange prices up to an agreed price cap"}
+    help_cs: "Jaký obchodní vztah je na odběrném místě smluven pro nákup elektřiny — podle zvolené možnosti se zobrazí příslušné parametry."
+    help_en: "Which commercial arrangement the offtake point has for buying electricity — the matching parameters are shown for the chosen option."
+
+  - id: spot_purchase_group_heading
+    type: group
+    label_cs: "Nákup na SPOTu"
+    label_en: "Buying on SPOT"
+    conditional_on: {field: electricity_purchase_contract_type, equals: spot}
+    help_cs: "Návod na výpočet: https://support.energostation.com/a/solutions/articles/47001247456?lang=cs&portalId=47000082337"
+    help_en: "Calculation guide: https://support.energostation.com/a/solutions/articles/47001247456?lang=cs&portalId=47000082337"
+
+  - id: spot_purchase_vt_cost
+    label_cs: "Náklady při vysokém tarifu"
+    label_en: "Cost at the high tariff (VT)"
+    type: number
+    unit: "EUR/MWh"
+    conditional_on: {field: electricity_purchase_contract_type, equals: spot}
+
+  - id: spot_purchase_nt_cost
+    label_cs: "Náklady při nízkém tarifu"
+    label_en: "Cost at the low tariff (NT)"
+    type: number
+    unit: "EUR/MWh"
+    conditional_on: {field: electricity_purchase_contract_type, equals: spot}
+
+  - id: spot_purchase_daily_cost
+    label_cs: "Denní náklady"
+    label_en: "Daily costs"
+    type: number
+    unit: "EUR/MWh"
+    conditional_on: {field: electricity_purchase_contract_type, equals: spot}
+
+  - id: spot_purchase_vat
+    label_cs: "Sazba DPH"
+    label_en: "VAT rate"
+    type: number
+    unit: "%"
+    conditional_on: {field: electricity_purchase_contract_type, equals: spot}
+
+  - id: fix_purchase_group_heading
+    type: group
+    label_cs: "Nákup za fixní cenu"
+    label_en: "Buying at a fixed price"
+    conditional_on: {field: electricity_purchase_contract_type, equals: fix}
+    help_cs: "Návod na výpočet: https://support.energostation.com/a/solutions/articles/47001247456?lang=cs&portalId=47000082337"
+    help_en: "Calculation guide: https://support.energostation.com/a/solutions/articles/47001247456?lang=cs&portalId=47000082337"
+
+  - id: fix_purchase_price
+    label_cs: "Fixní nákupní cena"
+    label_en: "Fixed purchase price"
+    type: number
+    unit: "EUR/MWh"
+    conditional_on: {field: electricity_purchase_contract_type, equals: fix}
+
+  - id: fix_purchase_vt_cost
+    label_cs: "Náklady při vysokém tarifu"
+    label_en: "Cost at the high tariff (VT)"
+    type: number
+    unit: "EUR/MWh"
+    conditional_on: {field: electricity_purchase_contract_type, equals: fix}
+
+  - id: fix_purchase_nt_cost
+    label_cs: "Náklady při nízkém tarifu"
+    label_en: "Cost at the low tariff (NT)"
+    type: number
+    unit: "EUR/MWh"
+    conditional_on: {field: electricity_purchase_contract_type, equals: fix}
+
+  - id: fix_purchase_daily_cost
+    label_cs: "Denní náklady"
+    label_en: "Daily costs"
+    type: number
+    unit: "EUR/MWh"
+    conditional_on: {field: electricity_purchase_contract_type, equals: fix}
+
+  - id: fix_purchase_vat
+    label_cs: "Sazba DPH"
+    label_en: "VAT rate"
+    type: number
+    unit: "%"
+    conditional_on: {field: electricity_purchase_contract_type, equals: fix}
+
+  - id: spot_fix_purchase_group_heading
+    type: group
+    label_cs: "Nákup SPOT+FIX"
+    label_en: "Buying SPOT+FIX"
+    conditional_on: {field: electricity_purchase_contract_type, equals: spot_fix}
+    help_cs: "Návod na výpočet: https://support.energostation.com/a/solutions/articles/47001247456?lang=cs&portalId=47000082337"
+    help_en: "Calculation guide: https://support.energostation.com/a/solutions/articles/47001247456?lang=cs&portalId=47000082337"
+
+  - id: spot_fix_max_purchase_price
+    label_cs: "Maximální nákupní cena"
+    label_en: "Maximum purchase price"
+    type: number
+    unit: "EUR/MWh"
+    conditional_on: {field: electricity_purchase_contract_type, equals: spot_fix}
+
+  - id: spot_fix_purchase_vt_cost
+    label_cs: "Náklady při vysokém tarifu"
+    label_en: "Cost at the high tariff (VT)"
+    type: number
+    unit: "EUR/MWh"
+    conditional_on: {field: electricity_purchase_contract_type, equals: spot_fix}
+
+  - id: spot_fix_purchase_nt_cost
+    label_cs: "Náklady při nízkém tarifu"
+    label_en: "Cost at the low tariff (NT)"
+    type: number
+    unit: "EUR/MWh"
+    conditional_on: {field: electricity_purchase_contract_type, equals: spot_fix}
+
+  - id: spot_fix_purchase_daily_cost
+    label_cs: "Denní náklady"
+    label_en: "Daily costs"
+    type: number
+    unit: "EUR/MWh"
+    conditional_on: {field: electricity_purchase_contract_type, equals: spot_fix}
+
+  - id: spot_fix_purchase_vat
+    label_cs: "Sazba DPH"
+    label_en: "VAT rate"
+    type: number
+    unit: "%"
+    conditional_on: {field: electricity_purchase_contract_type, equals: spot_fix}
+
+  - id: quarter_hour_billing_warning
+    type: note
+    severity: warning
+    label_cs: "Upozornění k fakturaci ¼h rezervované kapacity"
+    label_en: "Warning: ¼-hour reserved-capacity billing"
+    help_cs: >
+      DŮLEŽITÉ: pokud se bude nabíjet baterie ze SPOTu a OPM je fakturováno dle ¼h
+      rezervované kapacity (RK), je nutné řešit sledování a řízení ¼h výkonu přímo z
+      fakturačního elektroměru. Pokud nebude použito řízení ¼h rezervované kapacity z
+      fakturačního elektroměru, je možné, že se limit RK překročí a OPM může být
+      fakturováno za překročení limitu RK.
+    help_en: >
+      IMPORTANT: if the battery is charged from SPOT prices and the offtake point is
+      billed on a ¼-hour reserved-capacity (RK) basis, ¼-hour power must be monitored
+      and controlled directly from the billing meter. Without ¼-hour RK control from the
+      billing meter, the RK limit may be exceeded and billed as an overage.
 
   - id: quarter_hour_max_heading
     type: group
@@ -435,6 +474,88 @@ fields:
     type: note
     label_cs: "další stupně je nutno řešit individuálně"
     label_en: "Additional stages must be handled on a custom/individual basis"
+
+  - id: battery_mode
+    label_cs: "Režim bateriového uložiště (vyberte jednu možnost, kombinace je pouze po vzájemné domluvě a ověření, že daná technologie kombinaci podporuje)"
+    label_en: "Battery storage mode (select one; combinations only by mutual agreement and after verifying the technology supports the combination)"
+    type: select
+    conditional_on: {field: bess_present, equals: true}
+    options:
+      - value: self_consumption
+        label_cs: "Self-consumption – nabíjení z přetoků fve a kompenzace spotřeby"
+        label_en: "Self-consumption – charging from PV surplus and consumption offsetting"
+      - value: peak_shaving
+        label_cs: "Peak-shaving – ořezávání/vyrovnání výkonových špiček (standardní spotřeba není kompenzována)"
+        label_en: "Peak-shaving – clipping/smoothing power peaks (standard consumption is not offset)"
+      - value: spot_control
+        label_cs: "SPOT řízení – nabíjení a kompenzace na základě SPOTových cen (neřeší vyrovnávání výkonových špiček)"
+        label_en: "SPOT control – charging and offsetting based on SPOT prices (does not address peak shaving)"
+    help_cs: "Zdroj vykresluje tyto tři možnosti jako samostatné ANO/NE řádky; protože jde o vzájemně se vylučující volby (viz nadpis), zde je to sloučeno do jednoho výběru."
+    help_en: "The source renders these three options as separate ANO/NE lines; since the heading says to pick one, they're modeled here as a single-choice field."
+
+  - id: sources_heading
+    type: group
+    label_cs: "Nastavení zdrojů EMS pro SPOT"
+    label_en: "EMS source settings for SPOT"
+    help_cs: "Řízení zdrojů FVE, bateriová úložiště či jiné zdroje EMS. Pokud zdroj, například baterie, nebude provozován v režimu SPOT, danou část nevyplňujte."
+    help_en: "Control of PV, battery storage or other EMS sources. A source that won't run in SPOT mode — a battery, for example — is left out."
+
+  - id: spot_control_enabled
+    label_cs: "Povolit řízení EMS dle SPOT"
+    label_en: "Allow EMS control based on SPOT"
+    type: boolean
+    options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
+    help_cs: "Definujte, zda se mají technologie řídit SPOTem."
+    help_en: "Define whether the technology should be controlled based on SPOT prices."
+
+  - id: battery_discharge_to_grid_spot
+    label_cs: "Povolit vybíjení baterií do sítě dle SPOT"
+    label_en: "Allow battery discharge to the grid based on SPOT"
+    type: boolean
+    conditional_on:
+      - {field: bess_present, equals: true}
+      - {field: spot_control_enabled, equals: true}
+    options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
+    help_cs: "Definujte, zda se má BÚ nabíjet a vybíjet dle SPOTu z/do sítě."
+    help_en: "Define whether the battery storage should charge/discharge to/from the grid based on SPOT prices."
+
+  - id: battery_amortization_spot
+    label_cs: "Amortizace baterie při využití SPOT"
+    label_en: "Battery amortization when using SPOT"
+    type: number
+    conditional_on:
+      - {field: bess_present, equals: true}
+      - {field: spot_control_enabled, equals: true}
+    required: false
+    unit: EUR/MWh
+
+  - id: battery_losses
+    label_cs: "Ztráty bateriového úložiště"
+    label_en: "Battery storage losses"
+    type: number
+    conditional_on:
+      - {field: bess_present, equals: true}
+      - {field: spot_control_enabled, equals: true}
+    unit: "%"
+    help_cs: "Výrobcem definovaná procentuální vlastní ztráta BÚ."
+    help_en: "Manufacturer-specified percentage self-loss of the battery storage."
+
+  - id: additional_sources_installed
+    label_cs: "Jsou instalovány další zdroje do EMS/DŘ?"
+    label_en: "Are other sources connected to the EMS/DSO RTU?"
+    type: boolean
+    options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
+    help_cs: "Například kogenerační jednotky či diesel agregáty — tedy zařízení, která nebyla zmíněna ve výše uvedených bodech."
+    help_en: "For example CHP (cogeneration) units or diesel generators — devices not covered by the items above."
+
+  - id: additional_sources_notes
+    label_cs: "Poznámky – popis dalších zdrojů"
+    label_en: "Notes – description of the other sources"
+    type: text
+    multiline: true
+    conditional_on: {field: additional_sources_installed, equals: true}
+    help_cs: "Popište typ, výkon a způsob připojení / komunikace každého zdroje."
+    help_en: "Describe each source's type, power and how it is connected / communicates."
 
   - id: flexibility_heading
     type: group
