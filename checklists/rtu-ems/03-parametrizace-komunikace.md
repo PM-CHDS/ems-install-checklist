@@ -44,7 +44,8 @@ fields:
       apod.). Doporučujeme připojit řídící jednotky do vyhrazené části sítě s přístupem
       do internetu. Ve firewallu je nutné povolit komunikaci na tyto adresy:
       vpn.icool.cloud tcp/1194, cz.pool.ntp.org, 8.8.8.8 (DNS), www.pvforecast.cz,
-      www.ote-cr.cz.
+      transparency.entsoe.eu (ceny denního trhu z platformy ENTSO-E Transparency
+      Platform, https://transparency.entsoe.eu/).
     help_en: >
       The data network needs the correct parameters set for controller units to
       communicate with the parent system. The internet-facing data network connects to
@@ -53,7 +54,8 @@ fields:
       solar-irradiance forecast, weather, day-ahead prices). Recommended: put controller
       units on a dedicated network segment with internet access. The firewall must
       allow traffic to: vpn.icool.cloud tcp/1194, cz.pool.ntp.org, 8.8.8.8 (DNS),
-      www.pvforecast.cz, www.ote-cr.cz.
+      www.pvforecast.cz, transparency.entsoe.eu (day-ahead prices from the ENTSO-E
+      Transparency Platform, https://transparency.entsoe.eu/).
 
   - id: control_units_ip_ic_table
     label_cs: "IP adresy a IC čísla řídících jednotek"
