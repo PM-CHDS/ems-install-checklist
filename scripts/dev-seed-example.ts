@@ -8,8 +8,10 @@
  * Goes through the public API like the browser does, so the app must be running
  * (PUBLIC_BASE_URL). Placeholder photos and the signature are rendered with
  * Playwright's Chromium; fields with a matching help illustration get that instead.
- * The scenario opens as many conditional branches as the form allows; the only
- * thing left hidden is `inverters_info_table`, which excludes `datalogger_table`.
+ * The scenario opens as many conditional branches as the form allows within one
+ * site: PV controlled via a Logger (so the Modbus RTU/TCP branches stay hidden),
+ * SPOT for both sale and purchase (so the FIX blocks stay hidden), an indoor
+ * switchboard (no heating check).
  */
 import './_env';
 import fs from 'node:fs';
@@ -56,6 +58,8 @@ const values: Record<string, unknown> = {
   },
 
   // 2. Elektroměry
+  main_meter_purpose: 'delivery_point',
+  meter_at_vn: true,
   mtp_installed: true,
   mtn_installed: true,
   current_direction_check: true,
@@ -70,9 +74,9 @@ const values: Record<string, unknown> = {
   additional_meters_count: 3,
   additional_meters_table: {
     rows: [
-      { jps_label: 'EM-FVE1', meter_type: 'Janitza UMG 96-PA', comm_method: 'tcp', ip_or_modbus_id: '192.168.10.31, ID 1', mtp_ratio: '600/5 A', terminal_block: '— (TCP)' },
-      { jps_label: 'EM-FVE2', meter_type: 'Carlo Gavazzi EM24-DIN AV5 3 D X', comm_method: 'rtu', ip_or_modbus_id: 'ID 12', mtp_ratio: '200/5 A', terminal_block: 'X1' },
-      { jps_label: 'EM-BESS', meter_type: 'Carlo Gavazzi EM24-DIN AV5 3 D X', comm_method: 'rtu', ip_or_modbus_id: 'ID 13', mtp_ratio: '800/5 A', terminal_block: 'X2' },
+      { jps_label: 'EM-FVE1', meter_type: 'Janitza UMG 96-PA', comm_method: 'tcp', ip_or_modbus_id: '192.168.10.31, ID 1', mtp_ratio: '600/5 A', terminal_block: '' },
+      { jps_label: 'EM-FVE2', meter_type: 'Carlo Gavazzi EM24-DIN AV5 3 D X', comm_method: 'rtu', ip_or_modbus_id: 'ID 12', mtp_ratio: '200/5 A', terminal_block: 'x1' },
+      { jps_label: 'EM-BESS', meter_type: 'Carlo Gavazzi EM24-DIN AV5 3 D X', comm_method: 'rtu', ip_or_modbus_id: 'ID 13', mtp_ratio: '800/5 A', terminal_block: 'x2' },
     ],
   },
   meters_notes:
@@ -87,9 +91,9 @@ const values: Record<string, unknown> = {
   data_network_configured: true,
   control_units_ip_ic_table: {
     rows: [
-      { ic_number: '6450212fb9e5959', dhcp_ip: '192.168.10.118', static_ip_requested: '192.168.10.20' },
-      { ic_number: '6450212fb9e7a31', dhcp_ip: '192.168.10.121', static_ip_requested: '192.168.10.21' },
-      { ic_number: '6450212fb9e7b08', dhcp_ip: '192.168.10.124', static_ip_requested: '192.168.10.22' },
+      { ic_number: '6450212fb9e5959', ip_address: '192.168.10.20', addressing: 'static' },
+      { ic_number: '6450212fb9e7a31', ip_address: '192.168.10.21', addressing: 'static' },
+      { ic_number: '6450212fb9e7b08', ip_address: '192.168.10.124', addressing: 'dhcp' },
     ],
   },
   ip_range: '192.168.10.2 – 192.168.10.254',
@@ -100,20 +104,21 @@ const values: Record<string, unknown> = {
   connection_method: 'local_network',
 
   // 4. Technologie
-  inverters_connected_to_controllers: true,
-  rs485_termination_resistors: true,
-  rs485_polarity_verified: true,
-  inverters_connected_to_datalogger: true,
+  pv_present: true,
+  pv_control_method: 'logger',
   datalogger_connected_to_network: true,
-  modbus_enabled_on_devices: true,
+  logger_control_enabled: true,
+  inverters_connected_to_datalogger: true,
   datalogger_table: {
     rows: [
       { logger_type: 'Huawei SmartLogger3000A01EU', total_inverter_power_kw: 300, installed_pv_power_kwp: 374, ip_tcp_address_port: '192.168.10.40:502', modbus_id: '0', fw_version: 'V300R023C10SPC120' },
       { logger_type: 'Huawei SmartLogger3000A01EU', total_inverter_power_kw: 100, installed_pv_power_kwp: 124, ip_tcp_address_port: '192.168.10.41:502', modbus_id: '0', fw_version: 'V300R023C10SPC120' },
     ],
   },
+  bess_present: true,
   battery_components_connected: true,
   battery_type: t('Huawei LUNA2000-215-2S10 (2 ks, celkem 430 kWh)', 'Huawei LUNA2000-215-2S10 (2 units, 430 kWh total)'),
+  battery_capacity_kwh: 430,
   battery_max_soc: 95,
   battery_min_soc: 10,
   battery_components_table: {
@@ -128,6 +133,7 @@ const values: Record<string, unknown> = {
     'Both cabinets are controlled via the MBMS. Reachability verified by ping from the PLC (RE-EMS/DŘ).',
   ),
   meteo_station_installed: true,
+  meteo_station_irradiance_placement: true,
   meteo_station_correct_subnet: true,
   meteo_station_ip: '192.168.10.60',
   compensation_installed: true,
@@ -149,11 +155,9 @@ const values: Record<string, unknown> = {
   spot_purchase_nt_cost: 18.4,
   spot_purchase_daily_cost: 9.8,
   spot_purchase_vat: 21,
-  spot_purchase_trader_margin: 4.5,
   spot_sale_grid_fee: 3.2,
   spot_sale_vat: 21,
   spot_sale_min_profit: 5,
-  spot_sale_trader_margin: 3,
   block_negative_spot_price_export: true,
   spot_control_enabled: true,
   battery_discharge_to_grid_spot: true,
@@ -177,6 +181,8 @@ const values: Record<string, unknown> = {
   stage4_device_max_power: 22,
   stage5_device_shutdown: true,
   stage5_device_max_power: 15,
+  aggregator_device_connected: true,
+  aggregator_name: t('FlexAgregátor a.s. (ukázka)', 'FlexAggregator Ltd. (example)'),
 
   // 6. Dodané podklady a podpis
   photos_control_unit_displays: true,
@@ -190,6 +196,7 @@ const values: Record<string, unknown> = {
   distribution_portal_screenshot: true,
   filled_by_name: 'Tomáš Kratochvíl',
   filled_by_company: 'ElektroMontáže Jih s.r.o.',
+  filled_place: 'Modřice',
   filled_date: DATE,
 
   // 7. Poznámky

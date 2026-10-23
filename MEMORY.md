@@ -65,8 +65,10 @@ Next.js (Docker) ─────────────────────
   footnote cleanup lives at **v8**. `scripts/db-prune-checklists.ts --apply` clears
   published definitions that no longer exist in `generated/`; without it a stale higher
   version hides the current one in the admin picker.
-- **v8 is "EMS FULL" and covers EMS + dispatching control**, the same scope as the v7
-  source document. Terminology
+- **v8 is "EMS FULL" and covers EMS + dispatching control.** Since 2026-10-23 its source
+  is `input-dump/EMS-install-checklist/checklist-ems-full.pdf` + `…-navod.pdf` (the v7
+  docx was the first conversion). The review against them was done in place at v8 —
+  existing forms keep their snapshot; new links get the reviewed form. Terminology
   table — MaR → ISC, DŘ → Dispatching control (DSO RTU) — is in
   `checklists/rtu-ems/README.md`. Czech labels keep the on-site terms (`EMS/DŘ`, `MaR`);
   English mirrors them as `EMS/DSO RTU` and `ISC`, spelled out in help text.
@@ -76,12 +78,25 @@ Next.js (Docker) ─────────────────────
   instead of forcing a false NE, and drops their rows from the JPS table.
   Gated fixed rows keep their slot in the stored `rows` array, so hiding one never shifts
   another row's answer.
+- **Gates nest and combine** (2026-10-23). The compiler expands each field's gates into
+  `visibleWhen` — its own conditions plus, transitively, those of the fields they point
+  at — so hiding `pv_present` also hides whatever was chosen under it. `conditional_on`
+  may be a list (all must hold). Older snapshots have no `visibleWhen`; `state.ts` falls
+  back to `conditionalOn` for them. PV (`pv_present` → `pv_control_method` →
+  `pv_modbus_protocol`), BESS (`bess_present`) and the SPOT sale/purchase mode selects
+  are the decision trees built on it.
 - The compiler wipes `generated/` before writing, so a version bump doesn't leave the old
   JSON behind for the startup bootstrap to republish. The admin picker offers only the
   current version of each checklist; superseded rows stay in the table for existing
   instances.
-- rtu-ems v8 compiles to **8 sections, 129 fields (112 inputs, 31 blocking checks,
-  27 conditionals, 20 photo-capable fields)**.
+- rtu-ems v8 compiles to **8 sections, 168 fields (140 inputs, 36 blocking checks,
+  75 gated, 20 photo-capable fields)**.
+- The day-ahead-price firewall exception is **ENTSO-E** (`transparency.entsoe.eu`), not
+  OTE, by the owner's instruction — the 2026 PDF still says www.ote-cr.cz.
+- **PDF export** (`/admin/<id>/pdf`, `src/lib/pdf/form-pdf.ts`) uses PDFKit with DejaVu
+  Sans Condensed from `assets/fonts/`: PDFKit's built-in fonts can't encode Czech.
+  `next.config.ts` keeps `pdfkit` external and traces the TTFs into the standalone build —
+  drop either and the export breaks only in the deployed bundle, not in `next dev`.
 
 ### Non-obvious implementation notes
 
@@ -130,7 +145,7 @@ covered by the suite.
 
 ### Not built (deliberately deferred)
 
-PDF export of a submitted form · email notification on submit · admin editing of answers ·
+email notification on submit · admin editing of answers ·
 the other checklists in `input-dump/` (basic, RTU-PDS verification, obchodní) — the
 compiler already supports multiple checklists, they just need their sections authored ·
 any Airtable mirror (would be an export job, never the system of record).
