@@ -369,13 +369,18 @@ fields:
     multiline: true
     required: false
 
+  - id: meteo_heading
+    type: group
+    label_cs: "Meteorologická stanice (METEO)"
+    label_en: "Meteorological station (METEO)"
+
   - id: meteo_station_installed
-    label_cs: "Je instalována METEO stanice"
-    label_en: "Is a METEO station installed"
+    label_cs: "Je součástí projektu METEO stanice?"
+    label_en: "Is a METEO station part of the project?"
     type: boolean
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
-    help_cs: "Instaluje se na vyvýšené místo (např. střecha) a připojuje na datovou síť; datový kabel musí disponovat napájením (PoE)."
-    help_en: "Installed at an elevated location (e.g. roof) and connected to the data network; the data cable must supply power (PoE)."
+    help_cs: "Pokud NE, otázky k METEO stanici se nezobrazí a nevyplňují se. Stanice se instaluje na vyvýšené místo (např. střecha) a připojuje na datovou síť; datový kabel musí disponovat napájením (PoE)."
+    help_en: "If No, the METEO station questions are not shown and need not be filled in. The station is installed at an elevated location (e.g. roof) and connected to the data network; the data cable must supply power (PoE)."
 
   - id: meteo_station_irradiance_placement
     label_cs: "METEO stanice nainstalována s ohledem na měření osvitu elektrárny"
