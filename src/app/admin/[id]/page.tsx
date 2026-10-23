@@ -99,6 +99,9 @@ export default async function InstanceDetail({
           >
             {t(lang, 'admin.exportJson')}
           </a>
+          <a href={`/admin/${instance.id}/pdf`} className="btn-secondary text-xs" download>
+            {t(lang, 'admin.exportPdf')}
+          </a>
           {instance.status === 'submitted' && (
             <form action={markReviewed}>
               <input type="hidden" name="id" value={instance.id} />
