@@ -133,7 +133,8 @@ export async function renderFormPdf(loaded: LoadedInstance, lang: Lang): Promise
     const shown = section.fields.filter((f) => isVisible(f, state.values));
     if (!shown.some((f) => isInput(f) || files.has(f.id))) continue;
 
-    ensureSpace(doc, 60);
+    // Room for the heading plus a first row, so a heading never ends a page.
+    ensureSpace(doc, 110);
     doc.moveDown(1.2);
     doc.font('B').fontSize(13).fillColor(COLOR.text)
       .text(lang === 'en' ? section.titleEn : section.titleCs, left, doc.y, { width });
@@ -216,7 +217,9 @@ async function drawAnswer(
     doc.font('R').heightOfString(label(field, lang), { width: labelW }),
     doc.font(failed || field.options ? 'B' : 'R').heightOfString(text, { width: valueW }),
   );
-  ensureSpace(doc, h + 10);
+  // A field's first row of photos stays on the same page as its label.
+  const hasImages = (files.get(field.id) ?? []).some((f) => f.body);
+  ensureSpace(doc, h + 10 + (hasImages ? THUMB_H + 12 : 0));
   doc.moveDown(0.35);
   const y = doc.y;
   doc.font('R').fillColor(COLOR.muted).text(label(field, lang), left, y, { width: labelW });
@@ -260,8 +263,21 @@ function formatValue(field: CompiledField, value: unknown, lang: Lang): string {
     return new Intl.DateTimeFormat(lang === 'en' ? 'en-GB' : 'cs-CZ', { dateStyle: 'long' })
       .format(new Date(Date.UTC(y, m - 1, d)));
   }
-  if (field.type === 'number' && field.unit) return `${String(value)} ${field.unit}`;
+  if (field.type === 'number') {
+    const n = formatNumber(value, lang);
+    return field.unit ? `${n} ${field.unit}` : n;
+  }
   return String(value);
+}
+
+/** Locale decimals (3,2 in Czech); anything that isn't a plain number is shown as typed. */
+function formatNumber(value: unknown, lang: Lang): string {
+  const n = typeof value === 'number' ? value : Number(value);
+  if (!Number.isFinite(n)) return String(value);
+  return new Intl.NumberFormat(lang === 'en' ? 'en-GB' : 'cs-CZ', {
+    maximumFractionDigits: 6,
+    useGrouping: false,
+  }).format(n);
 }
 
 function drawNote(doc: Doc, field: CompiledField, lang: Lang, left: number, width: number) {
@@ -318,7 +334,7 @@ function drawTable(
       const opt = c.options.find((o) => o.value === v);
       if (opt) return label(opt, lang);
     }
-    return String(v);
+    return c.type === 'number' ? formatNumber(v, lang) : String(v);
   };
 
   const header = () => {
