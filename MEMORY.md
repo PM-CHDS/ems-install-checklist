@@ -135,6 +135,14 @@ the other checklists in `input-dump/` (basic, RTU-PDS verification, obchodní) �
 compiler already supports multiple checklists, they just need their sections authored ·
 any Airtable mirror (would be an export job, never the system of record).
 
+Submitting sends **no email**: `submission_contact` in `checklist.yaml` is only shown as a
+mailto link on the "submitted" page.
+
+### Known open bugs
+
+- The "Checklist submitted" page shows the Czech checklist title on EN forms —
+  `src/app/f/[token]/page.tsx` passes `checklist.titleCs` regardless of `instance.lang`.
+
 ## Local deployment on this machine (2026-08-19)
 
 A running instance for hands-on testing lives **outside** the repo, in
@@ -171,6 +179,10 @@ earlier attempt used is wiped between sessions and took the database with it.
   `libs/root`; export
   `LD_LIBRARY_PATH=~/.local/state/ems-checklist/libs/root/usr/lib/x86_64-linux-gnu`
   before running the suite or Chromium fails on `libnspr4.so`.
+- The demo database holds two fully filled, submitted example forms (CS and EN, created
+  2026-10-01/02). `scripts/dev-seed-example.ts [--lang en] [--no-submit]` re-creates one
+  through the public API; the app must be running, `PUBLIC_BASE_URL=http://127.0.0.1:3000`
+  and the `LD_LIBRARY_PATH` above (it renders placeholder photos with Chromium).
 
 ### If a future session has to rebuild this from nothing
 
