@@ -59,6 +59,19 @@ that was picked before. To require several answers at once, give a list; all mus
     - {field: spot_control_enabled, equals: true}
 ```
 
+For "either answer will do", use `any_of` (at least one must hold). It can stand alone
+or sit in a list next to plain gates:
+
+```yaml
+  conditional_on:
+    any_of:
+      - {field: electricity_sale_contract_type, equals: spot}
+      - {field: electricity_purchase_contract_type, equals: spot}
+```
+
+An `any_of` may not point at a field that is itself gated by an `any_of`; the compiler
+rejects that.
+
 ### Blocking checks
 
 ```yaml

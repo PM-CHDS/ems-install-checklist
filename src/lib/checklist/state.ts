@@ -8,6 +8,7 @@ import type {
   CompiledCondition,
   CompiledField,
   CompiledFixedRow,
+  CompiledGate,
   CompiledSection,
   Lang,
   OptionValue,
@@ -59,8 +60,14 @@ export function conditionMet(
   return c.equals !== undefined && eq(value, c.equals);
 }
 
+/** A plain condition, or an `anyOf` group where one alternative is enough. */
+function gateMet(g: CompiledGate, values: Record<string, unknown>): boolean {
+  if ('anyOf' in g) return g.anyOf.some((alt) => alt.every((c) => conditionMet(c, values)));
+  return conditionMet(g, values);
+}
+
 /** All gates on a field or fixed row, falling back for pre-`visibleWhen` snapshots. */
-function gatesOf(x: { conditionalOn?: CompiledCondition; visibleWhen?: CompiledCondition[] }) {
+function gatesOf(x: { conditionalOn?: CompiledCondition; visibleWhen?: CompiledGate[] }) {
   return x.visibleWhen ?? (x.conditionalOn ? [x.conditionalOn] : []);
 }
 
@@ -69,7 +76,7 @@ function gatesOf(x: { conditionalOn?: CompiledCondition; visibleWhen?: CompiledC
  * and those of the fields it depends on, so a hidden gate hides what's nested under it.
  */
 export function isVisible(field: CompiledField, values: Record<string, unknown>): boolean {
-  return gatesOf(field).every((c) => conditionMet(c, values));
+  return gatesOf(field).every((g) => gateMet(g, values));
 }
 
 /**
@@ -83,7 +90,7 @@ export function visibleFixedRows(
 ): { row: CompiledFixedRow; index: number }[] {
   return (field.fixedRows ?? [])
     .map((row, index) => ({ row, index }))
-    .filter(({ row }) => gatesOf(row).every((c) => conditionMet(c, values)));
+    .filter(({ row }) => gatesOf(row).every((g) => gateMet(g, values)));
 }
 
 /** Does this field hold a real answer? */

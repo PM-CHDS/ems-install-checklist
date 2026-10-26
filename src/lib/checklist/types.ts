@@ -65,6 +65,17 @@ export interface CompiledCondition {
   gt?: number;
 }
 
+/**
+ * Shown when at least one alternative holds; each alternative is a list of
+ * conditions that must all hold (a condition plus the chain its target needs).
+ */
+export interface CompiledAnyOf {
+  anyOf: CompiledCondition[][];
+}
+
+/** One entry of a `visibleWhen` list: a plain condition or an either/or group. */
+export type CompiledGate = CompiledCondition | CompiledAnyOf;
+
 export interface CompiledFixedRow {
   rowId: string;
   labelCs: string;
@@ -72,7 +83,7 @@ export interface CompiledFixedRow {
   /** Same gate vocabulary as a field's `conditionalOn`. */
   conditionalOn?: CompiledCondition;
   /** Same as a field's `visibleWhen`. */
-  visibleWhen?: CompiledCondition[];
+  visibleWhen?: CompiledGate[];
 }
 
 export interface OnFail {
@@ -103,7 +114,7 @@ export interface CompiledField {
    * also hides everything nested under it. Absent on snapshots compiled before
    * nested gating existed; `conditionalOn` alone applies to those.
    */
-  visibleWhen?: CompiledCondition[];
+  visibleWhen?: CompiledGate[];
 
   /** A `false` answer on this check is a failure that flags the whole form. */
   blocking?: boolean;

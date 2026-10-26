@@ -15,6 +15,7 @@ import type {
   CompiledColumn,
   CompiledCondition,
   CompiledField,
+  CompiledGate,
   CompiledOption,
   CompiledSection,
   FieldType,
@@ -65,17 +66,30 @@ const rawCondition = z
     message: 'conditional_on needs exactly one of `equals` or `gt`',
   });
 
-/** One gate, or a list of gates that must all hold. */
-const rawConditions = z.union([rawCondition, z.array(rawCondition).min(1)]);
+/** Either/or: shown when at least one of the conditions holds. */
+const rawAnyOf = z.object({ any_of: z.array(rawCondition).min(2) }).strict();
+
+/** One gate (plain or `any_of`), or a list of gates that must all hold. */
+const rawGate = z.union([rawAnyOf, rawCondition]);
+const rawConditions = z.union([rawGate, z.array(rawGate).min(1)]);
 type RawConditions = z.infer<typeof rawConditions>;
 
-function toConditions(raw: RawConditions | undefined): CompiledCondition[] {
+const toCondition = (c: z.infer<typeof rawCondition>): CompiledCondition => ({
+  field: c.field,
+  equals: c.equals,
+  gt: c.gt,
+});
+
+function toGates(raw: RawConditions | undefined): CompiledGate[] {
   if (!raw) return [];
-  return (Array.isArray(raw) ? raw : [raw]).map((c) => ({
-    field: c.field,
-    equals: c.equals,
-    gt: c.gt,
-  }));
+  return (Array.isArray(raw) ? raw : [raw]).map((g) =>
+    'any_of' in g ? { anyOf: g.any_of.map((c) => [toCondition(c)]) } : toCondition(g),
+  );
+}
+
+/** The first plain gate, for readers that only know `conditionalOn`. */
+function firstPlain(gates: CompiledGate[]): CompiledCondition | undefined {
+  return gates.find((g): g is CompiledCondition => !('anyOf' in g));
 }
 
 const rawFixedRow = bilingualLabel.extend({
@@ -316,8 +330,8 @@ function compileField(
     images,
     severity: raw.severity,
     // The full `visibleWhen` chain is filled in once every field is known.
-    conditionalOn: toConditions(raw.conditional_on)[0],
-    visibleWhen: toConditions(raw.conditional_on),
+    conditionalOn: firstPlain(toGates(raw.conditional_on)),
+    visibleWhen: toGates(raw.conditional_on),
     blocking: raw.blocking,
     onFail: raw.on_fail
       ? { requireNote: raw.on_fail.require_note, requirePhoto: raw.on_fail.require_photo }
@@ -331,8 +345,8 @@ function compileField(
       rowId: r.row_id,
       labelCs: r.label_cs,
       labelEn: r.label_en,
-      conditionalOn: toConditions(r.conditional_on)[0],
-      visibleWhen: toConditions(r.conditional_on),
+      conditionalOn: firstPlain(toGates(r.conditional_on)),
+      visibleWhen: toGates(r.conditional_on),
     })),
   };
 }
@@ -425,22 +439,46 @@ export function compileChecklist(dir: string): CompileResult {
     }
   }
 
+  const checkGate = (g: CompiledGate, where: string, ownerId: string) => {
+    for (const c of 'anyOf' in g ? g.anyOf.flat() : [g]) checkCondition(c, where, ownerId);
+  };
   for (const f of byId.values()) {
-    for (const c of f.visibleWhen ?? []) checkCondition(c, `field \`${f.id}\``, f.id);
+    for (const g of f.visibleWhen ?? []) checkGate(g, `field \`${f.id}\``, f.id);
     for (const row of f.fixedRows ?? []) {
-      for (const c of row.visibleWhen ?? [])
-        checkCondition(c, `field \`${f.id}\` → row \`${row.rowId}\``, f.id);
+      for (const g of row.visibleWhen ?? [])
+        checkGate(g, `field \`${f.id}\` → row \`${row.rowId}\``, f.id);
     }
   }
 
   // Expand each field's own gates into the full chain it depends on. Gates always
   // point earlier in the form, so walking in form order sees every target's chain
   // before it is needed.
-  const chains = new Map<string, CompiledCondition[]>();
-  const expand = (own: CompiledCondition[]) => {
-    const out = new Map<string, CompiledCondition>();
-    for (const c of own) {
-      for (const g of [c, ...(chains.get(c.field) ?? [])]) out.set(JSON.stringify(g), g);
+  // An `anyOf` alternative carries its own target's chain inside it, so one branch
+  // being hidden can't make the group pass on a stale answer.
+  const chains = new Map<string, CompiledGate[]>();
+  const expand = (own: CompiledGate[]) => {
+    const out = new Map<string, CompiledGate>();
+    const add = (g: CompiledGate) => out.set(JSON.stringify(g), g);
+    for (const g of own) {
+      if ('anyOf' in g) {
+        add({
+          anyOf: g.anyOf.map((alt) =>
+            alt.flatMap((c) => {
+              const chain = chains.get(c.field) ?? [];
+              if (chain.some((x) => 'anyOf' in x))
+                fail(
+                  'checklist',
+                  `any_of references \`${c.field}\`, which is itself gated by an any_of — ` +
+                    'nested either/or gates are not supported',
+                );
+              return [c, ...(chain as CompiledCondition[])];
+            }),
+          ),
+        });
+      } else {
+        add(g);
+        (chains.get(g.field) ?? []).forEach(add);
+      }
     }
     return [...out.values()];
   };
