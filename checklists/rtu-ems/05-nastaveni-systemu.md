@@ -25,7 +25,7 @@ fields:
   - id: om_parameters_heading
     type: group
     label_cs: "Parametry OM (EMS/DŘ)"
-    label_en: "Metering-point (OM) parameters (EMS/DSO RTU)"
+    label_en: "Point of connection (POC) parameters (EMS/DSO RTU)"
 
   - id: main_breaker_current
     label_cs: "jmenovitá hodnota proudu hlavního jističe (IN)"
@@ -46,19 +46,19 @@ fields:
 
   - id: reserved_capacity_sop
     label_cs: "hodnota rezervovaného příkonu dle SoP"
-    label_en: "Reserved input capacity per the connection agreement (SoP)"
+    label_en: "Reserved input capacity(grid import) per the connection agreement (CA)"
     type: number
     unit: kW
     help_cs: "Uveďte hodnotu rezervovaného příkonu z aktuální SoP."
-    help_en: "State the reserved-capacity value from the current connection agreement (SoP)."
+    help_en: "State the reserved-capacity(grid import) value from the current connection agreement (CA)."
 
   - id: reserved_power_plant_capacity_sop
     label_cs: "hodnota rezervovaného výkonu výrobny dle SoP"
-    label_en: "Reserved generation-plant output per the connection agreement (SoP)"
+    label_en: "Reserved generation-plant output(grid export) per the connection agreement (CA)"
     type: number
     unit: kW
     help_cs: "Uveďte hodnotu rezervovaného výkonu z aktuální SoP — jedná se o povolené přetoky do distribuční sítě."
-    help_en: "State the reserved output from the current connection agreement (SoP) — this is the permitted feed-in to the distribution grid."
+    help_en: "State the reserved output(grid export) from the current connection agreement — this is the permitted feed-in to the distribution network."
 
   - id: total_installed_power_sop
     label_cs: "celkový instalovaný výkon dle SoP"
@@ -69,7 +69,7 @@ fields:
     help_en: "State the total installed power from the current connection agreement (SoP)."
 
   - id: test_operation_overflow_allowed
-    label_cs: "povolení přetoků do sítě během zkušebního provozu"
+    label_cs: "povolení přetoků do sítě během zkušebního provozu (UPOS)"
     label_en: "Grid feed-in permitted during test operation"
     type: boolean
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
