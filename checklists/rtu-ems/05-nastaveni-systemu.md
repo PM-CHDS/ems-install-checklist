@@ -519,24 +519,6 @@ fields:
     label_cs: "další stupně je nutno řešit individuálně"
     label_en: "Additional stages must be handled on a custom/individual basis"
 
-  - id: battery_mode
-    label_cs: "Režim bateriového uložiště (vyberte jednu možnost, kombinace je pouze po vzájemné domluvě a ověření, že daná technologie kombinaci podporuje)"
-    label_en: "Battery storage mode (select one; combinations only by mutual agreement and after verifying the technology supports the combination)"
-    type: select
-    conditional_on: {field: bess_present, equals: true}
-    options:
-      - value: self_consumption
-        label_cs: "Self-consumption – nabíjení z přetoků fve a kompenzace spotřeby"
-        label_en: "Self-consumption – charging from PV surplus and consumption offsetting"
-      - value: peak_shaving
-        label_cs: "Peak-shaving – ořezávání/vyrovnání výkonových špiček (standardní spotřeba není kompenzována)"
-        label_en: "Peak-shaving – clipping/smoothing power peaks (standard consumption is not offset)"
-      - value: spot_control
-        label_cs: "SPOT řízení – nabíjení a kompenzace na základě SPOTových cen (neřeší vyrovnávání výkonových špiček)"
-        label_en: "SPOT control – charging and offsetting based on SPOT prices (does not address peak shaving)"
-    help_cs: "Zdroj vykresluje tyto tři možnosti jako samostatné ANO/NE řádky; protože jde o vzájemně se vylučující volby (viz nadpis), zde je to sloučeno do jednoho výběru."
-    help_en: "The source renders these three options as separate ANO/NE lines; since the heading says to pick one, they're modeled here as a single-choice field."
-
   - id: sources_heading
     type: group
     label_cs: "Nastavení zdrojů EMS pro SPOT"

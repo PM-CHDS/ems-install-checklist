@@ -267,8 +267,8 @@ fields:
     label_en: "Is battery storage (BESS) part of the project?"
     type: boolean
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
-    help_cs: "Pokud NE, otázky k bateriovému úložišti se nezobrazí a nevyplňují se — ani nastavení baterie v §5."
-    help_en: "If No, the battery-storage questions are not shown and need not be filled in — nor the battery settings in §5."
+    help_cs: "Pokud NE, otázky k bateriovému úložišti se nezobrazí a nevyplňují se — ani nastavení baterie v dalších částech."
+    help_en: "If No, the battery-storage questions are not shown and need not be filled in — nor the battery settings later in the form."
 
   - id: battery_components_connected
     label_cs: "Jsou všechny prvky bateriového úložiště (střídače, BMS, atd.) připojeny k řídícím jednotkám"
@@ -360,6 +360,27 @@ fields:
         type: text
         help_cs: "Bateriové úložiště může být připojené přímo, nebo začleněné do clusteru pod BMS — v takovém případě je identifikováno pomocí ID úložiště v rámci clusteru."
         help_en: "A battery can be connected directly or as part of a cluster under a BMS — in that case it is identified by its storage ID within the cluster."
+
+  - id: battery_mode
+    label_cs: "Režim bateriového uložiště (vyberte jednu možnost, kombinace je pouze po vzájemné domluvě a ověření, že daná technologie kombinaci podporuje)"
+    label_en: "Battery storage mode (select one; combinations only by mutual agreement and after verifying the technology supports the combination)"
+    type: select
+    conditional_on: {field: bess_present, equals: true}
+    options:
+      - value: self_consumption
+        label_cs: "Self-consumption – nabíjení z přetoků fve a kompenzace spotřeby"
+        label_en: "Self-consumption – charging from PV surplus and consumption offsetting"
+      - value: peak_shaving
+        label_cs: "Peak-shaving – ořezávání/vyrovnání výkonových špiček (standardní spotřeba není kompenzována)"
+        label_en: "Peak-shaving – clipping/smoothing power peaks (standard consumption is not offset)"
+      - value: spot_control
+        label_cs: "SPOT řízení – nabíjení a kompenzace na základě SPOTových cen (neřeší vyrovnávání výkonových špiček)"
+        label_en: "SPOT control – charging and offsetting based on SPOT prices (does not address peak shaving)"
+      - value: quarter_hour_compensation
+        label_cs: "Kompenzace ¼h maxima – vybíjení baterie tak, aby odběr nepřekročil rezervovanou ¼h kapacitu"
+        label_en: "¼-hour capacity compensation – discharging the battery so consumption stays within the reserved ¼-hour capacity"
+    help_cs: "Zdroj vykresluje tyto tři možnosti jako samostatné ANO/NE řádky; protože jde o vzájemně se vylučující volby (viz nadpis), zde je to sloučeno do jednoho výběru."
+    help_en: "The source renders these three options as separate ANO/NE lines; since the heading says to pick one, they're modeled here as a single-choice field."
 
   - id: battery_notes
     label_cs: "Poznámky k bateriím"
