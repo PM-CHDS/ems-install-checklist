@@ -234,6 +234,11 @@ export function FormApp({
         lang={lang}
         step={step}
         total={checklist.sections.length}
+        current={section ? stepLabel(section, lang) : ''}
+        last={
+          [...checklist.sections].reverse().map(sectionNumber).find(Boolean) ??
+          String(checklist.sections.length)
+        }
         onPrev={() => void goToStep(step === REVIEW ? checklist.sections.length - 1 : step - 1)}
         onNext={() =>
           void goToStep(step + 1 >= checklist.sections.length ? REVIEW : step + 1)
@@ -324,6 +329,20 @@ function Header({
   );
 }
 
+/**
+ * The number a section carries in its own title ("4. Technologie" → "4"), so the
+ * stepper matches the source document's numbering. Unnumbered sections (the cover)
+ * get none.
+ */
+function sectionNumber(s: { titleCs: string }): string | undefined {
+  return s.titleCs.match(/^(\d+)\./)?.[1];
+}
+
+/** Short stepper label: the section's own number, or "Úvod"/"Intro" for the cover. */
+function stepLabel(s: { titleCs: string }, lang: Lang): string {
+  return sectionNumber(s) ?? t(lang, 'form.coverStep');
+}
+
 function SectionNav({
   checklist,
   lang,
@@ -366,7 +385,7 @@ function SectionNav({
                           : 'bg-slate-300'
                   }`}
                 />
-                {i + 1}
+                {stepLabel(s, lang)}
               </button>
             </li>
           );
@@ -502,12 +521,17 @@ function StepFooter({
   lang,
   step,
   total,
+  current,
+  last,
   onPrev,
   onNext,
 }: {
   lang: Lang;
   step: number;
   total: number;
+  /** The current section's stepper label, and the last section's number. */
+  current: string;
+  last: string;
   onPrev: () => void;
   onNext: () => void;
 }) {
@@ -525,7 +549,9 @@ function StepFooter({
         <span className="text-xs text-slate-400">
           {step === REVIEW
             ? t(lang, 'form.review')
-            : `${t(lang, 'form.section')} ${step + 1} ${t(lang, 'form.of')} ${total}`}
+            : /^\d+$/.test(current)
+              ? `${t(lang, 'form.section')} ${current} ${t(lang, 'form.of')} ${last}`
+              : current}
         </span>
         <button
           type="button"

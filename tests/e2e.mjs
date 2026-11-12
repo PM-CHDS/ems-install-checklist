@@ -60,7 +60,7 @@ check('EN toggle switches labels', await page.getByText('Project name').isVisibl
 await page.getByRole('button', { name: 'cs', exact: true }).click();
 
 // --- section 1 (nav button "2": the cover is "1") ----------------------------
-await page.getByRole('button', { name: '2', exact: true }).click();
+await page.getByRole('button', { name: '1', exact: true }).click();
 await page.waitForTimeout(400);
 check(
   'section 1 renders its checks',
@@ -135,7 +135,7 @@ await count.fill('2');
 await page.waitForTimeout(1000);
 
 // --- conditional visibility --------------------------------------------------
-await page.getByRole('button', { name: '5', exact: true }).click();
+await page.getByRole('button', { name: '4', exact: true }).click();
 await page.waitForTimeout(400);
 const meteoIp = page.locator('#field-meteo_station_ip');
 check('conditional field hidden before its gate', (await meteoIp.count()) === 0);
@@ -147,7 +147,7 @@ await page.waitForTimeout(400);
 check('conditional field appears after answering its gate', (await meteoIp.count()) === 1);
 
 // --- repeatable table --------------------------------------------------------
-await page.getByRole('button', { name: '3', exact: true }).click();
+await page.getByRole('button', { name: '2', exact: true }).click();
 await page.waitForTimeout(400);
 const table = page.locator('#field-additional_meters_table');
 const before = await table.locator('tbody tr').count();
@@ -185,7 +185,7 @@ for (const field of [
 }
 
 await page.reload({ waitUntil: 'networkidle' });
-await page.getByRole('button', { name: '7', exact: true }).click();
+await page.getByRole('button', { name: '6', exact: true }).click();
 await page.waitForTimeout(500);
 
 const pad = page.locator('#field-signature canvas');
