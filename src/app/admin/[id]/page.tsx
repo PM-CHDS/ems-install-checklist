@@ -2,21 +2,8 @@ import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
 import { isAdmin } from '@/lib/auth';
 import { listEvents, loadById } from '@/lib/instances';
-import {
-  isFailed,
-  isTableValue,
-  isVisible,
-  summarize,
-  visibleFixedRows,
-  type FormState,
-} from '@/lib/checklist/state';
-import {
-  caption,
-  isInput,
-  label,
-  type CompiledField,
-  type Lang,
-} from '@/lib/checklist/types';
+import { viewAnswers, type Entry, type TableView } from '@/lib/checklist/answer-view';
+import { title, type Lang } from '@/lib/checklist/types';
 import type { Attachment } from '@/db/schema';
 import { t } from '@/lib/i18n';
 import { adminLang, dateLocale } from '@/lib/admin-lang';
@@ -40,7 +27,10 @@ export default async function InstanceDetail({
 
   const { instance, checklist, state, attachments } = loaded;
   const events = await listEvents(instance.id, 200);
-  const summary = summarize(checklist, state);
+  // Hidden answers stay listed (dimmed): the admin audits what was stored, not only
+  // what applies. They never count as failed checks.
+  const view = viewAnswers(checklist, state, lang, { includeHidden: true });
+  const { summary, failedChecks } = view;
   const url = `${process.env.PUBLIC_BASE_URL ?? ''}/f/${instance.token}`;
 
   const filesByField = new Map<string, Attachment[]>();
@@ -49,10 +39,6 @@ export default async function InstanceDetail({
     list.push(a);
     filesByField.set(a.fieldId, list);
   }
-
-  const failedFields = checklist.sections
-    .flatMap((s) => s.fields)
-    .filter((f) => isFailed(f, state.values[f.id]));
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8">
@@ -65,7 +51,7 @@ export default async function InstanceDetail({
           <div>
             <h1 className="text-xl font-semibold text-slate-900">{instance.label}</h1>
             <p className="mt-0.5 text-sm text-slate-500">
-              {lang === 'en' ? checklist.titleEn : checklist.titleCs} ·{' '}
+              {title(checklist, lang)} ·{' '}
               {instance.checklistSlug} v{instance.checklistVersion}
               {instance.customerName ? ` · ${instance.customerName}` : ''}
               {instance.customerEmail ? ` · ${instance.customerEmail}` : ''}
@@ -83,8 +69,8 @@ export default async function InstanceDetail({
             {summary.answered}/{summary.total} ({summary.percent}%)
           </Stat>
           <Stat label={t(lang, 'admin.failedChecks')}>
-            <span className={failedFields.length ? 'text-amber-700' : ''}>
-              {failedFields.length}
+            <span className={failedChecks.length ? 'text-amber-700' : ''}>
+              {failedChecks.length}
             </span>
           </Stat>
           <Stat label={t(lang, 'admin.attachments')}>{attachments.length}</Stat>
@@ -125,21 +111,21 @@ export default async function InstanceDetail({
         </div>
       </header>
 
-      {failedFields.length > 0 && (
+      {failedChecks.length > 0 && (
         <section className="card mt-6 border-amber-300 p-5">
           <h2 className="text-sm font-semibold text-amber-900">
-            ⚠ {t(lang, 'admin.failedChecks')} ({failedFields.length})
+            ⚠ {t(lang, 'admin.failedChecks')} ({failedChecks.length})
           </h2>
           <ul className="mt-2 divide-y divide-amber-100">
-            {failedFields.map((f) => (
-              <li key={f.id} className="py-2">
-                <p className="text-sm font-medium text-slate-800">{label(f, lang)}</p>
+            {failedChecks.map((f) => (
+              <li key={f.field.id} className="py-2">
+                <p className="text-sm font-medium text-slate-800">{f.label}</p>
                 <p className="mt-0.5 text-sm text-slate-600">
-                  {state.failNotes[f.id]?.trim() || (
+                  {f.failNote || (
                     <em className="text-rose-600">{t(lang, 'admin.noExplanation')}</em>
                   )}
                 </p>
-                <Files files={filesByField.get(f.id) ?? []} />
+                <Files files={filesByField.get(f.field.id) ?? []} />
               </li>
             ))}
           </ul>
@@ -151,20 +137,19 @@ export default async function InstanceDetail({
           {t(lang, 'admin.answers')}
         </h2>
         <div className="mt-3 space-y-4">
-          {checklist.sections.map((section) => (
+          {view.sections.map(({ section, title: sectionTitle, entries }) => (
             <div key={section.id} className="card overflow-hidden">
               <h3 className="border-b border-slate-200 bg-slate-50 px-4 py-2.5 text-sm font-semibold text-slate-700">
-                {lang === 'en' ? section.titleEn : section.titleCs}
+                {sectionTitle}
               </h3>
               <dl className="divide-y divide-slate-100">
-                {section.fields
-                  .filter((f) => isInput(f) || f.photo)
-                  .map((f) => (
+                {entries
+                  .filter((e) => e.kind !== 'group' && (e.kind !== 'note' || e.field.photo))
+                  .map((e) => (
                     <AnswerRow
-                      key={f.id}
-                      field={f}
-                      state={state}
-                      files={filesByField.get(f.id) ?? []}
+                      key={e.field.id}
+                      entry={e}
+                      files={filesByField.get(e.field.id) ?? []}
                       lang={lang}
                     />
                   ))}
@@ -203,38 +188,34 @@ export default async function InstanceDetail({
 }
 
 function AnswerRow({
-  field,
-  state,
+  entry,
   files,
   lang,
 }: {
-  field: CompiledField;
-  state: FormState;
+  entry: Entry;
   files: Attachment[];
   lang: Lang;
 }) {
-  const value = state.values[field.id];
-  const visible = isVisible(field, state.values);
-  const failed = isFailed(field, value);
+  const failed = entry.kind === 'answer' && entry.failed;
 
   return (
     <div
       className={`grid gap-1 px-4 py-2.5 sm:grid-cols-[1fr_1.2fr] ${
         failed ? 'bg-amber-50/60' : ''
-      } ${visible ? '' : 'opacity-50'}`}
+      } ${entry.hidden ? 'opacity-50' : ''}`}
     >
       <dt className="text-sm text-slate-600">
-        {label(field, lang)}
-        {!visible && (
+        {entry.label}
+        {entry.hidden && (
           <span className="ml-1 text-xs text-slate-400">({t(lang, 'admin.hidden')})</span>
         )}
-        <span className="ml-1.5 font-mono text-[10px] text-slate-400">{field.id}</span>
+        <span className="ml-1.5 font-mono text-[10px] text-slate-400">{entry.field.id}</span>
       </dt>
       <dd className="text-sm">
-        <Value field={field} value={value} values={state.values} lang={lang} />
-        {failed && state.failNotes[field.id] && (
+        <Value entry={entry} />
+        {entry.kind === 'answer' && entry.failed && entry.failNote && (
           <p className="mt-1 rounded border border-amber-200 bg-amber-50 px-2 py-1 text-xs text-amber-900">
-            ⚠ {state.failNotes[field.id]}
+            ⚠ {entry.failNote}
           </p>
         )}
         <Files files={files} />
@@ -243,86 +224,51 @@ function AnswerRow({
   );
 }
 
-function Value({
-  field,
-  value,
-  values,
-  lang,
-}: {
-  field: CompiledField;
-  value: unknown;
-  values: Record<string, unknown>;
-  lang: Lang;
-}) {
-  if (value === undefined || value === null || value === '')
-    return <span className="text-slate-300">—</span>;
+const TONE = { ok: 'text-emerald-700', fail: 'text-amber-700', plain: '', empty: '' };
 
-  if (field.type === 'table' && isTableValue(value)) {
-    const cols = field.columns ?? [];
-    const fixed = field.fixedRows;
-    const nonEmpty = (r: Record<string, unknown>) =>
-      Object.values(r).some((c) => c !== null && c !== undefined && String(c).trim() !== '');
-    // A fixed-row table's meaning is positional (row 2 = MaR1), so its rows are kept
-    // in place and shown with their labels; only free-form tables drop blank rows.
-    // Same gating the installer saw: a row that didn't apply isn't shown here either.
-    const rows = fixed
-      ? visibleFixedRows(field, values).map(({ row, index }) => ({
-          row: value.rows[index] ?? {},
-          label: label(row, lang),
-        }))
-      : value.rows.filter(nonEmpty).map((r) => ({ row: r, label: '' }));
-    if (!rows.some((r) => nonEmpty(r.row))) return <span className="text-slate-300">—</span>;
-    return (
-      <div className="overflow-x-auto">
-        <table className="min-w-max border-collapse text-xs">
-          <thead>
-            <tr className="text-slate-500">
-              {fixed && <th className="border-b border-slate-200 px-2 py-1" />}
-              {cols.map((c) => (
-                <th key={c.id} className="border-b border-slate-200 px-2 py-1 text-left">
-                  {label(c, lang)}
+function Value({ entry }: { entry: Entry }) {
+  if (entry.kind === 'table') return <Table table={entry.table} />;
+  if (entry.kind !== 'answer') return null; // signature and photo notes: their files say it
+  if (entry.empty) return <span className="text-slate-300">—</span>;
+  if (entry.isOption)
+    return <span className={`font-medium ${TONE[entry.tone]}`}>{entry.text}</span>;
+  return <span className="whitespace-pre-wrap text-slate-800">{entry.text}</span>;
+}
+
+function Table({ table }: { table: TableView }) {
+  if (table.empty) return <span className="text-slate-300">—</span>;
+  return (
+    <div className="overflow-x-auto">
+      <table className="min-w-max border-collapse text-xs">
+        <thead>
+          <tr className="text-slate-500">
+            {table.rowHeads && <th className="border-b border-slate-200 px-2 py-1" />}
+            {table.columns.map((c) => (
+              <th key={c.id} className="border-b border-slate-200 px-2 py-1 text-left">
+                {c.label}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {table.rows.map((r, i) => (
+            <tr key={i}>
+              {table.rowHeads && (
+                <th className="border-b border-slate-100 px-2 py-1 text-left font-normal whitespace-nowrap text-slate-500">
+                  {r.head}
                 </th>
+              )}
+              {r.cells.map((text, j) => (
+                <td key={table.columns[j].id} className="border-b border-slate-100 px-2 py-1">
+                  {text}
+                </td>
               ))}
             </tr>
-          </thead>
-          <tbody>
-            {rows.map((r, i) => (
-              <tr key={i}>
-                {fixed && (
-                  <th className="border-b border-slate-100 px-2 py-1 text-left font-normal whitespace-nowrap text-slate-500">
-                    {r.label}
-                  </th>
-                )}
-                {cols.map((c) => (
-                  <td key={c.id} className="border-b border-slate-100 px-2 py-1">
-                    {r.row[c.id] === null || r.row[c.id] === undefined
-                      ? ''
-                      : String(r.row[c.id])}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    );
-  }
-
-  if (field.options) {
-    const opt = field.options.find((o) => o.value === value);
-    if (opt)
-      return (
-        <span
-          className={`font-medium ${
-            value === false ? 'text-amber-700' : value === true ? 'text-emerald-700' : ''
-          }`}
-        >
-          {label(opt, lang)}
-        </span>
-      );
-  }
-
-  return <span className="whitespace-pre-wrap text-slate-800">{String(value)}</span>;
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
 }
 
 function Files({ files }: { files: Attachment[] }) {

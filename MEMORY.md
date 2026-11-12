@@ -53,6 +53,12 @@ Next.js (Docker) ─────────────────────
   *derived* from the answers on every save, never set by the client.
 - **One validation engine** (`src/lib/checklist/state.ts`) runs in both the browser (live
   feedback) and the server (authoritative at submit), so they can't disagree.
+- **One answer view for every reader** (`src/lib/checklist/answer-view.ts`). The admin
+  detail, the PDF and the JSON export lay out `viewAnswers(checklist, state, lang)`
+  rather than applying visibility, failed checks, value formatting or fixed-row labels
+  themselves. A failed check whose gate has since closed is *not* a failed check
+  anywhere; the admin and export still list such hidden answers, flagged `hidden`.
+  New reader of a filled form → start from this view.
 - **Two independent languages.** A form instance's `lang` is what the installer sees and is
   fixed when the link is created. The admin panel's language is separate — English by
   default (`src/lib/admin-lang.ts`), switchable to Czech, remembered in the

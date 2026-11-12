@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { isAdmin } from '@/lib/auth';
 import { listEvents, loadById } from '@/lib/instances';
-import { summarize } from '@/lib/checklist/state';
+import { viewAnswers, type Entry } from '@/lib/checklist/answer-view';
 
 /** Full machine-readable dump of one form: answers, attachments, audit trail. */
 export async function GET(
@@ -15,6 +15,8 @@ export async function GET(
 
   const { instance, checklist, state, attachments } = loaded;
   const events = await listEvents(instance.id, 5000);
+  // In the form's own language; hidden answers stay in the dump, flagged.
+  const view = viewAnswers(checklist, state, instance.lang, { includeHidden: true });
 
   const payload = {
     instance: {
@@ -28,22 +30,26 @@ export async function GET(
       createdAt: instance.createdAt,
       submittedAt: instance.submittedAt,
     },
-    summary: summarize(checklist, state),
-    answers: checklist.sections.map((s) => ({
-      section: s.id,
-      fields: s.fields
-        .filter((f) => f.id in state.values || state.photoCounts[f.id])
-        .map((f) => ({
-          id: f.id,
-          labelCs: f.labelCs,
-          labelEn: f.labelEn,
-          type: f.type,
-          value: state.values[f.id] ?? null,
-          failNote: state.failNotes[f.id] ?? null,
+    summary: view.summary,
+    answers: view.sections.map(({ section, entries }) => ({
+      section: section.id,
+      fields: entries
+        .filter((e) => e.field.id in state.values || state.photoCounts[e.field.id])
+        .map((e) => ({
+          id: e.field.id,
+          labelCs: e.field.labelCs,
+          labelEn: e.field.labelEn,
+          type: e.field.type,
+          value: state.values[e.field.id] ?? null,
+          display: display(e),
+          // A hidden answer was stored under a gate that has since closed: it doesn't apply.
+          hidden: e.hidden,
+          failed: e.kind === 'answer' && e.failed,
+          failNote: state.failNotes[e.field.id] ?? null,
           // Fixed-row tables are positional; ship the row labels so the export
           // stands on its own without the checklist definition beside it.
-          ...(f.fixedRows ? { rowLabels: f.fixedRows } : {}),
-          ...(f.columns ? { columns: f.columns.map((c) => c.id) } : {}),
+          ...(e.field.fixedRows ? { rowLabels: e.field.fixedRows } : {}),
+          ...(e.field.columns ? { columns: e.field.columns.map((c) => c.id) } : {}),
         })),
     })),
     attachments: attachments.map((a) => ({
@@ -64,4 +70,11 @@ export async function GET(
       'content-disposition': `attachment; filename="${instance.checklistSlug}-${instance.id}.json"`,
     },
   });
+}
+
+/** The value as the admin view and the PDF print it. */
+function display(e: Entry): string | string[][] | null {
+  if (e.kind === 'answer') return e.empty ? null : e.text;
+  if (e.kind === 'table') return e.table.rows.map((r) => (e.table.rowHeads ? [r.head, ...r.cells] : r.cells));
+  return null;
 }

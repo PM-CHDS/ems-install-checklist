@@ -174,6 +174,11 @@ export function label(
   return (lang === 'en' ? o.labelEn : o.labelCs) || o.labelCs || o.labelEn;
 }
 
+/** A checklist's or section's title, with the same fallback as `label`. */
+export function title(o: { titleCs: string; titleEn: string }, lang: Lang): string {
+  return (lang === 'en' ? o.titleEn : o.titleCs) || o.titleCs || o.titleEn;
+}
+
 export function help(
   o: { helpCs?: string; helpEn?: string },
   lang: Lang,

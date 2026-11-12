@@ -93,14 +93,17 @@ export function visibleFixedRows(
     .filter(({ row }) => gatesOf(row).every((g) => gateMet(g, values)));
 }
 
+/** Does this table row hold anything? */
+export function rowHasValue(row: Record<string, unknown>): boolean {
+  return Object.values(row).some((c) => c !== undefined && c !== null && String(c).trim() !== '');
+}
+
 /** Does this field hold a real answer? */
 export function hasValue(field: CompiledField, value: unknown): boolean {
   if (value === undefined || value === null || value === '') return false;
   if (field.type === 'table') {
     if (!isTableValue(value)) return false;
-    return value.rows.some((row) =>
-      Object.values(row).some((c) => c !== undefined && c !== null && String(c).trim() !== ''),
-    );
+    return value.rows.some(rowHasValue);
   }
   if (typeof value === 'string') return value.trim() !== '';
   return true;

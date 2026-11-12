@@ -10,8 +10,8 @@ import path from 'node:path';
 import PDFDocument from 'pdfkit';
 import type { Attachment } from '@/db/schema';
 import type { LoadedInstance } from '@/lib/instances';
-import { isFailed, isTableValue, isVisible, summarize, visibleFixedRows } from '@/lib/checklist/state';
-import { help, isInput, label, type CompiledField, type Lang } from '@/lib/checklist/types';
+import { viewAnswers, type Entry, type TableView } from '@/lib/checklist/answer-view';
+import { title, type Lang } from '@/lib/checklist/types';
 import { storage } from '@/lib/storage';
 
 const FONT_DIR = path.join(process.cwd(), 'assets', 'fonts');
@@ -94,7 +94,7 @@ export async function renderFormPdf(loaded: LoadedInstance, lang: Lang): Promise
     bufferPages: true,
     font: path.join(FONT_DIR, REGULAR),
     info: {
-      Title: `${label({ labelCs: checklist.titleCs, labelEn: checklist.titleEn }, lang)} – ${instance.label}`,
+      Title: `${title(checklist, lang)} – ${instance.label}`,
       Author: checklist.authorOrg ?? '',
     },
   });
@@ -107,16 +107,17 @@ export async function renderFormPdf(loaded: LoadedInstance, lang: Lang): Promise
 
   // --- header ---------------------------------------------------------------
   doc.font('B').fontSize(16).fillColor(COLOR.text)
-    .text(lang === 'en' ? checklist.titleEn : checklist.titleCs, left, PAGE_MARGIN, { width });
+    .text(title(checklist, lang), left, PAGE_MARGIN, { width });
   doc.font('R').fontSize(12).fillColor(COLOR.text).text(instance.label, { width });
   doc.moveDown(0.6);
 
-  const summary = summarize(checklist, state);
+  const view = viewAnswers(checklist, state, lang);
+  const { summary } = view;
   const meta: [string, string][] = [
     [s.checklist, `${instance.checklistSlug} v${instance.checklistVersion}`],
     [s.status, s[`status_${instance.status}` as keyof typeof s] ?? instance.status],
     [s.progress, `${summary.answered}/${summary.total} (${summary.percent} %)`],
-    [s.failedChecks, String(summary.failedChecks.length)],
+    [s.failedChecks, String(view.failedChecks.length)],
     [s.created, when(instance.createdAt)],
     [s.submitted, when(instance.submittedAt)],
     [s.generated, when(new Date())],
@@ -129,33 +130,33 @@ export async function renderFormPdf(loaded: LoadedInstance, lang: Lang): Promise
   }
 
   // --- sections -------------------------------------------------------------
-  for (const section of checklist.sections) {
-    const shown = section.fields.filter((f) => isVisible(f, state.values));
-    if (!shown.some((f) => isInput(f) || files.has(f.id))) continue;
+  for (const { title: sectionTitle, entries } of view.sections) {
+    const holdsAnswers = (e: Entry) =>
+      (e.kind !== 'group' && e.kind !== 'note') || files.has(e.field.id);
+    if (!entries.some(holdsAnswers)) continue;
 
     // Room for the heading plus a first row, so a heading never ends a page.
     ensureSpace(doc, 110);
     doc.moveDown(1.2);
     doc.font('B').fontSize(13).fillColor(COLOR.text)
-      .text(lang === 'en' ? section.titleEn : section.titleCs, left, doc.y, { width });
+      .text(sectionTitle, left, doc.y, { width });
     rule(doc, left, width, COLOR.text);
     doc.moveDown(0.4);
 
-    for (const field of shown) {
-      if (field.type === 'group') {
+    for (const entry of entries) {
+      if (entry.kind === 'group') {
         ensureSpace(doc, 40);
         doc.moveDown(0.5);
-        doc.font('B').fontSize(10.5).fillColor(COLOR.text).text(label(field, lang), left, doc.y, { width });
+        doc.font('B').fontSize(10.5).fillColor(COLOR.text).text(entry.label, left, doc.y, { width });
         doc.moveDown(0.2);
         continue;
       }
-      if (field.type === 'note') {
-        drawNote(doc, field, lang, left, width);
-        await drawFiles(doc, files.get(field.id), s, left, width);
+      if (entry.kind === 'note') {
+        drawNote(doc, entry, left, width);
+        await drawFiles(doc, files.get(entry.field.id), s, left, width);
         continue;
       }
-      if (!isInput(field)) continue;
-      await drawAnswer(doc, field, loaded, files, lang, left, width);
+      await drawAnswer(doc, entry, files, lang, left, width);
     }
   }
 
@@ -183,56 +184,51 @@ export async function renderFormPdf(loaded: LoadedInstance, lang: Lang): Promise
 
 async function drawAnswer(
   doc: Doc,
-  field: CompiledField,
-  loaded: LoadedInstance,
+  entry: Exclude<Entry, { kind: 'group' | 'note' }>,
   files: Map<string, LoadedFile[]>,
   lang: Lang,
   left: number,
   width: number,
 ) {
   const s = STRINGS[lang];
-  const { state } = loaded;
-  const value = state.values[field.id];
+  const own = files.get(entry.field.id);
   const labelW = width * LABEL_SHARE - 8;
   const valueX = left + width * LABEL_SHARE;
   const valueW = width * (1 - LABEL_SHARE);
 
   // Tables and signatures take the full width under their label.
-  if (field.type === 'table' || field.type === 'signature') {
+  if (entry.kind !== 'answer') {
     ensureSpace(doc, 50);
     doc.moveDown(0.35);
-    doc.font('R').fontSize(9).fillColor(COLOR.muted).text(label(field, lang), left, doc.y, { width });
+    doc.font('R').fontSize(9).fillColor(COLOR.muted).text(entry.label, left, doc.y, { width });
     doc.moveDown(0.2);
-    if (field.type === 'table') drawTable(doc, field, value, state.values, lang, left, width);
-    await drawFiles(doc, files.get(field.id), s, left, width);
+    if (entry.kind === 'table') drawTable(doc, entry.table, left, width);
+    await drawFiles(doc, own, s, left, width);
     doc.moveDown(0.2);
     rule(doc, left, width, COLOR.rule);
     return;
   }
 
-  const failed = isFailed(field, value);
-  const text = formatValue(field, value, lang);
+  const bold = entry.failed || entry.isOption;
   doc.fontSize(9);
   const h = Math.max(
-    doc.font('R').heightOfString(label(field, lang), { width: labelW }),
-    doc.font(failed || field.options ? 'B' : 'R').heightOfString(text, { width: valueW }),
+    doc.font('R').heightOfString(entry.label, { width: labelW }),
+    doc.font(bold ? 'B' : 'R').heightOfString(entry.text, { width: valueW }),
   );
   // A field's first row of photos stays on the same page as its label.
-  const hasImages = (files.get(field.id) ?? []).some((f) => f.body);
+  const hasImages = (own ?? []).some((f) => f.body);
   ensureSpace(doc, h + 10 + (hasImages ? THUMB_H + 12 : 0));
   doc.moveDown(0.35);
   const y = doc.y;
-  doc.font('R').fillColor(COLOR.muted).text(label(field, lang), left, y, { width: labelW });
+  doc.font('R').fillColor(COLOR.muted).text(entry.label, left, y, { width: labelW });
   const afterLabel = doc.y;
-  const empty = value === undefined || value === null || value === '';
-  doc.font(field.options && !empty ? 'B' : 'R')
-    .fillColor(empty ? COLOR.faint : value === false ? COLOR.fail : value === true ? COLOR.ok : COLOR.text)
-    .text(text, valueX, y, { width: valueW });
+  doc.font(entry.isOption ? 'B' : 'R')
+    .fillColor(TONE_COLOR[entry.tone])
+    .text(entry.text, valueX, y, { width: valueW });
   doc.y = Math.max(afterLabel, doc.y);
 
-  if (failed) {
-    const note = state.failNotes[field.id]?.trim();
-    const body = `${s.explanation}: ${note || s.noExplanation}`;
+  if (entry.failed) {
+    const body = `${s.explanation}: ${entry.failNote ?? s.noExplanation}`;
     doc.fontSize(8.5);
     const nh = doc.heightOfString(body, { width: valueW - 10 }) + 8;
     ensureSpace(doc, nh + 4);
@@ -243,7 +239,6 @@ async function drawAnswer(
     doc.y = ny + nh;
   }
 
-  const own = files.get(field.id);
   if (own?.length) {
     doc.moveDown(0.3);
     await drawFiles(doc, own, s, valueX, valueW);
@@ -252,101 +247,46 @@ async function drawAnswer(
   rule(doc, left, width, COLOR.rule);
 }
 
-function formatValue(field: CompiledField, value: unknown, lang: Lang): string {
-  if (value === undefined || value === null || value === '') return '—';
-  if (field.options) {
-    const opt = field.options.find((o) => o.value === value);
-    if (opt) return label(opt, lang);
-  }
-  if (field.type === 'date' && typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value)) {
-    const [y, m, d] = value.split('-').map(Number);
-    return new Intl.DateTimeFormat(lang === 'en' ? 'en-GB' : 'cs-CZ', { dateStyle: 'long' })
-      .format(new Date(Date.UTC(y, m - 1, d)));
-  }
-  if (field.type === 'number') {
-    const n = formatNumber(value, lang);
-    return field.unit ? `${n} ${field.unit}` : n;
-  }
-  return String(value);
-}
+const TONE_COLOR = { ok: COLOR.ok, fail: COLOR.fail, plain: COLOR.text, empty: COLOR.faint };
 
-/** Locale decimals (3,2 in Czech); anything that isn't a plain number is shown as typed. */
-function formatNumber(value: unknown, lang: Lang): string {
-  const n = typeof value === 'number' ? value : Number(value);
-  if (!Number.isFinite(n)) return String(value);
-  return new Intl.NumberFormat(lang === 'en' ? 'en-GB' : 'cs-CZ', {
-    maximumFractionDigits: 6,
-    useGrouping: false,
-  }).format(n);
-}
-
-function drawNote(doc: Doc, field: CompiledField, lang: Lang, left: number, width: number) {
-  const body = help(field, lang);
+function drawNote(doc: Doc, entry: Extract<Entry, { kind: 'note' }>, left: number, width: number) {
+  const body = entry.help;
   doc.fontSize(9);
   const h =
-    doc.font('B').heightOfString(label(field, lang), { width }) +
+    doc.font('B').heightOfString(entry.label, { width }) +
     (body ? doc.font('R').fontSize(8.5).heightOfString(body, { width }) : 0);
   ensureSpace(doc, h + 10);
   doc.moveDown(0.4);
   doc.font('B').fontSize(9)
-    .fillColor(field.severity === 'warning' ? COLOR.fail : COLOR.text)
-    .text(label(field, lang), left, doc.y, { width });
+    .fillColor(entry.field.severity === 'warning' ? COLOR.fail : COLOR.text)
+    .text(entry.label, left, doc.y, { width });
   if (body) doc.font('R').fontSize(8.5).fillColor(COLOR.muted).text(body, left, doc.y, { width });
   doc.moveDown(0.2);
 }
 
 /* ------------------------------------------------------------------ tables */
 
-function drawTable(
-  doc: Doc,
-  field: CompiledField,
-  value: unknown,
-  values: Record<string, unknown>,
-  lang: Lang,
-  left: number,
-  width: number,
-) {
-  const cols = field.columns ?? [];
-  const nonEmpty = (r: Record<string, unknown>) =>
-    Object.values(r).some((c) => c !== null && c !== undefined && String(c).trim() !== '');
-  const stored = isTableValue(value) ? value.rows : [];
-  // Fixed rows are positional: keep each row in its slot with its label, and show
-  // only the rows the installer saw. Free tables drop blank rows.
-  const rows = field.fixedRows
-    ? visibleFixedRows(field, values).map(({ row, index }) => ({
-        head: label(row, lang),
-        cells: stored[index] ?? {},
-      }))
-    : stored.filter(nonEmpty).map((r) => ({ head: '', cells: r }));
-
-  if (!rows.some((r) => nonEmpty(r.cells))) {
+function drawTable(doc: Doc, table: TableView, left: number, width: number) {
+  const cols = table.columns;
+  if (table.empty) {
     doc.font('R').fontSize(9).fillColor(COLOR.faint).text('—', left, doc.y);
     return;
   }
 
-  const headW = field.fixedRows ? Math.min(130, width * 0.28) : 0;
+  const headW = table.rowHeads ? Math.min(130, width * 0.28) : 0;
   const colW = (width - headW) / cols.length;
   const pad = 3;
-  const cell = (r: Record<string, unknown>, c: (typeof cols)[number]) => {
-    const v = r[c.id];
-    if (v === null || v === undefined || v === '') return '';
-    if (c.options) {
-      const opt = c.options.find((o) => o.value === v);
-      if (opt) return label(opt, lang);
-    }
-    return c.type === 'number' ? formatNumber(v, lang) : String(v);
-  };
 
   const header = () => {
     doc.font('B').fontSize(7.5);
     const hh =
-      Math.max(...cols.map((c) => doc.heightOfString(label(c, lang), { width: colW - 2 * pad }))) +
+      Math.max(...cols.map((c) => doc.heightOfString(c.label, { width: colW - 2 * pad }))) +
       2 * pad;
     ensureSpace(doc, hh + 16);
     const y = doc.y;
     doc.save().rect(left, y, width, hh).fill('#f1f5f9').restore();
     cols.forEach((c, i) => {
-      doc.fillColor(COLOR.muted).text(label(c, lang), left + headW + i * colW + pad, y + pad, {
+      doc.fillColor(COLOR.muted).text(c.label, left + headW + i * colW + pad, y + pad, {
         width: colW - 2 * pad,
       });
     });
@@ -354,13 +294,12 @@ function drawTable(
   };
 
   header();
-  for (const r of rows) {
+  for (const r of table.rows) {
     doc.font('R').fontSize(7.5);
-    const texts = cols.map((c) => cell(r.cells, c));
     const rh =
       Math.max(
         r.head ? doc.heightOfString(r.head, { width: headW - 2 * pad }) : 0,
-        ...texts.map((t) => doc.heightOfString(t || ' ', { width: colW - 2 * pad })),
+        ...r.cells.map((t) => doc.heightOfString(t || ' ', { width: colW - 2 * pad })),
       ) +
       2 * pad;
     if (doc.y + rh > doc.page.height - doc.page.margins.bottom) {
@@ -369,7 +308,7 @@ function drawTable(
     }
     const y = doc.y;
     if (r.head) doc.fillColor(COLOR.muted).text(r.head, left + pad, y + pad, { width: headW - 2 * pad });
-    texts.forEach((t, i) => {
+    r.cells.forEach((t, i) => {
       doc.fillColor(COLOR.text).text(t, left + headW + i * colW + pad, y + pad, { width: colW - 2 * pad });
     });
     doc.y = y + rh;
