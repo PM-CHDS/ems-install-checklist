@@ -176,7 +176,7 @@ as literal noise in the form. This table is the traceability record instead.
 | 9 | `04-technologie.md` | `inverters_connected_to_datalogger` |
 | 10 | `04-technologie.md` | `inverters_rtu_table`, `inverters_tcp_table` |
 | 11 | `04-technologie.md` | `master_slave` |
-| 12 | `05-nastaveni-systemu.md` | `additional_sources_installed` |
+| 12 | `04-technologie.md` | `additional_sources_installed` |
 | 13 | `06-dodane-podklady.md` | `modbus_register_table` |
 | 14 | `02-elektromery.md` | `ip_or_modbus_id` |
 

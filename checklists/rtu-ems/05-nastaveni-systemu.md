@@ -584,23 +584,6 @@ fields:
     help_cs: "Výrobcem definovaná procentuální vlastní ztráta BÚ."
     help_en: "Manufacturer-specified percentage self-loss of the battery storage."
 
-  - id: additional_sources_installed
-    label_cs: "Jsou instalovány další zdroje do EMS/DŘ?"
-    label_en: "Are other sources connected to the EMS/DSO RTU?"
-    type: boolean
-    options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
-    help_cs: "Například kogenerační jednotky či diesel agregáty — tedy zařízení, která nebyla zmíněna ve výše uvedených bodech."
-    help_en: "For example CHP (cogeneration) units or diesel generators — devices not covered by the items above."
-
-  - id: additional_sources_notes
-    label_cs: "Poznámky – popis dalších zdrojů"
-    label_en: "Notes – description of the other sources"
-    type: text
-    multiline: true
-    conditional_on: {field: additional_sources_installed, equals: true}
-    help_cs: "Popište typ, výkon a způsob připojení / komunikace každého zdroje."
-    help_en: "Describe each source's type, power and how it is connected / communicates."
-
   - id: flexibility_heading
     type: group
     label_cs: "Nastavení řízení flexibility"
