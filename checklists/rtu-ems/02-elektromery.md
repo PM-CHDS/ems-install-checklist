@@ -169,7 +169,7 @@ fields:
     repeatable: true
     suggested_rows: 4
     help_cs: "Pokud je instalováno více elektroměrů, využijte pole pro poznámky."
-    help_en: "If more meters are installed than fit here, use the Notes field (§7)."
+    help_en: "If more meters are installed than fit here, use the Notes field (§8)."
     columns:
       - id: jps_label
         label_cs: "Označení elektroměru dle JPS"

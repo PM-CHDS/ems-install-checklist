@@ -84,7 +84,7 @@ fields:
     type: table
     repeatable: false
     help_cs: "Pokud je instalováno více rozvaděčů, využijte pole pro poznámky. Uveďte názvy instalovaných rozvaděčů tak, jak jsou označeny na místě instalace. Tento název bude pak použit při konfiguraci."
-    help_en: "If more switchboards are installed than fit here, use the Notes field (§7). Enter the names of the installed switchboards exactly as labeled on site — this name is then used during configuration."
+    help_en: "If more switchboards are installed than fit here, use the Notes field (§8). Enter the names of the installed switchboards exactly as labeled on site — this name is then used during configuration."
     fixed_rows:
       - {row_id: ems_dr, label_cs: "Rozvaděč EMS/DŘ", label_en: "EMS/DSO RTU switchboard"}
       - row_id: mar1

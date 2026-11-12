@@ -31,8 +31,9 @@ One file per checklist section, in document order:
 | `03-parametrizace-komunikace.md` | §3 Parametrizace a komunikace |
 | `04-technologie.md` | §4 Technologie |
 | `05-nastaveni-systemu.md` | §5 Nastavení systému |
-| `06-dodane-podklady.md` | §6 Dodané podklady spolu s checklistem + sign-off block |
-| `07-poznamky.md` | §7 Poznámky (free-text notes) |
+| `06-podminky-nakupu-prodeje.md` | §6 Podmínky nákupu a prodeje elektřiny (SPOT/FIX sale and purchase, SPOT region, EMS SPOT sources) — split out of §5 |
+| `07-dodane-podklady.md` | §7 Dodané podklady spolu s checklistem + sign-off block |
+| `08-poznamky.md` | §8 Poznámky (free-text notes) |
 
 **§8 "Legenda" (glossary) is not its own file.** It was prose explaining §1–§6 items — that
 text has been folded into each field's `help_cs`/`help_en` at the matching field, so a
@@ -79,7 +80,7 @@ sibling fields stay easy to diff). Field object keys:
   not in the source document.
 - `photo` / `photo_required` — offer file attachments on this field, and require at least
   one for the field to count as complete. Used where the source asks in prose for
-  photo documentation (nameplates, PLC displays, the §6 document checklist).
+  photo documentation (nameplates, PLC displays, the §7 document checklist).
 - `conditional_on` — `{field: <id>, equals: <value>}`. Only set when an earlier field in
   the same schema actually gates this one (per source wording like "vyplňte, pokud…" /
   "fill in only if…"). Where the source implies a condition but no earlier field
@@ -100,7 +101,7 @@ sibling fields stay easy to diff). Field object keys:
 ```
 
 `suggested_rows` / footnotes on most tables say some version of "if you have more rows
-than fit, use the Notes field" (§7) — the web form should allow adding rows freely; the
+than fit, use the Notes field" (§8) — the web form should allow adding rows freely; the
 paper form's row count was a print-layout constraint, not a business rule.
 
 ## Known source-document quirks
@@ -125,7 +126,7 @@ one field it illustrates via that field's `images` key (see field shape above):
 | `03-plc-display-ic-number.jpeg` | `03-parametrizace-komunikace.md` → `control_units_ip_ic_table` |
 | `03-plc-display-connection-status.png` | `03-parametrizace-komunikace.md` → `cloud_connectivity_note` |
 | `05-ak-puls-cib-address-label.png` | `05-nastaveni-systemu.md` → `cib_address_ak_puls` |
-| `06-switchboard-documentation-example.png` | `06-dodane-podklady.md` → `switchboard_documentation_with_signals` |
+| `06-switchboard-documentation-example.png` | `07-dodane-podklady.md` → `switchboard_documentation_with_signals` |
 
 The 9th image is the company logo (used in both document headers) — not extracted, not
 relevant to the form schema.
@@ -177,7 +178,7 @@ as literal noise in the form. This table is the traceability record instead.
 | 10 | `04-technologie.md` | `inverters_rtu_table`, `inverters_tcp_table` |
 | 11 | `04-technologie.md` | `master_slave` |
 | 12 | `04-technologie.md` | `additional_sources_installed` |
-| 13 | `06-dodane-podklady.md` | `modbus_register_table` |
+| 13 | `07-dodane-podklady.md` | `modbus_register_table` |
 | 14 | `02-elektromery.md` | `ip_or_modbus_id` |
 
 Three source footnotes carry nothing usable:

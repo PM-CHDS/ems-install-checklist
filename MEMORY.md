@@ -90,8 +90,10 @@ Next.js (Docker) ─────────────────────
   JSON behind for the startup bootstrap to republish. The admin picker offers only the
   current version of each checklist; superseded rows stay in the table for existing
   instances.
-- rtu-ems v8.1 compiles to **8 sections, 169 fields (141 inputs, 36 blocking checks,
-  20 photo-capable fields)**.
+- rtu-ems v8.1 compiles to **9 sections, 173 fields (142 inputs, 36 blocking checks,
+  20 photo-capable fields)**. §6 "Podmínky nákupu a prodeje elektřiny" (section id
+  `obchodni_podminky`) gathers the source's 2.2, 2.3 and 2.6 out of §5; the source's §3
+  attachments and notes are the form's §7 and §8.
 - The day-ahead-price firewall exception is **ENTSO-E** (`transparency.entsoe.eu`), not
   OTE, by the owner's instruction — the 2026 PDF still says www.ote-cr.cz.
 - **PDF export** (`/admin/<id>/pdf`, `src/lib/pdf/form-pdf.ts`) uses PDFKit with DejaVu

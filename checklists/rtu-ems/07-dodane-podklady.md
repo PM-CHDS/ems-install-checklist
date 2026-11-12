@@ -1,4 +1,4 @@
-# 6. Dodané podklady spolu s checklistem (EMS/DŘ)
+# 7. Dodané podklady spolu s checklistem (EMS/DŘ)
 
 *(Documents supplied together with the checklist — EMS / dispatching control (DSO RTU))*
 

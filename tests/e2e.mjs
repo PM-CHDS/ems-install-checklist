@@ -185,7 +185,7 @@ for (const field of [
 }
 
 await page.reload({ waitUntil: 'networkidle' });
-await page.getByRole('button', { name: '6', exact: true }).click();
+await page.getByRole('button', { name: '7', exact: true }).click();
 await page.waitForTimeout(500);
 
 const pad = page.locator('#field-signature canvas');

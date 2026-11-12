@@ -41,11 +41,15 @@ sections:
     id: nastaveni
     title_cs: "5. Nastavení systému"
     title_en: "5. System settings"
-  - file: 06-dodane-podklady.md
+  - file: 06-podminky-nakupu-prodeje.md
+    id: obchodni_podminky
+    title_cs: "6. Podmínky nákupu a prodeje elektřiny"
+    title_en: "6. Electricity buy/sell conditions"
+  - file: 07-dodane-podklady.md
     id: podklady
-    title_cs: "6. Dodané podklady a podpis"
-    title_en: "6. Supplied documents and sign-off"
-  - file: 07-poznamky.md
+    title_cs: "7. Dodané podklady a podpis"
+    title_en: "7. Supplied documents and sign-off"
+  - file: 08-poznamky.md
     id: poznamky
-    title_cs: "7. Poznámky"
-    title_en: "7. Notes"
+    title_cs: "8. Poznámky"
+    title_en: "8. Notes"

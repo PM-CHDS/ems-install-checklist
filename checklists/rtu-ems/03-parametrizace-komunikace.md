@@ -161,10 +161,10 @@ fields:
     label_en: "Starting configuration requires working data connectivity"
     help_cs: >
       Přiložte fotografii displeje PLC, kde je vidět potvrzení o správné komunikaci PLC
-      do cloudu — nutný je stav [100]. Fotografii přiložte i v §6 (Dodané podklady).
+      do cloudu — nutný je stav [100]. Fotografii přiložte i v §7 (Dodané podklady).
     help_en: >
       Attach a photo of the PLC display showing confirmation of correct PLC-to-cloud
-      communication — the status must show [100]. Also include it with the §6 attachments.
+      communication — the status must show [100]. Also include it with the §7 attachments.
     images:
       - file: assets/03-plc-display-connection-status.png
         caption_cs: "Displej PLC jednotky se stavem připojení"
