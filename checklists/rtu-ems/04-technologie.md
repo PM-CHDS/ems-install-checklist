@@ -382,6 +382,15 @@ fields:
     help_cs: "Zdroj vykresluje tyto tři možnosti jako samostatné ANO/NE řádky; protože jde o vzájemně se vylučující volby (viz nadpis), zde je to sloučeno do jednoho výběru."
     help_en: "The source renders these three options as separate ANO/NE lines; since the heading says to pick one, they're modeled here as a single-choice field."
 
+  - id: battery_spot_contract_note
+    type: note
+    severity: warning
+    label_cs: "Řízení baterie podle SPOT vyžaduje SPOT ceny"
+    label_en: "SPOT battery control requires SPOT prices"
+    conditional_on: {field: battery_mode, equals: spot_control}
+    help_cs: "Je nutné, aby smlouva o dodávce elektřiny měla pro nákup i prodej nastavené SPOT ceny. Podmínky vyplňte v §6 (Podmínky nákupu a prodeje elektřiny)."
+    help_en: "Your electricity agreement must use SPOT prices for both buying and selling. Fill in the terms in §6 (Electricity buy/sell conditions)."
+
   - id: battery_notes
     label_cs: "Poznámky k bateriím"
     label_en: "Notes on battery storage"
