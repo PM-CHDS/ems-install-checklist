@@ -14,8 +14,17 @@
 
 ```yaml
 fields:
+  - id: price_optimization_enabled
+    label_cs: "Využít EMS pro arbitráž / plánování podle cen elektřiny?"
+    label_en: "Use the EMS for electricity price arbitrage / planning?"
+    type: boolean
+    options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
+    help_cs: "Podmínkou je smlouva o nákupu elektřiny se SPOT nebo SPOT+FIX cenami. Pokud NE, další otázky v této části se nezobrazí a nevyplňují se."
+    help_en: "This requires an electricity purchase agreement with SPOT or SPOT+FIX prices. If No, the rest of this section is not shown and need not be filled in."
+
   - id: spot_sale_section_heading
     type: group
+    conditional_on: {field: price_optimization_enabled, equals: true}
     label_cs: "Prodej (výkup) elektřiny"
     label_en: "Electricity sale (feed-in)"
 
@@ -23,6 +32,7 @@ fields:
     label_cs: "Vybraný režim výkupu elektřiny (EMS)"
     label_en: "Selected electricity sale (feed-in) mode (EMS)"
     type: select
+    conditional_on: {field: price_optimization_enabled, equals: true}
     options:
       - {value: spot, label_cs: "SPOT – burzovní ceny", label_en: "SPOT – exchange prices"}
       - {value: fix, label_cs: "FIX – pevná cena domluvená s obchodníkem", label_en: "FIX – fixed price agreed with the trader"}
@@ -96,6 +106,7 @@ fields:
 
   - id: spot_purchase_section_heading
     type: group
+    conditional_on: {field: price_optimization_enabled, equals: true}
     label_cs: "Nákup elektřiny"
     label_en: "Electricity purchase"
 
@@ -103,6 +114,7 @@ fields:
     label_cs: "Vybraný režim nákupu elektřiny (EMS)"
     label_en: "Selected electricity purchase mode (EMS)"
     type: select
+    conditional_on: {field: price_optimization_enabled, equals: true}
     options:
       - {value: spot, label_cs: "SPOT – burzovní ceny", label_en: "SPOT – exchange prices"}
       - {value: fix, label_cs: "FIX – pevná cena domluvená s obchodníkem", label_en: "FIX – fixed price agreed with the trader"}
@@ -264,6 +276,7 @@ fields:
 
   - id: quarter_hour_billing_warning
     type: note
+    conditional_on: {field: price_optimization_enabled, equals: true}
     severity: warning
     label_cs: "Upozornění k fakturaci ¼h rezervované kapacity"
     label_en: "Warning: ¼-hour reserved-capacity billing"
@@ -281,6 +294,7 @@ fields:
 
   - id: sources_heading
     type: group
+    conditional_on: {field: price_optimization_enabled, equals: true}
     label_cs: "Nastavení zdrojů EMS pro SPOT"
     label_en: "EMS source settings for SPOT"
     help_cs: "Řízení zdrojů FVE, bateriová úložiště či jiné zdroje EMS. Pokud zdroj, například baterie, nebude provozován v režimu SPOT, danou část nevyplňujte."
@@ -290,6 +304,7 @@ fields:
     label_cs: "Povolit řízení EMS dle SPOT"
     label_en: "Allow EMS control based on SPOT"
     type: boolean
+    conditional_on: {field: price_optimization_enabled, equals: true}
     options: {true: {cs: "ANO", en: "Yes"}, false: {cs: "NE", en: "No"}}
     help_cs: "Definujte, zda se mají technologie řídit SPOTem."
     help_en: "Define whether the technology should be controlled based on SPOT prices."
